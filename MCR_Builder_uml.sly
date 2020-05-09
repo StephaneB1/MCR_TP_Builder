@@ -38,7 +38,7 @@
         </multiplicity>
       </role>
     </association>
-    <entity entityType="CLASS" id="23094" isAbstract="false" name="Racer" visibility="PUBLIC">
+    <entity entityType="CLASS" id="23094" isAbstract="false" name="races.Racer" visibility="PUBLIC">
       <attribute const="false" defaultValue="" isStatic="false" name="currentDistance" type="double" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="name" type="String" visibility="PRIVATE"/>
       <method isAbstract="false" isStatic="false" name="addDistance" returnType="void" view="DEFAULT" visibility="PUBLIC">
@@ -162,7 +162,7 @@
         </multiplicity>
       </role>
     </association>
-    <entity entityType="CLASS" id="22355" isAbstract="false" name="Race" visibility="PUBLIC">
+    <entity entityType="CLASS" id="22355" isAbstract="false" name="races.Race" visibility="PUBLIC">
       <attribute const="false" defaultValue="" isStatic="false" name="totalDistance" type="Double" visibility="PRIVATE"/>
       <method isAbstract="false" isStatic="false" name="start" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="false" isStatic="false" name="restart" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
@@ -193,7 +193,7 @@
       <child>18105</child>
       <parent>18238</parent>
     </inheritance>
-    <entity entityType="CLASS" id="17489" isAbstract="false" name="CarBuilder" visibility="PUBLIC"/>
+    <entity entityType="CLASS" id="17489" isAbstract="false" name="carBuilder.CarBuilder" visibility="PUBLIC"/>
     <entity entityType="CLASS" id="17768" isAbstract="false" name="Car" visibility="PUBLIC">
       <attribute const="false" defaultValue="" isStatic="false" name="acceleration" type="double" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="weight" type="double" visibility="PRIVATE"/>
@@ -202,7 +202,7 @@
       <attribute const="false" defaultValue="" isStatic="false" name="resistance" type="double" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="color" type="Color" visibility="PRIVATE"/>
     </entity>
-    <entity entityType="CLASS" id="17836" isAbstract="true" name="Builder" visibility="PUBLIC">
+    <entity entityType="CLASS" id="17836" isAbstract="true" name="carBuilder.Builder" visibility="PUBLIC">
       <method isAbstract="true" isStatic="false" name="buildMotor" returnType="void" view="DEFAULT" visibility="PUBLIC">
         <variable const="false" name="motor" type="Motor"/>
         <variable const="false" name="p" type="int"/>
