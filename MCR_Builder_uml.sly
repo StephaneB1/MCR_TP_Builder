@@ -101,7 +101,7 @@
       <source>18238</source>
       <target>18147</target>
     </dependency>
-    <entity entityType="INTERFACE" id="18147" isAbstract="true" name="Stats" visibility="PUBLIC">
+    <entity entityType="INTERFACE" id="18147" isAbstract="true" name="cars.Stats" visibility="PUBLIC">
       <method isAbstract="true" isStatic="false" name="getAcceleration" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="true" isStatic="false" name="getWeight" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="true" isStatic="false" name="getAdherence" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
@@ -138,7 +138,7 @@
       <method isAbstract="false" isStatic="false" name="buildTire" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="false" isStatic="false" name="buildSpoiler" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
     </entity>
-    <entity entityType="CLASS" id="17768" isAbstract="false" name="Car" visibility="PUBLIC">
+    <entity entityType="CLASS" id="17768" isAbstract="false" name="cars.Car" visibility="PUBLIC">
       <attribute const="false" defaultValue="" isStatic="false" name="acceleration" type="void" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="weight" type="void" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="adherence" type="void" visibility="PRIVATE"/>
