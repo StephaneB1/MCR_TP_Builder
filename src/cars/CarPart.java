@@ -1,11 +1,15 @@
 package cars;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public abstract class CarPart implements Stats{
 
     private String name;
     private String imagePath;
+    private Image image;
 
     // Stats
     private double acceleration;
@@ -13,9 +17,8 @@ public abstract class CarPart implements Stats{
     private double adherence;
     private double maniability;
     private double resistance;
-    private Color color;
 
-    public CarPart(String name, String imagePath, double acceleration, double weight, double adherence, double maniability, double resistance, Color color) {
+    public CarPart(String name, String imagePath, double acceleration, double weight, double adherence, double maniability, double resistance) {
         this.name = name;
         this.imagePath = imagePath;
         this.acceleration = acceleration;
@@ -23,7 +26,12 @@ public abstract class CarPart implements Stats{
         this.adherence = adherence;
         this.maniability = maniability;
         this.resistance = resistance;
-        this.color = color;
+
+        try {
+            image = ImageIO.read(new File(imagePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public abstract String getCategory();
@@ -51,5 +59,9 @@ public abstract class CarPart implements Stats{
     @Override
     public double getResistance() {
         return 0;
+    }
+
+    public Image getImage() {
+        return image;
     }
 }

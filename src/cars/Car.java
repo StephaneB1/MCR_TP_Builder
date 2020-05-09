@@ -1,8 +1,9 @@
 package cars;
 
+import javax.swing.*;
 import java.awt.*;
 
-public class Car implements Stats{
+public class Car extends JPanel implements Stats{
 
     private String name;
     private Body body;
@@ -18,14 +19,17 @@ public class Car implements Stats{
     private double resistance;
     private Color color;
 
-
-    public Car(String name, Body body, Motor motor, Tires tires, Spoiler spoiler) {
+    public Car(String name, Body body, Motor motor, Tires tires, Spoiler spoiler, Color color) {
         this.name = name;
         this.body = body;
         this.motor = motor;
         this.tires = tires;
         this.spoiler = spoiler;
+        this.color = color;
+
+        this.setSize(450, 200);
     }
+
 
     @Override
     public double getAcceleration() {
@@ -54,5 +58,15 @@ public class Car implements Stats{
 
     public Color getColor(){
         return color;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        g.drawImage(body.getImage(), 0, 0, this);
+        g.drawImage(tires.getImage(), 0, 0, this);
+        g.drawImage(motor.getImage(), 0, 0, this);
+        g.drawImage(spoiler.getImage(), 0, 0, this);
     }
 }
