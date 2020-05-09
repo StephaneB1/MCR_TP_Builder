@@ -11,6 +11,11 @@ public class Controller extends JFrame {
 
     private Image carImg;
 
+    private final int SCREEN_WIDTH  = 1200;
+    private final int SCREEN_HEIGHT = 600;
+
+    private final Color CAR_STATS_BG_COLOR     = Color.WHITE;
+    private final Color SHOP_AND_RACE_BG_COLOR = new Color(230, 230, 230);
 
     public Controller() {
 
@@ -20,10 +25,16 @@ public class Controller extends JFrame {
 
         // Car frame with statistics
         JPanel carPanel = new JPanel();
-        carPanel.setLayout(new GridLayout(1, 2));
+        carPanel.setBackground(CAR_STATS_BG_COLOR);
+        GridLayout carPanelGridLayout = new GridLayout(1,2);
+        carPanelGridLayout.setVgap(25);
+        carPanel.setLayout(carPanelGridLayout);
         //carPanel.add(playerCar);
-        carPanel.add(new JPanel());
+        JPanel carPanelImage = new JPanel();
+        carPanelImage.setOpaque(false);
+        carPanel.add(carPanelImage);
         JPanel carStatsPanel = new JPanel();
+        carStatsPanel.setOpaque(false);
         carStatsPanel.setLayout(new GridLayout(5, 2));
         // Set car statistics (later with car.getAcceleration() etc...)
         JLabel accelerationLabel = new JLabel("xxx m/s2");
@@ -45,12 +56,16 @@ public class Controller extends JFrame {
 
         // Builder and race UI
         JPanel builderAndRacePanel = new JPanel();
+        builderAndRacePanel.setBackground(SHOP_AND_RACE_BG_COLOR);
         builderAndRacePanel.setLayout(new GridLayout(1, 2));
         // Builder panel (carPart images + selection interface)
         JPanel builderPanel = new JPanel();
+        builderPanel.setOpaque(false);
         builderPanel.setLayout(new GridLayout(2, 1));
         JPanel carPartPanel = new JPanel();
+        carPartPanel.setOpaque(false);
         JPanel selectionPanel = new JPanel();
+        selectionPanel.setOpaque(false);
         selectionPanel.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         // Selection labels
@@ -90,6 +105,14 @@ public class Controller extends JFrame {
 
         // Race info panel
         JPanel racePanel = new JPanel();
+        racePanel.setOpaque(false);
+        racePanel.setLayout(new GridLayout(3, 2));
+        racePanel.add(new JLabel("Racers :"));
+        racePanel.add(new JLabel("5"));
+        racePanel.add(new JLabel("Total distance :"));
+        racePanel.add(new JLabel("5km"));
+        racePanel.add(new JButton("Quit"));
+        racePanel.add(new JButton("Start"));
 
         builderAndRacePanel.add(builderPanel);
         builderAndRacePanel.add(racePanel);
@@ -99,7 +122,7 @@ public class Controller extends JFrame {
         add(builderAndRacePanel);
 
         //Resizing frame
-        setSize(600,400);
+        setSize(SCREEN_WIDTH,SCREEN_HEIGHT);
         //position center of screen
         setLocationRelativeTo(null);
         //set visible
