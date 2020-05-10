@@ -223,7 +223,7 @@ public class Controller extends JFrame {
     private void setupGarage() {
         garage = new Garage();
 
-        // Products available in the garage
+        // Products available in the garage (maybe add the point coordinate in the class)
         // - Car bodies
         GarageProduct bodies = new GarageProduct("Bodies");
         bodies.addProduct(new Body("Body-1", "bodyTemplate.png", 2, 2, 2, 2, 2));
