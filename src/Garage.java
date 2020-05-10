@@ -1,8 +1,8 @@
 import cars.*;
 
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Garage {
 
@@ -15,15 +15,24 @@ public class Garage {
 
     public Garage() {
 
-
+        //---------------------------------//
+        // GARAGE INVENTORY                //
+        //---------------------------------//
+        // Car bodies
+        bodies   = new ArrayList<>();
+        bodies.add(new Body("Body-1", "resources/cars/bodies/body-1.png", 2, 2, 2, 2, 2));
+        // Car motors
+        motors   = new ArrayList<>();
+        motors.add(new Motor("Motor-1", "resources/cars/motors/motor-1.png", 2, 2, 2, 2, 2));
+        // Car tires
+        tires    = new ArrayList<>();
+        tires.add(new Tires("Tires-1", "resources/cars/tires/tires-1.png", 2, 2, 2, 2, 2));
+        // Car spoilers
+        spoilers = new ArrayList<>();
+        spoilers.add(new Spoiler("Spoiler-1", "resources/cars/spoilers/spoiler-1.png", 2, 2, 2, 2, 2));
+        // Cars
         cars = new ArrayList<>();
-
-        Body body1 = new Body("Body-1", "resources/cars/bodies/body-1.png", 2, 2, 2, 2, 2);
-        Motor motor1 = new Motor("Motor-1", "resources/cars/motors/motor-1.png", 2, 2, 2, 2, 2);
-        Tires tires1 = new Tires("Tires-1", "resources/cars/tires/tires-1.png", 2, 2, 2, 2, 2);
-        Spoiler spoiler1 = new Spoiler("Spoiler-1", "resources/cars/spoilers/spoiler-1.png", 2, 2, 2, 2, 2);
-
-        cars.add(new Car("Car-1", body1, motor1, tires1, spoiler1, Color.RED));
+        cars.add(getRandomCar());
     }
 
     public ArrayList<Body> getBodies() {
@@ -44,5 +53,15 @@ public class Garage {
 
     public ArrayList<Car> getCars() {
         return cars;
+    }
+
+    public Car getRandomCar() {
+        return new Car(
+                "Carx",
+                bodies.get(new Random().nextInt(bodies.size())),
+                motors.get(new Random().nextInt(tires.size())),
+                tires.get(new Random().nextInt(tires.size())),
+                spoilers.get(new Random().nextInt(tires.size())),
+                Color.RED);
     }
 }
