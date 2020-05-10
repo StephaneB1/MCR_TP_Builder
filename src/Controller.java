@@ -227,14 +227,15 @@ public class Controller extends JFrame {
         // - Car bodies
         GarageProduct bodies = new GarageProduct("Bodies");
         bodies.addProduct(new Body("Body-1", "body-1.png", 2, 2, 2, 2, 2));
-        //bodies.addProduct(new Body("Body-2", "body_sport_red.png", 2, 2, 2, 2, 2));
+        bodies.addProduct(new Body("Body-2", "body-formule1.png", 2, 2, 2, 2, 2));
         // - Car motors
         GarageProduct motors = new GarageProduct("Motors");
         motors.addProduct(new Motor("Motor-1", "motor-1.png", 2, 2, 2, 2, 2, new Point(10, 10)));
-        motors.addProduct(new Motor("Motor-2", "motor_sport.png", 2, 2, 2, 2, 2, new Point(20, 10)));
+        //motors.addProduct(new Motor("Motor-2", "motor_sport.png", 2, 2, 2, 2, 2, new Point(20, 10)));
         // - Car tires
         GarageProduct tires = new GarageProduct("Tires");
         tires.addProduct(new Tires("Tires-1", "tires-1.png", 2, 2, 2, 2, 2, new Point(0, 0)));
+        tires.addProduct(new Tires("Tires-2", "tires-2.png", 2, 2, 2, 2, 2, new Point(0, 0)));
         //tires.addProduct(new Tires("Tires-2", "tires_sport.png", 2, 2, 2, 2, 2));
         // - Car spoilers
         GarageProduct spoilers = new GarageProduct("Spoilers");
