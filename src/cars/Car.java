@@ -64,9 +64,9 @@ public class Car extends JPanel implements Stats{
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        g.drawImage(body.getImage(), 0, 0, this);
-        g.drawImage(tires.getImage(), 0, 0, this);
-        g.drawImage(motor.getImage(), 0, 0, this);
-        g.drawImage(spoiler.getImage(), 0, 0, this);
+        g.drawImage(body.getImage(), body.getXCoord(), body.getYCoord(), this);
+        g.drawImage(tires.getImage(), tires.getXCoord(), tires.getYCoord(), this);
+        g.drawImage(motor.getImage(), motor.getXCoord(), motor.getYCoord(), this);
+        g.drawImage(spoiler.getImage(), spoiler.getXCoord(), spoiler.getYCoord(), this);
     }
 }

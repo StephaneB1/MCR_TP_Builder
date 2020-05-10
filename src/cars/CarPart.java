@@ -5,11 +5,12 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public abstract class CarPart implements Stats{
+public abstract class CarPart implements Stats {
 
     private String name;
     private String imagePath;
     private Image image;
+    private Point relCoord;
 
     // Stats
     private double acceleration;
@@ -18,7 +19,9 @@ public abstract class CarPart implements Stats{
     private double maniability;
     private double resistance;
 
-    public CarPart(String name, String imagePath, double acceleration, double weight, double adherence, double maniability, double resistance) {
+    public CarPart(String name, String imagePath, double acceleration,
+                   double weight, double adherence, double maniability,
+                   double resistance, Point relCoord) {
         this.name = name;
         this.imagePath = imagePath;
         this.acceleration = acceleration;
@@ -26,6 +29,7 @@ public abstract class CarPart implements Stats{
         this.adherence = adherence;
         this.maniability = maniability;
         this.resistance = resistance;
+        this.relCoord = relCoord;
 
         try {
             image = ImageIO.read(new File(imagePath));
@@ -67,5 +71,13 @@ public abstract class CarPart implements Stats{
 
     public String getName() {
         return name;
+    }
+
+    public int getXCoord() {
+        return relCoord.x;
+    }
+
+    public int getYCoord() {
+        return relCoord.y;
     }
 }
