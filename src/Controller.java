@@ -83,7 +83,7 @@ public class Controller extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 currentCategory = (currentCategory - 1 + garage.getInventory().size()) % garage.getInventory().size();
                 categoryLabel.setText(garage.getInventory().get(currentCategory).getProductLabel());
-                productLabel.setText(garage.getInventory().get(currentCategory).getProducts().get(currentProduct).getCategory());
+                productLabel.setText(garage.getInventory().get(currentCategory).getProducts().get(currentProduct).getName());
             }
         });
         JButton categoryRightButton = new JButton(">");
@@ -92,8 +92,27 @@ public class Controller extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 currentCategory = (currentCategory + 1) % garage.getInventory().size();
                 categoryLabel.setText(garage.getInventory().get(currentCategory).getProductLabel());
+                productLabel.setText(garage.getInventory().get(currentCategory).getProducts().get(currentProduct).getName());
             }
         });
+        JButton productLeftButton = new JButton("<");
+        productLeftButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                currentProduct = (currentProduct - 1 + garage.getInventory().get(currentCategory).getProducts().size())
+                        % garage.getInventory().get(currentCategory).getProducts().size();
+                productLabel.setText(garage.getInventory().get(currentCategory).getProducts().get(currentProduct).getName());
+            }
+        });
+        JButton productRightButton = new JButton(">");
+        productRightButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                currentProduct = (currentProduct + 1) % garage.getInventory().get(currentCategory).getProducts().size();
+                productLabel.setText(garage.getInventory().get(currentCategory).getProducts().get(currentProduct).getName());
+            }
+        });
+
         productLabel.setHorizontalAlignment(SwingConstants.CENTER);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.anchor=GridBagConstraints.CENTER;
