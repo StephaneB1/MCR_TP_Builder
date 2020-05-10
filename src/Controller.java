@@ -1,15 +1,10 @@
-import cars.Car;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Controller extends JFrame {
-
-    private Image carImg;
 
     private final int SCREEN_WIDTH  = 1200;
     private final int SCREEN_HEIGHT = 600;
@@ -22,7 +17,6 @@ public class Controller extends JFrame {
     public Controller() {
 
         garage = new Garage();
-        //Car playerCar = new Car("src/ressources/cartest.png");
 
         setTitle("MCR - Racers");
 
@@ -32,7 +26,6 @@ public class Controller extends JFrame {
         GridLayout carPanelGridLayout = new GridLayout(1,2);
         carPanelGridLayout.setVgap(25);
         carPanel.setLayout(carPanelGridLayout);
-        //carPanel.add(playerCar);
         JPanel carPanelImage = garage.getCars().get(0);
         carPanelImage.setOpaque(false);
         carPanel.add(carPanelImage);
@@ -75,19 +68,27 @@ public class Controller extends JFrame {
         JLabel categoryLabel = new JLabel("Category");
         categoryLabel.setHorizontalAlignment(SwingConstants.CENTER);
         JLabel productLabel = new JLabel("Product");
+        JButton categoryLeftButton = new JButton("<");
+        categoryLeftButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //categoryLabel.setText(garage.getCategories().at());
+            }
+        });
+        JButton categoryRightButton = new JButton(">");
         productLabel.setHorizontalAlignment(SwingConstants.CENTER);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.anchor=GridBagConstraints.CENTER;
         c.gridy = 0;
         c.gridx = 0;
         c.weightx = 0.2;
-        selectionPanel.add(new JButton("<"), c);
+        selectionPanel.add(categoryLeftButton, c);
         c.gridx = 1;
         c.weightx = 0.6;
         selectionPanel.add(categoryLabel, c);
         c.gridx = 2;
         c.weightx = 0.2;
-        selectionPanel.add(new JButton(">"), c);
+        selectionPanel.add(categoryRightButton, c);
         c.gridy = 1;
         c.gridx = 0;
         c.weightx = 0.2;

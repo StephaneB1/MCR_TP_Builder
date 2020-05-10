@@ -6,14 +6,16 @@ import java.util.ArrayList;
 
 public class Garage {
 
+    private ArrayList<String> categories;
     private ArrayList<Body> bodies;
     private ArrayList<Motor> motors;
     private ArrayList<Tires> tires;
     private ArrayList<Spoiler> spoilers;
-
     private ArrayList<Car> cars;
 
     public Garage() {
+
+
         cars = new ArrayList<>();
 
         Body body1 = new Body("Body-1", "resources/cars/bodies/body-1.png", 2, 2, 2, 2, 2);
