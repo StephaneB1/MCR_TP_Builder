@@ -83,6 +83,7 @@ public class Controller extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 currentCategory = (currentCategory - 1 + garage.getInventory().size()) % garage.getInventory().size();
                 categoryLabel.setText(garage.getInventory().get(currentCategory).getProductLabel());
+                productLabel.setText(garage.getInventory().get(currentCategory).getProducts().get(currentProduct).getCategory());
             }
         });
         JButton categoryRightButton = new JButton(">");

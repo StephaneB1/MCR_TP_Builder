@@ -64,4 +64,8 @@ public abstract class CarPart implements Stats{
     public Image getImage() {
         return image;
     }
+
+    public String getName() {
+        return name;
+    }
 }
