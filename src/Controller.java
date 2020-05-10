@@ -208,11 +208,16 @@ public class Controller extends JFrame {
         garage.addToInventory(spoilers);
     }
 
-    private void updateSelectionLabels(JLabel category, JLabel product, JPanel productPanel) {
-        CarPart carPart = garage.getInventory().get(currentCategory).getProducts().get(currentProduct);
-        category.setText(garage.getInventory().get(currentCategory).getProductLabel());
-        product.setText(carPart.getName());
-        JLabel picLabel = new JLabel(new ImageIcon(carPart.getImage()));
+    private void updateSelectionLabels(JLabel categoryLabel, JLabel productLabel, JPanel productPanel) {
+        GarageProduct category = garage.getInventory().get(currentCategory);
+        CarPart product        = category.getProducts().get(currentProduct);
+
+        // Selection labels
+        categoryLabel.setText(category.getProductLabel());
+        productLabel.setText(product.getName());
+
+        // Product display
+        JLabel picLabel = new JLabel(new ImageIcon(product.getImage()));
         productPanel.removeAll();
         productPanel.add(picLabel);
         productPanel.repaint();
