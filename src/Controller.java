@@ -1,4 +1,11 @@
 
+import cars.Body;
+import cars.Motor;
+import cars.Spoiler;
+import cars.Tires;
+import garage.Garage;
+import garage.GarageProduct;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,10 +20,12 @@ public class Controller extends JFrame {
     private final Color SHOP_AND_RACE_BG_COLOR = new Color(230, 230, 230);
 
     private Garage garage;
+    private int currentCategory;
+    private int currentProduct;
 
     public Controller() {
 
-        garage = new Garage();
+        setupGarage();
 
         setTitle("MCR - Racers");
 
@@ -26,7 +35,7 @@ public class Controller extends JFrame {
         GridLayout carPanelGridLayout = new GridLayout(1,2);
         carPanelGridLayout.setVgap(25);
         carPanel.setLayout(carPanelGridLayout);
-        JPanel carPanelImage = garage.getCars().get(0);
+        JPanel carPanelImage = new JPanel(); //garage.getCars().get(0);
         carPanelImage.setOpaque(false);
         carPanel.add(carPanelImage);
         JPanel carStatsPanel = new JPanel();
@@ -65,17 +74,25 @@ public class Controller extends JFrame {
         selectionPanel.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         // Selection labels
-        JLabel categoryLabel = new JLabel("Category");
+        JLabel categoryLabel = new JLabel(garage.getInventory().get(currentCategory).getProductLabel());
         categoryLabel.setHorizontalAlignment(SwingConstants.CENTER);
         JLabel productLabel = new JLabel("Product");
         JButton categoryLeftButton = new JButton("<");
         categoryLeftButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //categoryLabel.setText(garage.getCategories().at());
+                currentCategory = (currentCategory - 1 + garage.getInventory().size()) % garage.getInventory().size();
+                categoryLabel.setText(garage.getInventory().get(currentCategory).getProductLabel());
             }
         });
         JButton categoryRightButton = new JButton(">");
+        categoryRightButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                currentCategory = (currentCategory + 1) % garage.getInventory().size();
+                categoryLabel.setText(garage.getInventory().get(currentCategory).getProductLabel());
+            }
+        });
         productLabel.setHorizontalAlignment(SwingConstants.CENTER);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.anchor=GridBagConstraints.CENTER;
@@ -132,6 +149,31 @@ public class Controller extends JFrame {
         //set visible
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    private void setupGarage() {
+        garage = new Garage();
+
+        // Products available in the garage
+        // - Car bodies
+        GarageProduct bodies = new GarageProduct("Bodies");
+        bodies.addProduct(new Body("Body-1", "resources/cars/bodies/body-1.png", 2, 2, 2, 2, 2));
+        // - Car motors
+        GarageProduct motors = new GarageProduct("Motors");
+        motors.addProduct(new Motor("Motor-1", "resources/cars/motors/motor-1.png", 2, 2, 2, 2, 2));
+        // - Car tires
+        GarageProduct tires = new GarageProduct("Tires");
+        tires.addProduct(new Tires("Tires-1", "resources/cars/tires/tires-1.png", 2, 2, 2, 2, 2));
+        // - Car spoilers
+        GarageProduct spoilers = new GarageProduct("Spoilers");
+        spoilers.addProduct(new Spoiler("Spoiler-1", "resources/cars/spoilers/spoiler-1.png", 2, 2, 2, 2, 2));
+
+        // Adding to the garage inventory
+        garage.addToInventory(bodies);
+        garage.addToInventory(motors);
+        garage.addToInventory(tires);
+        garage.addToInventory(spoilers);
+
     }
 
 }

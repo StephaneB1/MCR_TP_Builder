@@ -29,7 +29,7 @@
         </multiplicity>
       </role>
     </association>
-    <entity entityType="CLASS" id="24946" isAbstract="false" name="Garage" visibility="PUBLIC"/>
+    <entity entityType="CLASS" id="24946" isAbstract="false" name="garage.Garage" visibility="PUBLIC"/>
     <dependency id="18198" label="use">
       <source>18238</source>
       <target>18147</target>
