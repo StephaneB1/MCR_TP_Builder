@@ -82,6 +82,7 @@ public class Controller extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 currentCategory = (currentCategory - 1 + garage.getInventory().size()) % garage.getInventory().size();
+                currentProduct  = 0;
                 updateSelectionLabels(categoryLabel, productLabel, carPartPanel);
             }
         });
@@ -90,6 +91,7 @@ public class Controller extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 currentCategory = (currentCategory + 1) % garage.getInventory().size();
+                currentProduct  = 0;
                 updateSelectionLabels(categoryLabel, productLabel, carPartPanel);
             }
         });
@@ -97,8 +99,6 @@ public class Controller extends JFrame {
         productLeftButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Clicked on left");
-                System.out.println("product total : " + garage.getInventory().get(currentCategory).getProducts().size());
                 currentProduct = (currentProduct - 1 + garage.getInventory().get(currentCategory).getProducts().size())
                         % garage.getInventory().get(currentCategory).getProducts().size();
                 updateSelectionLabels(categoryLabel, productLabel, carPartPanel);
