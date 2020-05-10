@@ -76,7 +76,7 @@ public class Controller extends JFrame {
         // Selection labels
         JLabel categoryLabel = new JLabel(garage.getInventory().get(currentCategory).getProductLabel());
         categoryLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        JLabel productLabel = new JLabel("Product");
+        JLabel productLabel = new JLabel(garage.getInventory().get(currentCategory).getProducts().get(currentProduct).getName());
         JButton categoryLeftButton = new JButton("<");
         categoryLeftButton.addActionListener(new ActionListener() {
             @Override
@@ -97,6 +97,8 @@ public class Controller extends JFrame {
         productLeftButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println("Clicked on left");
+                System.out.println("product total : " + garage.getInventory().get(currentCategory).getProducts().size());
                 currentProduct = (currentProduct - 1 + garage.getInventory().get(currentCategory).getProducts().size())
                         % garage.getInventory().get(currentCategory).getProducts().size();
                 updateSelectionLabels(categoryLabel, productLabel, carPartPanel);
@@ -127,13 +129,13 @@ public class Controller extends JFrame {
         c.gridy = 1;
         c.gridx = 0;
         c.weightx = 0.2;
-        selectionPanel.add(new JButton("<"), c);
+        selectionPanel.add(productLeftButton, c);
         c.gridx = 1;
         c.weightx = 0.6;
         selectionPanel.add(productLabel, c);
         c.gridx = 2;
         c.weightx = 0.2;
-        selectionPanel.add(new JButton(">"), c);
+        selectionPanel.add(productRightButton, c);
         c.gridy = 2;
         c.gridx = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -184,30 +186,6 @@ public class Controller extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    private void setupGarage() {
-        garage = new Garage();
-
-        // Products available in the garage
-        // - Car bodies
-        GarageProduct bodies = new GarageProduct("Bodies");
-        bodies.addProduct(new Body("Body-1", "resources/cars/bodies/body-1.png", 2, 2, 2, 2, 2));
-        // - Car motors
-        GarageProduct motors = new GarageProduct("Motors");
-        motors.addProduct(new Motor("Motor-1", "resources/cars/motors/motor-1.png", 2, 2, 2, 2, 2));
-        // - Car tires
-        GarageProduct tires = new GarageProduct("Tires");
-        tires.addProduct(new Tires("Tires-1", "resources/cars/tires/tires-1.png", 2, 2, 2, 2, 2));
-        // - Car spoilers
-        GarageProduct spoilers = new GarageProduct("Spoilers");
-        spoilers.addProduct(new Spoiler("Spoiler-1", "resources/cars/spoilers/spoiler-1.png", 2, 2, 2, 2, 2));
-
-        // Adding to the garage inventory
-        garage.addToInventory(bodies);
-        garage.addToInventory(motors);
-        garage.addToInventory(tires);
-        garage.addToInventory(spoilers);
-    }
-
     private void updateSelectionLabels(JLabel categoryLabel, JLabel productLabel, JPanel productPanel) {
         GarageProduct category = garage.getInventory().get(currentCategory);
         CarPart product        = category.getProducts().get(currentProduct);
@@ -221,6 +199,34 @@ public class Controller extends JFrame {
         productPanel.removeAll();
         productPanel.add(picLabel);
         productPanel.repaint();
+    }
+
+    private void setupGarage() {
+        garage = new Garage();
+
+        // Products available in the garage
+        // - Car bodies
+        GarageProduct bodies = new GarageProduct("Bodies");
+        bodies.addProduct(new Body("Body-1", "resources/cars/bodies/body-1.png", 2, 2, 2, 2, 2));
+        bodies.addProduct(new Body("Body-2", "resources/cars/bodies/body_sport_red.png", 2, 2, 2, 2, 2));
+        // - Car motors
+        GarageProduct motors = new GarageProduct("Motors");
+        motors.addProduct(new Motor("Motor-1", "resources/cars/motors/motor-1.png", 2, 2, 2, 2, 2));
+        motors.addProduct(new Motor("Motor-2", "resources/cars/motors/motor_sport_red.png", 2, 2, 2, 2, 2));
+        // - Car tires
+        GarageProduct tires = new GarageProduct("Tires");
+        tires.addProduct(new Tires("Tires-1", "resources/cars/tires/tires-1.png", 2, 2, 2, 2, 2));
+        tires.addProduct(new Tires("Tires-2", "resources/cars/tires/tires_sport.png", 2, 2, 2, 2, 2));
+        // - Car spoilers
+        GarageProduct spoilers = new GarageProduct("Spoilers");
+        spoilers.addProduct(new Spoiler("Spoiler-1", "resources/cars/spoilers/spoiler-1.png", 2, 2, 2, 2, 2));
+        spoilers.addProduct(new Spoiler("Spoiler-2", "resources/cars/spoilers/spoiler_sport_red.png", 2, 2, 2, 2, 2));
+
+        // Adding to the garage inventory
+        garage.addToInventory(bodies);
+        garage.addToInventory(motors);
+        garage.addToInventory(tires);
+        garage.addToInventory(spoilers);
     }
 
 }
