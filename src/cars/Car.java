@@ -19,6 +19,10 @@ public class Car extends JPanel implements Stats{
     private double resistance;
     private Color color;
 
+    public Car() {
+
+    }
+
     public Car(String name, Body body, Motor motor, Tires tires, Spoiler spoiler, Color color) {
         this.name = name;
         this.body = body;
@@ -30,6 +34,25 @@ public class Car extends JPanel implements Stats{
         this.setSize(450, 200);
     }
 
+    /**
+     * TEMP : Should be done by the builder or another design less ugly than switch
+     */
+    public void installCarPart(CarPart carPart) {
+        switch(carPart.getCategory()) {
+            case "Motor":
+                motor = (Motor) carPart;
+                break;
+            case "Tires":
+                tires = (Tires) carPart;
+                break;
+            case "Spoiler":
+                spoiler = (Spoiler) carPart;
+                break;
+            case "Body":
+                body = (Body) carPart;
+                break;
+        }
+    }
 
     @Override
     public double getAcceleration() {
@@ -64,9 +87,9 @@ public class Car extends JPanel implements Stats{
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        g.drawImage(body.getImage(), body.getXCoord(), body.getYCoord(), this);
-        g.drawImage(tires.getImage(), tires.getXCoord(), tires.getYCoord(), this);
-        g.drawImage(motor.getImage(), motor.getXCoord(), motor.getYCoord(), this);
-        g.drawImage(spoiler.getImage(), spoiler.getXCoord(), spoiler.getYCoord(), this);
+        if(body != null) g.drawImage(body.getImage(), body.getXCoord(), body.getYCoord(), this);
+        if(tires != null) g.drawImage(tires.getImage(), tires.getXCoord(), tires.getYCoord(), this);
+        if(motor != null) g.drawImage(motor.getImage(), motor.getXCoord(), motor.getYCoord(), this);
+        if(spoiler != null) g.drawImage(spoiler.getImage(), spoiler.getXCoord(), spoiler.getYCoord(), this);
     }
 }

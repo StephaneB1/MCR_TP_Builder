@@ -22,11 +22,12 @@ public class Controller extends JFrame {
     private Garage garage;
     private int currentCategory;
     private int currentProduct;
-    //private Car playerCar;
+    private Car playerCar;
 
     public Controller() {
 
         setupGarage();
+        playerCar = new Car();
 
         setTitle("MCR - Racers");
 
@@ -36,7 +37,7 @@ public class Controller extends JFrame {
         carPanel.setLayout(new GridLayout(1,2));
         // -- Player car panel
         // TODO : build car bit by bit and update the display
-        JPanel carPanelImage = new JPanel();//playerCar;
+        JPanel carPanelImage = playerCar;
         carPanelImage.setOpaque(false);
         carPanel.add(carPanelImage);
         // -- Player car stat's panel
@@ -148,7 +149,8 @@ public class Controller extends JFrame {
         mountToCarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO : add piece to car
+                playerCar.installCarPart(garage.getInventory().get(currentCategory).getProducts().get(currentProduct));
+                carPanelImage.repaint();
             }
         });
         selectionPanel.add(mountToCarButton, c);
@@ -232,11 +234,11 @@ public class Controller extends JFrame {
         motors.addProduct(new Motor("Motor-2", "motor_sport.png", 2, 2, 2, 2, 2, new Point(20, 10)));
         // - Car tires
         GarageProduct tires = new GarageProduct("Tires");
-        //tires.addProduct(new Tires("Tires-1", "tires-1.png", 2, 2, 2, 2, 2));
+        tires.addProduct(new Tires("Tires-1", "tires-1.png", 2, 2, 2, 2, 2, new Point(0, 0)));
         //tires.addProduct(new Tires("Tires-2", "tires_sport.png", 2, 2, 2, 2, 2));
         // - Car spoilers
         GarageProduct spoilers = new GarageProduct("Spoilers");
-        //spoilers.addProduct(new Spoiler("Spoiler-1", "spoiler-1.png", 2, 2, 2, 2, 2));
+        spoilers.addProduct(new Spoiler("Spoiler-1", "spoiler-1.png", 2, 2, 2, 2, 2, new Point(0, 0)));
         //spoilers.addProduct(new Spoiler("Spoiler-2", "spoiler_sport_red.png", 2, 2, 2, 2, 2));
 
         // Adding to the garage inventory
