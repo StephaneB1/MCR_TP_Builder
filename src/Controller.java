@@ -226,21 +226,16 @@ public class Controller extends JFrame {
         // Products available in the garage
         // - Car bodies
         GarageProduct bodies = new GarageProduct("Bodies");
-        bodies.addProduct(new Body("Body-1", "body-1.png", 2, 2, 2, 2, 2));
-        bodies.addProduct(new Body("Body-2", "body-formule1.png", 2, 2, 2, 2, 2));
+        bodies.addProduct(new Body("Body-1", "bodyTemplate.png", 2, 2, 2, 2, 2));
         // - Car motors
         GarageProduct motors = new GarageProduct("Motors");
-        motors.addProduct(new Motor("Motor-1", "motor-1.png", 2, 2, 2, 2, 2, new Point(10, 10)));
-        //motors.addProduct(new Motor("Motor-2", "motor_sport.png", 2, 2, 2, 2, 2, new Point(20, 10)));
+        motors.addProduct(new Motor("Motor-1", "motorTemplate.png", 2, 2, 2, 2, 2, new Point(80, 70)));
         // - Car tires
         GarageProduct tires = new GarageProduct("Tires");
-        tires.addProduct(new Tires("Tires-1", "tires-1.png", 2, 2, 2, 2, 2, new Point(0, 0)));
-        tires.addProduct(new Tires("Tires-2", "tires-2.png", 2, 2, 2, 2, 2, new Point(0, 0)));
-        //tires.addProduct(new Tires("Tires-2", "tires_sport.png", 2, 2, 2, 2, 2));
+        tires.addProduct(new Tires("Tires-1", "tiresTemplate.png", 2, 2, 2, 2, 2, new Point(90, 130)));
         // - Car spoilers
         GarageProduct spoilers = new GarageProduct("Spoilers");
-        spoilers.addProduct(new Spoiler("Spoiler-1", "spoiler-1.png", 2, 2, 2, 2, 2, new Point(0, 0)));
-        //spoilers.addProduct(new Spoiler("Spoiler-2", "spoiler_sport_red.png", 2, 2, 2, 2, 2));
+        spoilers.addProduct(new Spoiler("Spoiler-1", "spoilerTemplate.png", 2, 2, 2, 2, 2, new Point(35, 35)));
 
         // Adding to the garage inventory
         garage.addToInventory(bodies);
