@@ -207,20 +207,20 @@ public class Controller extends JFrame {
         // Products available in the garage
         // - Car bodies
         GarageProduct bodies = new GarageProduct("Bodies");
-        bodies.addProduct(new Body("Body-1", "resources/cars/bodies/body-1.png", 2, 2, 2, 2, 2));
-        bodies.addProduct(new Body("Body-2", "resources/cars/bodies/body_sport_red.png", 2, 2, 2, 2, 2));
+        bodies.addProduct(new Body("Body-1", "body-1.png", 2, 2, 2, 2, 2));
+        bodies.addProduct(new Body("Body-2", "body_sport_red.png", 2, 2, 2, 2, 2));
         // - Car motors
         GarageProduct motors = new GarageProduct("Motors");
-        motors.addProduct(new Motor("Motor-1", "resources/cars/motors/motor-1.png", 2, 2, 2, 2, 2));
-        motors.addProduct(new Motor("Motor-2", "resources/cars/motors/motor_sport_red.png", 2, 2, 2, 2, 2));
+        motors.addProduct(new Motor("Motor-1", "motor-1.png", 2, 2, 2, 2, 2));
+        motors.addProduct(new Motor("Motor-2", "motor_sport_red.png", 2, 2, 2, 2, 2));
         // - Car tires
         GarageProduct tires = new GarageProduct("Tires");
-        tires.addProduct(new Tires("Tires-1", "resources/cars/tires/tires-1.png", 2, 2, 2, 2, 2));
-        tires.addProduct(new Tires("Tires-2", "resources/cars/tires/tires_sport.png", 2, 2, 2, 2, 2));
+        tires.addProduct(new Tires("Tires-1", "tires-1.png", 2, 2, 2, 2, 2));
+        tires.addProduct(new Tires("Tires-2", "tires_sport.png", 2, 2, 2, 2, 2));
         // - Car spoilers
         GarageProduct spoilers = new GarageProduct("Spoilers");
-        spoilers.addProduct(new Spoiler("Spoiler-1", "resources/cars/spoilers/spoiler-1.png", 2, 2, 2, 2, 2));
-        spoilers.addProduct(new Spoiler("Spoiler-2", "resources/cars/spoilers/spoiler_sport_red.png", 2, 2, 2, 2, 2));
+        spoilers.addProduct(new Spoiler("Spoiler-1", "spoiler-1.png", 2, 2, 2, 2, 2));
+        spoilers.addProduct(new Spoiler("Spoiler-2", "spoiler_sport_red.png", 2, 2, 2, 2, 2));
 
         // Adding to the garage inventory
         garage.addToInventory(bodies);
