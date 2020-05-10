@@ -17,8 +17,11 @@ public class Controller extends JFrame {
     private final Color CAR_STATS_BG_COLOR     = Color.WHITE;
     private final Color SHOP_AND_RACE_BG_COLOR = new Color(230, 230, 230);
 
+    private Garage garage;
+
     public Controller() {
 
+        garage = new Garage();
         //Car playerCar = new Car("src/ressources/cartest.png");
 
         setTitle("MCR - Racers");
@@ -30,7 +33,7 @@ public class Controller extends JFrame {
         carPanelGridLayout.setVgap(25);
         carPanel.setLayout(carPanelGridLayout);
         //carPanel.add(playerCar);
-        JPanel carPanelImage = new JPanel();
+        JPanel carPanelImage = garage.getCars().get(0);
         carPanelImage.setOpaque(false);
         carPanel.add(carPanelImage);
         JPanel carStatsPanel = new JPanel();
