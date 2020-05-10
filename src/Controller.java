@@ -1,15 +1,15 @@
 
-import cars.Body;
-import cars.Motor;
-import cars.Spoiler;
-import cars.Tires;
+import cars.*;
 import garage.Garage;
 import garage.GarageProduct;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class Controller extends JFrame {
 
@@ -17,7 +17,7 @@ public class Controller extends JFrame {
     private final int SCREEN_HEIGHT = 600;
 
     private final Color CAR_STATS_BG_COLOR     = Color.WHITE;
-    private final Color SHOP_AND_RACE_BG_COLOR = new Color(230, 230, 230);
+    private final Color SHOP_AND_RACE_BG_COLOR = Color.WHITE; //new Color(230, 230, 230);
 
     private Garage garage;
     private int currentCategory;
@@ -32,9 +32,7 @@ public class Controller extends JFrame {
         // Car frame with statistics
         JPanel carPanel = new JPanel();
         carPanel.setBackground(CAR_STATS_BG_COLOR);
-        GridLayout carPanelGridLayout = new GridLayout(1,2);
-        carPanelGridLayout.setVgap(25);
-        carPanel.setLayout(carPanelGridLayout);
+        carPanel.setLayout(new GridLayout(1,2));
         JPanel carPanelImage = new JPanel(); //garage.getCars().get(0);
         carPanelImage.setOpaque(false);
         carPanel.add(carPanelImage);
@@ -62,7 +60,9 @@ public class Controller extends JFrame {
         // Builder and race UI
         JPanel builderAndRacePanel = new JPanel();
         builderAndRacePanel.setBackground(SHOP_AND_RACE_BG_COLOR);
-        builderAndRacePanel.setLayout(new GridLayout(1, 2));
+        GridLayout builderRaceLayout = new GridLayout(1, 2);
+        builderRaceLayout.setHgap(50);
+        builderAndRacePanel.setLayout(builderRaceLayout);
         // Builder panel (carPart images + selection interface)
         JPanel builderPanel = new JPanel();
         builderPanel.setOpaque(false);
@@ -82,8 +82,7 @@ public class Controller extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 currentCategory = (currentCategory - 1 + garage.getInventory().size()) % garage.getInventory().size();
-                categoryLabel.setText(garage.getInventory().get(currentCategory).getProductLabel());
-                productLabel.setText(garage.getInventory().get(currentCategory).getProducts().get(currentProduct).getName());
+                updateSelectionLabels(categoryLabel, productLabel, carPartPanel);
             }
         });
         JButton categoryRightButton = new JButton(">");
@@ -91,8 +90,7 @@ public class Controller extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 currentCategory = (currentCategory + 1) % garage.getInventory().size();
-                categoryLabel.setText(garage.getInventory().get(currentCategory).getProductLabel());
-                productLabel.setText(garage.getInventory().get(currentCategory).getProducts().get(currentProduct).getName());
+                updateSelectionLabels(categoryLabel, productLabel, carPartPanel);
             }
         });
         JButton productLeftButton = new JButton("<");
@@ -101,7 +99,7 @@ public class Controller extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 currentProduct = (currentProduct - 1 + garage.getInventory().get(currentCategory).getProducts().size())
                         % garage.getInventory().get(currentCategory).getProducts().size();
-                productLabel.setText(garage.getInventory().get(currentCategory).getProducts().get(currentProduct).getName());
+                updateSelectionLabels(categoryLabel, productLabel, carPartPanel);
             }
         });
         JButton productRightButton = new JButton(">");
@@ -109,11 +107,11 @@ public class Controller extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 currentProduct = (currentProduct + 1) % garage.getInventory().get(currentCategory).getProducts().size();
-                productLabel.setText(garage.getInventory().get(currentCategory).getProducts().get(currentProduct).getName());
+                updateSelectionLabels(categoryLabel, productLabel, carPartPanel);
             }
         });
-
         productLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        c.insets = new Insets(3,3,3,3); // padding
         c.fill = GridBagConstraints.HORIZONTAL;
         c.anchor=GridBagConstraints.CENTER;
         c.gridy = 0;
@@ -140,7 +138,15 @@ public class Controller extends JFrame {
         c.gridx = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridwidth = 3;
-        selectionPanel.add(new JButton("Mount to car"), c);
+        c.ipady = 30; // make the button bigger
+        JButton mountToCarButton = new JButton("Mount to car");
+        mountToCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO : add piece to car
+            }
+        });
+        selectionPanel.add(mountToCarButton, c);
         builderPanel.add(carPartPanel);
         builderPanel.add(selectionPanel);
 
@@ -158,7 +164,14 @@ public class Controller extends JFrame {
         builderAndRacePanel.add(builderPanel);
         builderAndRacePanel.add(racePanel);
 
-        setLayout(new GridLayout(2, 1));
+        GridLayout gl = new GridLayout(2, 1);
+        gl.setVgap(10);
+        setLayout(gl);
+
+        // Add panels with padding
+        Border padding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+        carPanel.setBorder(padding);
+        builderAndRacePanel.setBorder(padding);
         add(carPanel);
         add(builderAndRacePanel);
 
@@ -193,7 +206,16 @@ public class Controller extends JFrame {
         garage.addToInventory(motors);
         garage.addToInventory(tires);
         garage.addToInventory(spoilers);
+    }
 
+    private void updateSelectionLabels(JLabel category, JLabel product, JPanel productPanel) {
+        CarPart carPart = garage.getInventory().get(currentCategory).getProducts().get(currentProduct);
+        category.setText(garage.getInventory().get(currentCategory).getProductLabel());
+        product.setText(carPart.getName());
+        JLabel picLabel = new JLabel(new ImageIcon(carPart.getImage()));
+        productPanel.removeAll();
+        productPanel.add(picLabel);
+        productPanel.repaint();
     }
 
 }
