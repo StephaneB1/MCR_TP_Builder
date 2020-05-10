@@ -22,6 +22,7 @@ public class Controller extends JFrame {
     private Garage garage;
     private int currentCategory;
     private int currentProduct;
+    //private Car playerCar;
 
     public Controller() {
 
@@ -33,18 +34,20 @@ public class Controller extends JFrame {
         JPanel carPanel = new JPanel();
         carPanel.setBackground(CAR_STATS_BG_COLOR);
         carPanel.setLayout(new GridLayout(1,2));
-        JPanel carPanelImage = new JPanel(); //garage.getCars().get(0);
+        // -- Player car panel
+        // TODO : build car bit by bit and update the display
+        JPanel carPanelImage = new JPanel();//playerCar;
         carPanelImage.setOpaque(false);
         carPanel.add(carPanelImage);
+        // -- Player car stat's panel
         JPanel carStatsPanel = new JPanel();
         carStatsPanel.setOpaque(false);
         carStatsPanel.setLayout(new GridLayout(5, 2));
-        // Set car statistics (later with car.getAcceleration() etc...)
         JLabel accelerationLabel = new JLabel("xxx m/s2");
-        JLabel weightLabel = new JLabel("xxx kg");
-        JLabel adherenceLabel = new JLabel("xxx ??");
-        JLabel maniabilityLabel = new JLabel("xxx ??");
-        JLabel resistanceLabel = new JLabel("xxx ??");
+        JLabel weightLabel       = new JLabel("xxx kg");
+        JLabel adherenceLabel    = new JLabel("xxx ??");
+        JLabel maniabilityLabel  = new JLabel("xxx ??");
+        JLabel resistanceLabel   = new JLabel("xxx ??");
         carStatsPanel.add(new JLabel("acceleration :"));
         carStatsPanel.add(accelerationLabel);
         carStatsPanel.add(new JLabel("weight :"));
@@ -63,7 +66,7 @@ public class Controller extends JFrame {
         GridLayout builderRaceLayout = new GridLayout(1, 2);
         builderRaceLayout.setHgap(50);
         builderAndRacePanel.setLayout(builderRaceLayout);
-        // Builder panel (carPart images + selection interface)
+        // -- Builder panel (carPart images + selection interface)
         JPanel builderPanel = new JPanel();
         builderPanel.setOpaque(false);
         builderPanel.setLayout(new GridLayout(2, 1));
@@ -73,7 +76,7 @@ public class Controller extends JFrame {
         selectionPanel.setOpaque(false);
         selectionPanel.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        // Selection labels
+        // -- Selection labels
         JLabel categoryLabel = new JLabel(garage.getInventory().get(currentCategory).getProductLabel());
         categoryLabel.setHorizontalAlignment(SwingConstants.CENTER);
         JLabel productLabel = new JLabel(garage.getInventory().get(currentCategory).getProducts().get(currentProduct).getName());
@@ -156,12 +159,26 @@ public class Controller extends JFrame {
         JPanel racePanel = new JPanel();
         racePanel.setOpaque(false);
         racePanel.setLayout(new GridLayout(3, 2));
+        JButton quitButton = new JButton("Quit");
+        quitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+        JButton startButton = new JButton("Start");
+        startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                startRace();
+            }
+        });
         racePanel.add(new JLabel("Racers :"));
         racePanel.add(new JLabel("5"));
         racePanel.add(new JLabel("Total distance :"));
         racePanel.add(new JLabel("5km"));
-        racePanel.add(new JButton("Quit"));
-        racePanel.add(new JButton("Start"));
+        racePanel.add(quitButton);
+        racePanel.add(startButton);
 
         builderAndRacePanel.add(builderPanel);
         builderAndRacePanel.add(racePanel);
@@ -183,7 +200,7 @@ public class Controller extends JFrame {
         setLocationRelativeTo(null);
         //set visible
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     private void updateSelectionLabels(JLabel categoryLabel, JLabel productLabel, JPanel productPanel) {
@@ -227,6 +244,10 @@ public class Controller extends JFrame {
         garage.addToInventory(motors);
         garage.addToInventory(tires);
         garage.addToInventory(spoilers);
+    }
+
+    private void startRace() {
+
     }
 
 }
