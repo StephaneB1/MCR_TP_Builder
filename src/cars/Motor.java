@@ -15,4 +15,8 @@ public class Motor extends CarPart {
         return "Motor";
     }
 
+    @Override
+    public int getLayerIndex() {
+        return 1;
+    }
 }

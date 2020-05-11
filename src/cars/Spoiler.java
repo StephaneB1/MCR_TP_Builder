@@ -15,4 +15,8 @@ public class Spoiler extends CarPart {
         return "Spoiler";
     }
 
+    @Override
+    public int getLayerIndex() {
+        return 1;
+    }
 }

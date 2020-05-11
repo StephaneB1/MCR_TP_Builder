@@ -15,4 +15,8 @@ public class Tires extends CarPart {
         return "Tires";
     }
 
+    @Override
+    public int getLayerIndex() {
+        return 1;
+    }
 }

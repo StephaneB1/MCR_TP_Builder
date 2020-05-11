@@ -15,4 +15,8 @@ public class Body extends CarPart {
         return "Body";
     }
 
+    @Override
+    public int getLayerIndex() {
+        return 0;
+    }
 }

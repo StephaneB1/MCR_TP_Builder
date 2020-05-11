@@ -5,9 +5,11 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public abstract class CarPart implements Stats {
+public abstract class CarPart implements Stats, Displayable {
 
     private String name;
+
+    // Graphic display
     private String imagePath;
     private Image image;
     private Point relCoord;
@@ -65,18 +67,21 @@ public abstract class CarPart implements Stats {
         return 0;
     }
 
-    public Image getImage() {
-        return image;
-    }
-
     public String getName() {
         return name;
     }
 
+    @Override
+    public Image getImage() {
+        return image;
+    }
+
+    @Override
     public int getXCoord() {
         return relCoord.x;
     }
 
+    @Override
     public int getYCoord() {
         return relCoord.y;
     }
