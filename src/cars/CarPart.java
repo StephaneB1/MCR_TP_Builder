@@ -85,4 +85,14 @@ public abstract class CarPart implements Stats, Displayable {
     public int getYCoord() {
         return relCoord.y;
     }
+
+    public static int compareThem(CarPart a, CarPart b) {
+        if(a.getLayerIndex() == b.getLayerIndex()) {
+            return 0;
+        } else if (a.getLayerIndex() < b.getLayerIndex()) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
 }

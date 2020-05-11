@@ -3,6 +3,9 @@ package cars;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Car extends JPanel implements Stats{
 
@@ -34,16 +37,24 @@ public class Car extends JPanel implements Stats{
 
         this.setSize(450, 200);
     }
-
-    /**
-     * TEMP : Should be done by the builder or another design less ugly than switch
-     */
+    
     public void installCarPart(CarPart carPart) {
         if(!carParts.contains(carPart)) {
-            System.out.println("adding : " + carPart.getName());
             carParts.add(carPart);
-        } else {
-            System.out.println("already in");
+
+            // Reorder the parts by layers for the graphical display
+            Collections.sort(carParts, new Comparator<CarPart>() {
+                @Override
+                public int compare(CarPart a, CarPart b) {
+                    if(a.getLayerIndex() == b.getLayerIndex()) {
+                        return 0;
+                    } else if (a.getLayerIndex() < b.getLayerIndex()) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
+                }
+            });
         }
     }
 
@@ -105,6 +116,7 @@ public class Car extends JPanel implements Stats{
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        // display the car parts
         for(CarPart carPart : carParts)
             g.drawImage(carPart.getImage(), carPart.getXCoord(), carPart.getYCoord(), this);
     }
