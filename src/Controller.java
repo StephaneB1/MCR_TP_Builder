@@ -36,7 +36,6 @@ public class Controller extends JFrame {
         carPanel.setBackground(CAR_STATS_BG_COLOR);
         carPanel.setLayout(new GridLayout(1,2));
         // -- Player car panel
-        // TODO : build car bit by bit and update the display
         JPanel carPanelImage = playerCar;
         carPanelImage.setOpaque(false);
         carPanel.add(carPanelImage);
@@ -44,11 +43,11 @@ public class Controller extends JFrame {
         JPanel carStatsPanel = new JPanel();
         carStatsPanel.setOpaque(false);
         carStatsPanel.setLayout(new GridLayout(5, 2));
-        JLabel accelerationLabel = new JLabel("xxx m/s2");
-        JLabel weightLabel       = new JLabel("xxx kg");
-        JLabel adherenceLabel    = new JLabel("xxx ??");
-        JLabel maniabilityLabel  = new JLabel("xxx ??");
-        JLabel resistanceLabel   = new JLabel("xxx ??");
+        final JLabel accelerationLabel = new JLabel(playerCar.getAcceleration() + "m/s2");
+        final JLabel weightLabel       = new JLabel(playerCar.getWeight() + "kg");
+        final JLabel adherenceLabel    = new JLabel(playerCar.getAdherence() + "/10");
+        final JLabel maniabilityLabel  = new JLabel(playerCar.getManiability() + "/10");
+        final JLabel resistanceLabel   = new JLabel(playerCar.getResistance() + "%");
         carStatsPanel.add(new JLabel("acceleration :"));
         carStatsPanel.add(accelerationLabel);
         carStatsPanel.add(new JLabel("weight :"));
@@ -149,8 +148,17 @@ public class Controller extends JFrame {
         mountToCarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Add car part to the player's car
                 playerCar.installCarPart(garage.getInventory().get(currentCategory).getProducts().get(currentProduct));
                 carPanelImage.repaint();
+
+                // Update the stats labels
+                accelerationLabel.setText(playerCar.getAcceleration() + "m/s2");
+                weightLabel.setText(playerCar.getWeight() + "kg");
+                adherenceLabel.setText(playerCar.getAdherence() + "/10");
+                maniabilityLabel.setText(playerCar.getManiability() + "/10");
+                resistanceLabel.setText(playerCar.getResistance() + "%");
+
             }
         });
         selectionPanel.add(mountToCarButton, c);

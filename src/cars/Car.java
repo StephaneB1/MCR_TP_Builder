@@ -2,6 +2,7 @@ package cars;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Car extends JPanel implements Stats{
 
@@ -11,25 +12,25 @@ public class Car extends JPanel implements Stats{
     private Tires tires;
     private Spoiler spoiler;
 
+    private ArrayList<CarPart> carParts;
+
     // Stats
-    private double acceleration;
-    private double weight;
-    private double adherence;
-    private double maniability;
-    private double resistance;
     private Color color;
 
     public Car() {
-
+        carParts = new ArrayList<>();
     }
 
     public Car(String name, Body body, Motor motor, Tires tires, Spoiler spoiler, Color color) {
+        this();
         this.name = name;
-        this.body = body;
-        this.motor = motor;
-        this.tires = tires;
-        this.spoiler = spoiler;
         this.color = color;
+
+        // Add the car parts to the car
+        carParts.add(body);
+        carParts.add(motor);
+        carParts.add(tires);
+        carParts.add(spoiler);
 
         this.setSize(450, 200);
     }
@@ -38,45 +39,62 @@ public class Car extends JPanel implements Stats{
      * TEMP : Should be done by the builder or another design less ugly than switch
      */
     public void installCarPart(CarPart carPart) {
-        switch(carPart.getCategory()) {
-            case "Motor":
-                motor = (Motor) carPart;
-                break;
-            case "Tires":
-                tires = (Tires) carPart;
-                break;
-            case "Spoiler":
-                spoiler = (Spoiler) carPart;
-                break;
-            case "Body":
-                body = (Body) carPart;
-                break;
+        if(!carParts.contains(carPart)) {
+            System.out.println("adding : " + carPart.getName());
+            carParts.add(carPart);
+        } else {
+            System.out.println("already in");
         }
     }
 
     @Override
     public double getAcceleration() {
-        return acceleration;
+        double averageAcceleration = 0;
+
+        for(CarPart carPart : carParts)
+            averageAcceleration += carPart.getAcceleration();
+
+        return averageAcceleration;
     }
 
     @Override
     public double getWeight() {
-        return weight;
+        double averageWeight = 0;
+
+        for(CarPart carPart : carParts)
+            averageWeight += carPart.getWeight();
+
+        return averageWeight;
     }
 
     @Override
     public double getAdherence() {
-        return adherence;
+        double averageAdherence = 0;
+
+        for(CarPart carPart : carParts)
+            averageAdherence += carPart.getAdherence();
+
+        return averageAdherence;
     }
 
     @Override
     public double getManiability() {
-        return maniability;
+        double averageManiability = 0;
+
+        for(CarPart carPart : carParts)
+            averageManiability += carPart.getManiability() / carParts.size();
+
+        return averageManiability;
     }
 
     @Override
     public double getResistance() {
-        return resistance;
+        double averageResistance = 0;
+
+        for(CarPart carPart : carParts)
+            averageResistance += carPart.getResistance() / carParts.size();
+
+        return averageResistance;
     }
 
     public Color getColor(){
@@ -87,9 +105,7 @@ public class Car extends JPanel implements Stats{
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        if(body != null) g.drawImage(body.getImage(), body.getXCoord(), body.getYCoord(), this);
-        if(tires != null) g.drawImage(tires.getImage(), tires.getXCoord(), tires.getYCoord(), this);
-        if(motor != null) g.drawImage(motor.getImage(), motor.getXCoord(), motor.getYCoord(), this);
-        if(spoiler != null) g.drawImage(spoiler.getImage(), spoiler.getXCoord(), spoiler.getYCoord(), this);
+        for(CarPart carPart : carParts)
+            g.drawImage(carPart.getImage(), carPart.getXCoord(), carPart.getYCoord(), this);
     }
 }
