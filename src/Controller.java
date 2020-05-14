@@ -264,22 +264,22 @@ public class Controller extends JFrame {
 
     private void startRace() {
         Car car1 = new Car( "Car1",
-                new Body("Body", "bodyTemplate.png", 1, 1, 0.2, 1, 0.1),
-                new Motor("Motor", "motorTemplate.png",1,1,0.2,1,0.1,new Point(1,1)),
-                new Tires("Tires", "tiresTemplate.png",1,1,0.2,1,0.1, new Point(1,1)),
+                new Body("Body", "bodyTemplate.png", 1, 1, 1, 1, 1),
+                new Motor("Motor", "motorTemplate.png",1,1,0.1,0.1,0.1,new Point(1,1)),
+                new Tires("Tires", "tiresTemplate.png",1,1,0.1,0.1,0.1, new Point(1,1)),
                 new Spoiler("Spoiler", "spoilerTemplate.png",1,1,0.2,0.5,1,new Point(1,1)),
                 Color.RED);
         Car car2 = new Car( "Car2",
-                new Body("Body", "bodyTemplate.png", 1, 1, 1, 1, 11),
-                new Motor("Motor", "motorTemplate.png",1,1,1,1,1,new Point(1,1)),
-                new Tires("Tires", "tiresTemplate.png",1,1,1,1,1, new Point(1,1)),
+                new Body("Body", "bodyTemplate.png", 0.5, 1, 1, 1, 11),
+                new Motor("Motor", "motorTemplate.png",0.8,1,1,1,1,new Point(1,1)),
+                new Tires("Tires", "tiresTemplate.png",0.7,1,1,1,1, new Point(1,1)),
                 new Spoiler("Spoiler", "spoilerTemplate.png",1,1,1,1,1,new Point(1,1)),
                 Color.BLUE);
 
 
 
-        Racer racer1 = new Racer("Player1", car1, Color.RED, false);
-        Racer racer2 = new Racer("Player2", car2, Color.GREEN, false);
+        Racer racer1 = new Racer("Player1", car1, Color.RED, true);
+        Racer racer2 = new Racer("Player2", car2, Color.GREEN, true);
 
         ArrayList<Racer> racers = new ArrayList<>();
         racers.add(racer1);

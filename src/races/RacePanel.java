@@ -28,7 +28,7 @@ public class RacePanel extends JPanel {
         g.drawLine(RACE_BEGIN_X, RACE_BEGIN_Y + (RACER_SIZE / 2), RACE_WIDTH + RACE_BEGIN_X, RACE_BEGIN_Y + (RACER_SIZE / 2));
 
         for(Racer racer : racers){
-            int distanceInPixel = (int)(racer.getCurrentDistanceKilometer() * RACE_WIDTH / totalDistance);
+            int distanceInPixel = (int)(racer.getCurrentDistanceMeter() * RACE_WIDTH / totalDistance);
             g.setColor(racer.getColor());
             g.fillOval((int)(RACE_BEGIN_X + distanceInPixel), RACE_BEGIN_Y, RACER_SIZE, RACER_SIZE);
         }

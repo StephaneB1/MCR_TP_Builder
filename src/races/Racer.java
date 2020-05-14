@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class Racer {
     private Car car;
-    private double currentDistanceKm;
+    private double currentDistance; // TODO make all in meters
     private String name;
     private boolean displayLogs;
     private Color color;
@@ -18,8 +18,6 @@ public class Racer {
     private final double CRASH_CHANCE; // Depends on car's adherence and maniability
     private final double SPEED; // Racer's speed affected by Car's stats
     private final double RESISTANCE_FACTOR;
-
-    private final static double CRASH_DISTANCE_KM = 0.1; // Base distance in km that the Racer looses if it crashes
 
     public Racer(String name, Car car, Color color,  boolean displayLogs) {
         this.name = name;
@@ -52,22 +50,13 @@ public class Racer {
 
     /**
      * The total distance the Racer has ran so far.
-     * @return the distance in kilometer
-     */
-    public double getCurrentDistanceKilometer() {
-        return currentDistanceKm;
-    }
-
-    /**
-     * The total distance the Racer has ran so far.
      * @return the distance in meter
      */
     public double getCurrentDistanceMeter() {
-        return getCurrentDistanceKilometer() / 1000;
+        return currentDistance;
     }
 
     public void runOneTick(double tickValueHour) {
-        /*
         // The tick must have a positive temporal value
         if(tickValueHour < 0)
             throw new RuntimeException("Cannot run for a negative amount of time.");
@@ -78,16 +67,14 @@ public class Racer {
         // Car may crash => apply distance malus
         if(rand.nextDouble() < CRASH_CHANCE) {
             // The Racer's resistance softens the crash
-            double crashMalusDistanceKm = CRASH_DISTANCE_KM * (1 - RESISTANCE_FACTOR);
+            double crashMalusDistanceKm = runDistanceKm - (runDistanceKm * RESISTANCE_FACTOR);
             runDistanceKm -= crashMalusDistanceKm;
-            displayLog(name + " crashed: -" + crashMalusDistanceKm + "Km");
+
+            displayLog(name + " crashed: -" + crashMalusDistanceKm + "m");
         }
 
-        currentDistanceKm += runDistanceKm;
-        displayLog(name + " ran " + runDistanceKm + "Km");
-        return runDistanceKm;
-         */
-        currentDistanceKm += new Random().nextInt(1000);
+        currentDistance += runDistanceKm;
+        displayLog(name + " ran " + runDistanceKm + "m");
     }
 
     private void displayLog(String message) {

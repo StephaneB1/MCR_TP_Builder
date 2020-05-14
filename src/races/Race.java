@@ -38,10 +38,10 @@ public class Race extends JFrame {
             public void run() {
 
                 while(isRunning){
-                    System.out.println(racers.get(1).getCurrentDistanceKilometer());
+                    System.out.println(racers.get(1).getCurrentDistanceMeter());
                     // Check if there is a winner
                     for(Racer racer : racers){
-                        if(racer.getCurrentDistanceKilometer() >= totalDistance){
+                        if(racer.getCurrentDistanceMeter() >= totalDistance){
                             isRunning = false;
                             displayWinner();
                             break;
