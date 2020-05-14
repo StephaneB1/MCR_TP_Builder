@@ -9,6 +9,8 @@ import java.util.Comparator;
 
 public class Car extends JPanel implements Stats{
 
+    private static final int BASE_SPEED_KMH = 120; // Unit: km/h
+
     private String name;
     private Body body;
     private Motor motor;
@@ -58,6 +60,8 @@ public class Car extends JPanel implements Stats{
         }
     }
 
+    // TODO refactor stats getters
+
     @Override
     public double getAcceleration() {
         double averageAcceleration = 0;
@@ -65,17 +69,17 @@ public class Car extends JPanel implements Stats{
         for(CarPart carPart : carParts)
             averageAcceleration += carPart.getAcceleration();
 
-        return averageAcceleration;
+        return averageAcceleration / carParts.size();
     }
 
     @Override
     public double getWeight() {
-        double averageWeight = 0;
+        double totalWeight = 0;
 
         for(CarPart carPart : carParts)
-            averageWeight += carPart.getWeight();
+            totalWeight += carPart.getWeight();
 
-        return averageWeight;
+        return totalWeight;
     }
 
     @Override
@@ -85,7 +89,7 @@ public class Car extends JPanel implements Stats{
         for(CarPart carPart : carParts)
             averageAdherence += carPart.getAdherence();
 
-        return averageAdherence;
+        return averageAdherence / carParts.size();
     }
 
     @Override
@@ -95,7 +99,7 @@ public class Car extends JPanel implements Stats{
         for(CarPart carPart : carParts)
             averageManiability += carPart.getManiability() / carParts.size();
 
-        return averageManiability;
+        return averageManiability / carParts.size();
     }
 
     @Override
@@ -105,7 +109,7 @@ public class Car extends JPanel implements Stats{
         for(CarPart carPart : carParts)
             averageResistance += carPart.getResistance() / carParts.size();
 
-        return averageResistance;
+        return averageResistance / carParts.size();
     }
 
     public Color getColor(){
@@ -119,5 +123,9 @@ public class Car extends JPanel implements Stats{
         // display the car parts
         for(CarPart carPart : carParts)
             g.drawImage(carPart.getImage(), carPart.getXCoord(), carPart.getYCoord(), this);
+    }
+
+    public static int getBaseSpeedKmh() {
+        return BASE_SPEED_KMH;
     }
 }

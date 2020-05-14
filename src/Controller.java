@@ -233,13 +233,13 @@ public class Controller extends JFrame {
         // Products available in the garage (maybe add the point coordinate in the class)
         // - Car bodies
         GarageProduct bodies = new GarageProduct("Bodies");
-        bodies.addProduct(new Body("Body-1", "bodyTemplate.png", 2, 2, 2, 2, 2));
+        bodies.addProduct(new Body("Body-1", "bodyTemplate.png", 0, 1200, 0, 0, 50));
         // - Car motors
         GarageProduct motors = new GarageProduct("Motors");
-        motors.addProduct(new Motor("Motor-1", "motorTemplate.png", 2, 2, 2, 2, 2, new Point(80, 70)));
+        motors.addProduct(new Motor("Motor-1", "motorTemplate.png", 3, 40, 2, 2, 2, new Point(80, 70)));
         // - Car tires
         GarageProduct tires = new GarageProduct("Tires");
-        tires.addProduct(new Tires("Tires-1", "tiresTemplate.png", 2, 2, 2, 2, 2, new Point(90, 130)));
+        tires.addProduct(new Tires("Tires-1", "tiresTemplate.png", 0.1, 2, 2, 2, 2, new Point(90, 130)));
         // - Car spoilers
         GarageProduct spoilers = new GarageProduct("Spoilers");
         spoilers.addProduct(new Spoiler("Spoiler-1", "spoilerTemplate.png", 2, 2, 2, 2, 2, new Point(35, 35)));
