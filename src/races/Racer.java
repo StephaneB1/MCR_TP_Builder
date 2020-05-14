@@ -3,6 +3,7 @@ package races;
 import cars.Car;
 import utils.Utils;
 
+import java.awt.*;
 import java.util.Random;
 
 public class Racer {
@@ -10,6 +11,8 @@ public class Racer {
     private double currentDistanceKm;
     private String name;
     private boolean displayLogs;
+
+    private Color color;
 
     // Store stats to avoid unnecessary recalculations
     // Factors and chances: [0;1]
@@ -25,9 +28,26 @@ public class Racer {
         this.displayLogs = displayLogs;
 
         // Calculate stats
+        // TODO make weight affect speed
         CRASH_CHANCE = 1 - Utils.average(car.getAdherence(), car.getManiability());
         SPEED = Car.getBaseSpeedKmh() * car.getAcceleration();
         RESISTANCE_FACTOR = car.getResistance();
+    }
+
+    /**
+     * Simple color getter
+     * @return color of the Racer
+     */
+    public Color getColor() {
+        return color;
+    }
+
+    /**
+     * Simple name getter.
+     * @return the name of the Racer
+     */
+    public String getName() {
+        return name;
     }
 
     /**
@@ -44,14 +64,6 @@ public class Racer {
      */
     public double getCurrentDistanceMeter() {
         return getCurrentDistanceKilometer() / 1000;
-    }
-
-    /**
-     * Simple name getter.
-     * @return the name of the Racer
-     */
-    public String getName() {
-        return name;
     }
 
     public double runOneTick(double tickValueHour) {
