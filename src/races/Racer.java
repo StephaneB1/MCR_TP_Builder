@@ -11,7 +11,6 @@ public class Racer {
     private double currentDistanceKm;
     private String name;
     private boolean displayLogs;
-
     private Color color;
 
     // Store stats to avoid unnecessary recalculations
@@ -22,9 +21,10 @@ public class Racer {
 
     private final static double CRASH_DISTANCE_KM = 0.1; // Base distance in km that the Racer looses if it crashes
 
-    public Racer(String name, Car car, boolean displayLogs) {
+    public Racer(String name, Car car, Color color,  boolean displayLogs) {
         this.name = name;
         this.car = car;
+        this.color = color;
         this.displayLogs = displayLogs;
 
         // Calculate stats
@@ -66,7 +66,8 @@ public class Racer {
         return getCurrentDistanceKilometer() / 1000;
     }
 
-    public double runOneTick(double tickValueHour) {
+    public void runOneTick(double tickValueHour) {
+        /*
         // The tick must have a positive temporal value
         if(tickValueHour < 0)
             throw new RuntimeException("Cannot run for a negative amount of time.");
@@ -85,6 +86,8 @@ public class Racer {
         currentDistanceKm += runDistanceKm;
         displayLog(name + " ran " + runDistanceKm + "Km");
         return runDistanceKm;
+         */
+        currentDistanceKm += new Random().nextInt(1000);
     }
 
     private void displayLog(String message) {

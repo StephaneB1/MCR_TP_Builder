@@ -4,12 +4,15 @@ import carBuilder.EmtpyCar;
 import cars.*;
 import garage.Garage;
 import garage.GarageProduct;
+import races.Race;
+import races.Racer;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class Controller extends JFrame {
 
@@ -260,7 +263,32 @@ public class Controller extends JFrame {
     }
 
     private void startRace() {
+        Car car1 = new Car( "Car1",
+                new Body("Body", "bodyTemplate.png", 1, 1, 0.2, 1, 0.1),
+                new Motor("Motor", "motorTemplate.png",1,1,0.2,1,0.1,new Point(1,1)),
+                new Tires("Tires", "tiresTemplate.png",1,1,0.2,1,0.1, new Point(1,1)),
+                new Spoiler("Spoiler", "spoilerTemplate.png",1,1,0.2,0.5,1,new Point(1,1)),
+                Color.RED);
+        Car car2 = new Car( "Car2",
+                new Body("Body", "bodyTemplate.png", 1, 1, 1, 1, 11),
+                new Motor("Motor", "motorTemplate.png",1,1,1,1,1,new Point(1,1)),
+                new Tires("Tires", "tiresTemplate.png",1,1,1,1,1, new Point(1,1)),
+                new Spoiler("Spoiler", "spoilerTemplate.png",1,1,1,1,1,new Point(1,1)),
+                Color.BLUE);
 
+
+
+        Racer racer1 = new Racer("Player1", car1, Color.RED, false);
+        Racer racer2 = new Racer("Player2", car2, Color.GREEN, false);
+
+        ArrayList<Racer> racers = new ArrayList<>();
+        racers.add(racer1);
+        racers.add(racer2);
+
+        Race race = new Race(10000, racers);
+        race.setVisible(true);
+
+        race.start();
     }
 
     public static EmtpyCar createNewCar(){
