@@ -263,8 +263,8 @@ public class Controller extends JFrame {
 
     }
 
-    public static EmtpyCar createNewCar(String name, Color color){
-        return new CarBuilder(name, color);
+    public static EmtpyCar createNewCar(){
+        return new CarBuilder();
     }
 
 }

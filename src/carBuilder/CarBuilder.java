@@ -22,12 +22,16 @@ public class CarBuilder implements EmtpyCar, CarWithBody {
         spoiler = null;
     }
 
-    public void setName(String name) {
+    @Override
+    public EmtpyCar setName(String name) {
         this.name = name;
+        return this;
     }
 
-    public void setColor(Color color) {
+    @Override
+    public EmtpyCar setColor(Color color) {
         this.color = color;
+        return this;
     }
 
     @Override

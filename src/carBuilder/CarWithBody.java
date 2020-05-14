@@ -2,7 +2,7 @@ package carBuilder;
 
 import cars.*;
 
-public interface CarWithBody {
+public interface CarWithBody{
 
     CarWithBody buildMotor(Motor motor);
 
