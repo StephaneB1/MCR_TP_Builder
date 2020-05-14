@@ -115,6 +115,29 @@ public class Controller extends JFrame {
                 updateSelectionLabels(categoryLabel, productLabel, carPartPanel);
             }
         });
+        JButton mountToCarButton = new JButton("Mount to car");
+        JButton buildCarButton   = new JButton("Build car");
+        mountToCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Add car part to the player's car
+                playerCar.installCarPart(garage.getInventory().get(currentCategory).getProducts().get(currentProduct));
+                carPanelImage.repaint();
+
+                // Update the stats labels
+                accelerationLabel.setText(playerCar.getAcceleration() + "m/s2");
+                weightLabel.setText(playerCar.getWeight() + "kg");
+                adherenceLabel.setText(playerCar.getAdherence() + "/10");
+                maniabilityLabel.setText(playerCar.getManiability() + "/10");
+                resistanceLabel.setText(playerCar.getResistance() + "%");
+            }
+        });
+        buildCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                // Build car
+            }
+        });
         productLabel.setHorizontalAlignment(SwingConstants.CENTER);
         c.insets = new Insets(3,3,3,3); // padding
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -140,27 +163,12 @@ public class Controller extends JFrame {
         c.weightx = 0.2;
         selectionPanel.add(productRightButton, c);
         c.gridy = 2;
-        c.gridx = 0;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridwidth = 3;
+        c.gridx = 1;
         c.ipady = 30; // make the button bigger
-        JButton mountToCarButton = new JButton("Mount to car");
-        mountToCarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Add car part to the player's car
-                playerCar.installCarPart(garage.getInventory().get(currentCategory).getProducts().get(currentProduct));
-                carPanelImage.repaint();
-
-                // Update the stats labels
-                accelerationLabel.setText(playerCar.getAcceleration() + "m/s2");
-                weightLabel.setText(playerCar.getWeight() + "kg");
-                adherenceLabel.setText(playerCar.getAdherence() + "/10");
-                maniabilityLabel.setText(playerCar.getManiability() + "/10");
-                resistanceLabel.setText(playerCar.getResistance() + "%");
-            }
-        });
         selectionPanel.add(mountToCarButton, c);
+        c.gridy = 2;
+        c.gridx = 2;
+        selectionPanel.add(buildCarButton, c);
         builderPanel.add(carPartPanel);
         builderPanel.add(selectionPanel);
 

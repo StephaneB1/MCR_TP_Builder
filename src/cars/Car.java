@@ -2,6 +2,7 @@ package cars;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.RescaleOp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -120,9 +121,14 @@ public class Car extends JPanel implements Stats{
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        Graphics2D g2d = (Graphics2D) g;
+
         // display the car parts
-        for(CarPart carPart : carParts)
+        for(CarPart carPart : carParts) {
+            AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
+            ((Graphics2D) g).setComposite(ac);
             g.drawImage(carPart.getImage(), carPart.getXCoord(), carPart.getYCoord(), this);
+        }
     }
 
     public static int getBaseSpeedKmh() {
