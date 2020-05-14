@@ -24,14 +24,15 @@ public abstract class CarPart implements Stats, Displayable {
     public CarPart(String name, String imagePath, double acceleration,
                    double weight, double adherence, double maniability,
                    double resistance, Point relCoord) {
-        this.name = name;
-        this.imagePath = imagePath;
+
+        this.name         = name;
+        this.imagePath    = imagePath;
         this.acceleration = acceleration;
-        this.weight = weight;
-        this.adherence = adherence;
-        this.maniability = maniability;
-        this.resistance = resistance;
-        this.relCoord = relCoord;
+        this.weight       = weight;
+        this.adherence    = adherence;
+        this.maniability  = maniability;
+        this.resistance   = resistance;
+        this.relCoord     = relCoord;
 
         try {
             image = ImageIO.read(new File(imagePath));
@@ -44,27 +45,27 @@ public abstract class CarPart implements Stats, Displayable {
 
     @Override
     public double getAcceleration() {
-        return 0;
+        return acceleration;
     }
 
     @Override
     public double getWeight() {
-        return 0;
+        return weight;
     }
 
     @Override
     public double getAdherence() {
-        return 0;
+        return adherence;
     }
 
     @Override
     public double getManiability() {
-        return 0;
+        return maniability;
     }
 
     @Override
     public double getResistance() {
-        return 0;
+        return resistance;
     }
 
     public String getName() {
