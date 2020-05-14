@@ -48,7 +48,7 @@ public class CarBuilder implements EmtpyCar, CarWithBody {
 
     @Override
     public Car getCar() {
-        if(motor != null && motor != null &&  tire != null) {
+        if(motor != null && spoiler != null &&  tire != null) {
             return new Car(name, body, motor, tire, spoiler, color);
         }else{
             throw new IllegalArgumentException("Missing some part");
