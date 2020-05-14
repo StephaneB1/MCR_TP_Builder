@@ -1,4 +1,6 @@
 
+import carBuilder.CarBuilder;
+import carBuilder.EmtpyCar;
 import cars.*;
 import garage.Garage;
 import garage.GarageProduct;
@@ -251,6 +253,10 @@ public class Controller extends JFrame {
 
     private void startRace() {
 
+    }
+
+    public static EmtpyCar createNewCar(String name, Color color){
+        return new CarBuilder(name, color);
     }
 
 }
