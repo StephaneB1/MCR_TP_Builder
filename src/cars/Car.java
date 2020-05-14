@@ -37,7 +37,7 @@ public class Car extends JPanel implements Stats{
 
         this.setSize(450, 200);
     }
-    
+
     public void installCarPart(CarPart carPart) {
         if(!carParts.contains(carPart)) {
             carParts.add(carPart);

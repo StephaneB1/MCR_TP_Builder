@@ -3,13 +3,11 @@ import cars.*;
 import garage.Garage;
 import garage.GarageProduct;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 public class Controller extends JFrame {
 
@@ -158,7 +156,6 @@ public class Controller extends JFrame {
                 adherenceLabel.setText(playerCar.getAdherence() + "/10");
                 maniabilityLabel.setText(playerCar.getManiability() + "/10");
                 resistanceLabel.setText(playerCar.getResistance() + "%");
-
             }
         });
         selectionPanel.add(mountToCarButton, c);
