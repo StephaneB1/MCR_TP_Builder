@@ -13,13 +13,21 @@ public class CarBuilder implements EmtpyCar, CarWithBody {
     private String name;
     private Color color;
 
-    public CarBuilder(String name, Color color) {
-        this.name = name;
-        this.color = color;
+    public CarBuilder() {
+        name = null;
+        color = null;
         motor = null;
         body = null;
         tire = null;
         spoiler = null;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     @Override
@@ -48,7 +56,7 @@ public class CarBuilder implements EmtpyCar, CarWithBody {
 
     @Override
     public Car getCar() {
-        if(motor != null && spoiler != null &&  tire != null) {
+        if(motor != null && spoiler != null &&  tire != null && name != null && color != null) {
             return new Car(name, body, motor, tire, spoiler, color);
         }else{
             throw new IllegalArgumentException("Missing some part");
