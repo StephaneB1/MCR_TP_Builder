@@ -14,6 +14,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import static java.lang.System.exit;
+
 public class Controller extends JFrame {
 
     private final int SCREEN_WIDTH  = 1200;
@@ -183,7 +185,7 @@ public class Controller extends JFrame {
         quitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
+                exit(0);
             }
         });
         JButton startButton = new JButton("Start");
@@ -220,7 +222,7 @@ public class Controller extends JFrame {
         setLocationRelativeTo(null);
         //set visible
         setVisible(true);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     private void updateSelectionLabels(JLabel categoryLabel, JLabel productLabel, JPanel productPanel) {
@@ -286,7 +288,6 @@ public class Controller extends JFrame {
         racers.add(racer2);
 
         Race race = new Race(10000, racers);
-        race.setVisible(true);
 
         race.start();
     }
