@@ -280,6 +280,7 @@ public class Controller extends JFrame {
 
 
 
+        // /!\ RACERS[0] IS ALWAYS THE PLAYER, NOT A BOT /!\
         Racer racer1 = new Racer("Player1", car1, Color.RED, true);
         Racer racer2 = new Racer("Player2", car2, Color.GREEN, true);
 

@@ -8,16 +8,32 @@ public class RacePanel extends JPanel {
 
     private ArrayList<Racer> racers;
     private int totalDistance;
-    private final int RACE_WIDTH = 600;
-    private final int RACE_BEGIN_X = 50;
-    private final int RACE_BEGIN_Y = 50;
+    private int raceWidth;
+    private int raceBeginX;
+    private int raceBeginY;
     private final int RACER_SIZE = 28;
 
+    private JLabel lblDistanceTraveled;
+    private JLabel lblYou;
+
     public RacePanel(int width, int height, ArrayList<Racer> racers, int totalDistance) {
+        this.setSize(width, height);
+
+        // Race width (black line) is the 70% of the windows (15% margin left, 15% margin right)
+        this.raceWidth = width - (2 * (width * 15 / 100));
+        this.raceBeginX = width * 15 / 100;
+
         this.racers = racers;
         this.totalDistance = totalDistance;
 
-        this.setSize(width, height);
+
+        this.raceBeginY = height * 40 / 100;
+        this.lblDistanceTraveled = new JLabel(racers.get(0).getCurrentDistanceMeter() + " / " + totalDistance + " meters traveled", SwingConstants.CENTER);
+        this.lblDistanceTraveled.setFont(new Font("Arial", Font.BOLD, 18));
+
+        this.lblYou = new JLabel("You");
+        this.add(lblDistanceTraveled);
+        this.add(lblYou);
     }
 
     @Override
@@ -26,12 +42,22 @@ public class RacePanel extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setStroke(new BasicStroke(4.0F));
         g2d.setColor(Color.BLACK);
-        g2d.drawLine(RACE_BEGIN_X, RACE_BEGIN_Y + (RACER_SIZE / 2), RACE_WIDTH + RACE_BEGIN_X, RACE_BEGIN_Y + (RACER_SIZE / 2));
+        g2d.drawLine(raceBeginX, raceBeginY + (RACER_SIZE / 2), raceWidth + raceBeginX, raceBeginY + (RACER_SIZE / 2));
 
         for(Racer racer : racers){
-            int distanceInPixel = (int)(racer.getCurrentDistanceMeter() * RACE_WIDTH / totalDistance);
+            int distanceInPixel = (int)(racer.getCurrentDistanceMeter() * raceWidth / totalDistance);
+            int racerPosX = (raceBeginX - RACER_SIZE / 2) + distanceInPixel;
+            int racerPosY = raceBeginY;
+
+            // Draw the "you" to display which racer is the current player racer
+            if(racer.equals(racers.get(0))){
+               lblYou.setBounds(racerPosX, racerPosY + RACER_SIZE, lblYou.getPreferredSize().width, lblYou.getPreferredSize().height);
+            }
+
             g2d.setColor(racer.getColor());
-            g2d.fillOval((int)(RACE_BEGIN_X + distanceInPixel), RACE_BEGIN_Y, RACER_SIZE, RACER_SIZE);
+            g2d.fillOval(racerPosX, racerPosY, RACER_SIZE, RACER_SIZE);
         }
+
+        this.lblDistanceTraveled.setText((int)racers.get(0).getCurrentDistanceMeter() + " / " + totalDistance + " meters traveled");
     }
 }

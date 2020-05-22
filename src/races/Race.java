@@ -11,7 +11,7 @@ import java.util.Timer;
 
 public class Race extends JFrame implements WindowListener {
 
-    private final int WIDTH =1200;
+    private final int WIDTH = 1200;
     private final int HEIGHT = 600;
     private RacePanel racePanel;
 
@@ -28,9 +28,18 @@ public class Race extends JFrame implements WindowListener {
         this.setTitle("Race");
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        this.setResizable(false);
         this.setLayout(null);
-        this.racePanel = new RacePanel(1000, 200, racers, totalDistance);
+        // Race panel has same width as the JFrame and 1/4 of his height
+        this.racePanel = new RacePanel(WIDTH, HEIGHT / 4, racers, totalDistance);
+        // PanelBottom for player stats in the current race has the rest of the windows
+        JPanel panelBottom = new JPanel();
+        panelBottom.setSize(1200, 3 * HEIGHT / 4);
+        panelBottom.setBackground(Color.red);
+        panelBottom.setLocation(0, HEIGHT / 4);
+
         this.add(racePanel);
+        this.add(panelBottom);
         this.setVisible(true);
 
         // Don't forget to stop the race, otherwise it will continue to calculate racers positions
