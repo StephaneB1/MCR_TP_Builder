@@ -52,13 +52,12 @@ public class Controller extends JFrame {
          * - Car components      | - Race information  *
          *                       |                     *
          *---------------------------------------------*/
-        setBackground(Color.GREEN);
 
         JPanel mainPanel = new JPanel();
         mainPanel.setOpaque(false);
         GridLayout mainLayout = new GridLayout(2, 2);
-        mainLayout.setHgap(20);
-        mainLayout.setVgap(20);
+        mainLayout.setHgap(10);
+        mainLayout.setVgap(10);
         mainPanel.setLayout(mainLayout);
 
         // BLUEPRINTS
@@ -66,17 +65,19 @@ public class Controller extends JFrame {
         playerCar.setOpaque(false);
         // STATS
         JPanel carStatsPanel = loadCarStatsPanel();
-        carStatsPanel.setBackground(Color.WHITE);
         // BUILDER
         JPanel builderPanel = loadBuilderPanel();
         builderPanel.setBackground(Color.WHITE);
         // RACE
         JPanel racePanel = loadRacePanel();
-        racePanel.setBackground(Color.WHITE);
 
         // Add panels with padding
-        Border padding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+        Border padding = BorderFactory.createEmptyBorder(20, 20, 20, 20);
+        Border padding_small = BorderFactory.createEmptyBorder(5, 5, 5, 5);
         mainPanel.setBorder(padding);
+        carStatsPanel.setBorder(padding_small);
+        builderPanel.setBorder(padding_small);
+        racePanel.setBorder(padding_small);
         mainPanel.add(playerCar);
         mainPanel.add(carStatsPanel);
         mainPanel.add(builderPanel);
@@ -93,20 +94,6 @@ public class Controller extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    private void updateSelectionLabels(JLabel categoryLabel, JLabel productLabel, JPanel productPanel) {
-        GarageProduct category = garage.getInventory().get(currentCategory);
-        CarPart product        = category.getProducts().get(currentProduct);
-
-        // Selection labels
-        categoryLabel.setText(category.getProductLabel());
-        productLabel.setText(product.getName());
-
-        // Product display
-        JLabel picLabel = new JLabel(new ImageIcon(product.getImage()));
-        productPanel.removeAll();
-        productPanel.add(picLabel);
-        productPanel.repaint();
-    }
 
     private void setupGarage() {
         garage = new Garage();
@@ -165,12 +152,27 @@ public class Controller extends JFrame {
         return new CarBuilder();
     }
 
+    private void updateSelectionLabels(JLabel categoryLabel, JLabel productLabel, JPanel productPanel) {
+        GarageProduct category = garage.getInventory().get(currentCategory);
+        CarPart product        = category.getProducts().get(currentProduct);
+
+        // Selection labels
+        categoryLabel.setText(category.getProductLabel());
+        productLabel.setText(product.getName());
+
+        // Product display
+        JLabel picLabel = new JLabel(new ImageIcon(product.getImage()));
+        productPanel.removeAll();
+        productPanel.add(picLabel);
+        productPanel.repaint();
+    }
+
     /*----------------------------------------------------------------*
      *                      JAVA SWING PANELS                         *
      *----------------------------------------------------------------*/
     private JPanel loadCarStatsPanel() {
         JPanel carStatsPanel = new JPanel();
-        carStatsPanel.setOpaque(true);
+        carStatsPanel.setOpaque(false);
         carStatsPanel.setLayout(new GridLayout(5, 2));
         accelerationLabel.setText(playerCar.getAcceleration() + "m/s2");
         weightLabel.setText(playerCar.getWeight() + "kg");
@@ -302,7 +304,7 @@ public class Controller extends JFrame {
 
     private JPanel loadRacePanel() {
         JPanel racePanel = new JPanel();
-        racePanel.setOpaque(true);
+        racePanel.setOpaque(false);
         racePanel.setLayout(new GridLayout(3, 2));
         JButton quitButton = new JButton("Quit");
         quitButton.addActionListener(new ActionListener() {
