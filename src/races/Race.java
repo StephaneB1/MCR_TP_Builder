@@ -20,6 +20,7 @@ public class Race extends JFrame implements WindowListener {
     private ArrayList<Racer> racers;
     private Boolean isRunning = false;
     private Timer timer = new Timer();
+    private Racer racerWinner;
 
     public Race(int totalDistance, ArrayList<Racer> racers){
         this.totalDistance = totalDistance;
@@ -56,12 +57,13 @@ public class Race extends JFrame implements WindowListener {
     }
 
     public void start(){
+
         isRunning = true;
 
         // Set up the repeated task that will update the subject states (seconds)
         TimerTask repeatedTask = new TimerTask() {
             public void run() {
-                System.out.println("dede");
+
                 if(isRunning){
 
                     // Run a tick
@@ -72,8 +74,7 @@ public class Race extends JFrame implements WindowListener {
                     // Check if there is a winner
                     for(Racer racer : racers){
                         if(racer.getCurrentDistanceMeter() >= totalDistance){
-                            System.out.println("WINNER : " + racer.getCurrentDistanceMeter());
-                            displayWinner(racer);
+                            racerWinner = racer;
                             isRunning = false;
                             break;
                         }
@@ -83,8 +84,9 @@ public class Race extends JFrame implements WindowListener {
                     raceDetailsPanel.updateLeaderBoard();
 
                 }
-                // Race finish -> stop the current timertask
+                // Race finish -> stop the current timertask and display winner
                 else{
+                    displayWinner(racerWinner);
                     this.cancel();
                 }
            }

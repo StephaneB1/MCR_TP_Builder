@@ -28,7 +28,7 @@ public class RaceDetailsPanel extends JPanel {
         //leftPanel.setBackground(Color.RED);
         JLabel lblYourCar = new JLabel("Your car");
         lblYourCar.setVisible(true);
-        lblYourCar.setFont(new Font("Arial", Font.BOLD, 18));
+        lblYourCar.setFont(new Font("Arial", Font.BOLD, 20));
         lblYourCar.setBounds(260,20,lblYourCar.getPreferredSize().width,lblYourCar.getPreferredSize().height);
         leftPanel.add(lblYourCar);
 
@@ -40,12 +40,17 @@ public class RaceDetailsPanel extends JPanel {
         rightPanel.setLayout(null);
         //rightPanel.setBackground(Color.BLUE);
         JLabel lblLeaderBoard = new JLabel("Leaderboard");
-        lblLeaderBoard.setFont(new Font("Arial", Font.BOLD, 18));
+        lblLeaderBoard.setFont(new Font("Arial", Font.BOLD, 20));
         lblLeaderBoard.setBounds(260,20,lblLeaderBoard.getPreferredSize().width,lblLeaderBoard.getPreferredSize().height);
         rightPanel.add(lblLeaderBoard);
-        for(int i = 0; i < racers.size(); ++i){
+        int initialxPos = 150;
+        int initialYPos = 80;
+        int yIncrement = 0;
+        for(int i = 0; i < racers.size(); ++i, yIncrement += 30){
             learerboardLabels.add(new JLabel((i+1) + ". " + racers.get(i).getName() + " - " + (int)(racers.get(i).getCurrentDistanceMeter() * 100 / totalDistance) + "%"));
             learerboardLabels.get(i).setFont(new Font("Arial", Font.BOLD, 18));
+            // Add +40 to be able to display all the label text when we pass from ...99% to ...100%
+            learerboardLabels.get(i).setBounds(initialxPos ,initialYPos + yIncrement,learerboardLabels.get(i).getPreferredSize().width + 40,learerboardLabels.get(i).getPreferredSize().height);
             rightPanel.add(learerboardLabels.get(i));
         }
 
@@ -56,11 +61,9 @@ public class RaceDetailsPanel extends JPanel {
 
     public void updateLeaderBoard() {
         racers.sort(Collections.reverseOrder());
-        int initialxPos = 150;
-        int initialYPos = 80;
-        int yIncrement = 0;
-        for(int i = 0; i < racers.size(); ++i, yIncrement += 30){
-            learerboardLabels.get(i).setBounds(initialxPos ,initialYPos + yIncrement,learerboardLabels.get(i).getPreferredSize().width,learerboardLabels.get(i).getPreferredSize().height);
+
+        for(int i = 0; i < racers.size(); ++i){
+            learerboardLabels.get(i).setForeground(racers.get(i).getColor());
             learerboardLabels.get(i).setText((i+1) + ". " + racers.get(i).getName() + " - " + (int)(racers.get(i).getCurrentDistanceMeter() * 100 / totalDistance) + "%");
             System.out.println((i+1) + ". " + racers.get(i).getName() + " - " + racers.get(i).getCurrentDistanceMeter());
         }
