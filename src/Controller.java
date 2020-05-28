@@ -102,6 +102,7 @@ public class Controller extends JFrame {
         // - Car bodies
         GarageProduct bodies = new GarageProduct("Bodies");
         bodies.addProduct(new Body("Body-1", "bodyTemplate.png", 0, 1200, 0, 0, 50));
+        bodies.addProduct(new Body("Body-2", "Body_1.png", 0, 1200, 0, 0, 50));
         // - Car motors
         GarageProduct motors = new GarageProduct("Motors");
         motors.addProduct(new Motor("Motor-1", "motorTemplate.png", 3, 40, 2, 2, 2, new Point(80, 70)));
@@ -120,17 +121,18 @@ public class Controller extends JFrame {
     }
 
     private void startRace() {
+
         Car car1 = new Car( "Car1",
                 new Body("Body", "bodyTemplate.png", 1, 1, 1, 1, 1),
-                new Motor("Motor", "motorTemplate.png",1,1,0.1,0.1,0.1,new Point(1,1)),
-                new Tires("Tires", "tiresTemplate.png",1,1,0.1,0.1,0.1, new Point(1,1)),
-                new Spoiler("Spoiler", "spoilerTemplate.png",1,1,0.2,0.5,1,new Point(1,1)),
+                new Motor("Motor", "motorTemplate.png",1,1,0.1,0.1,0.1, new Point(80, 70)),
+                new Tires("Tires", "tiresTemplate.png",1,1,0.1,0.1,0.1, new Point(90, 130)),
+                new Spoiler("Spoiler", "spoilerTemplate.png",1,1,0.2,0.5,1, new Point(35, 35)),
                 Color.RED);
         Car car2 = new Car( "Car2",
                 new Body("Body", "bodyTemplate.png", 0.5, 1, 1, 1, 11),
-                new Motor("Motor", "motorTemplate.png",0.8,1,1,1,1,new Point(1,1)),
-                new Tires("Tires", "tiresTemplate.png",0.7,1,1,1,1, new Point(1,1)),
-                new Spoiler("Spoiler", "spoilerTemplate.png",1,1,1,1,1,new Point(1,1)),
+                new Motor("Motor", "motorTemplate.png",0.8,1,1,1,1, new Point(80, 70)),
+                new Tires("Tires", "tiresTemplate.png",0.7,1,1,1,1, new Point(90, 130)),
+                new Spoiler("Spoiler", "spoilerTemplate.png",1,1,1,1,1, new Point(35, 35)),
                 Color.BLUE);
 
 
@@ -143,7 +145,7 @@ public class Controller extends JFrame {
         racers.add(racer1);
         racers.add(racer2);
 
-        Race race = new Race(10000, racers);
+        Race race = new Race(30000, racers);
 
         race.start();
     }

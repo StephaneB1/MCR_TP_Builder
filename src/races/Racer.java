@@ -49,6 +49,14 @@ public class Racer {
     }
 
     /**
+     * Simple Car getter
+     * @return Car the car of the Racer
+     */
+    public Car getCar() {
+        return car;
+    }
+
+    /**
      * The total distance the Racer has ran so far.
      * @return the distance in meter
      */

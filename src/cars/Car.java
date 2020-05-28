@@ -17,6 +17,7 @@ public class Car extends JPanel implements Stats{
     private Motor motor;
     private Tires tires;
     private Spoiler spoiler;
+    private float alphaTransparency = 0.5f; // Transparency is set default to 0.5, use the setter to modify it
 
     private ArrayList<CarPart> carParts;
 
@@ -117,6 +118,10 @@ public class Car extends JPanel implements Stats{
         return color;
     }
 
+    public void setAlphaTransparency(float alphaTransparency) {
+        this.alphaTransparency = alphaTransparency;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -125,7 +130,7 @@ public class Car extends JPanel implements Stats{
 
         // display the car parts
         for(CarPart carPart : carParts) {
-            AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
+            AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaTransparency);
             ((Graphics2D) g).setComposite(ac);
             g.drawImage(carPart.getImage(), carPart.getXCoord(), carPart.getYCoord(), this);
         }

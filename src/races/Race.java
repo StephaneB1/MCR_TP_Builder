@@ -33,13 +33,13 @@ public class Race extends JFrame implements WindowListener {
         // Race panel has same width as the JFrame and 1/4 of his height
         this.racePanel = new RacePanel(WIDTH, HEIGHT / 4, racers, totalDistance);
         // PanelBottom for player stats in the current race has the rest of the windows
-        JPanel panelBottom = new JPanel();
-        panelBottom.setSize(1200, 3 * HEIGHT / 4);
-        panelBottom.setBackground(Color.red);
-        panelBottom.setLocation(0, HEIGHT / 4);
+        JPanel raceDetailsPanel = new RaceDetailsPanel(this.racers.get(0).getCar());
+        raceDetailsPanel.setSize(1200, 3 * HEIGHT / 4);
+        raceDetailsPanel.setBackground(Color.red);
+        raceDetailsPanel.setLocation(0, HEIGHT / 4);
 
         this.add(racePanel);
-        this.add(panelBottom);
+        this.add(raceDetailsPanel);
         this.setVisible(true);
 
         // Don't forget to stop the race, otherwise it will continue to calculate racers positions
@@ -61,7 +61,7 @@ public class Race extends JFrame implements WindowListener {
         TimerTask repeatedTask = new TimerTask() {
             public void run() {
 
-                while(isRunning){
+                if(isRunning){
 
                     racePanel.repaint();
 
@@ -79,18 +79,12 @@ public class Race extends JFrame implements WindowListener {
                         }
                     }
 
-
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
                 }
            }
         };
 
         long delay  = 0;
-        long period = 10;
+        long period = 50;
         timer.scheduleAtFixedRate(repeatedTask, delay, period);
 
     }
