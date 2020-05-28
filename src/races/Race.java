@@ -86,7 +86,10 @@ public class Race extends JFrame implements WindowListener {
                 }
                 // Race finish -> stop the current timertask and display winner
                 else{
-                    displayWinner(racerWinner);
+                    // check we have winner, because we can stop the race when we quit the frame (top left cross icon)
+                    if(racerWinner != null){
+                        displayWinner(racerWinner);
+                    }
                     this.cancel();
                 }
            }

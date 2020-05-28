@@ -34,6 +34,7 @@ public class RacePanel extends JPanel {
         this.lblDistanceTraveled.setFont(new Font("Arial", Font.BOLD, 18));
 
         this.lblYou = new JLabel("You");
+        this.lblYou.setForeground(playerRacer.getColor());
         this.add(lblDistanceTraveled);
         this.add(lblYou);
     }

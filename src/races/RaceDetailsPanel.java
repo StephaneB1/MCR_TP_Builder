@@ -1,7 +1,5 @@
 package races;
 
-import cars.Car;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
