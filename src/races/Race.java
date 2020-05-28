@@ -14,6 +14,7 @@ public class Race extends JFrame implements WindowListener {
     private final int WIDTH = 1200;
     private final int HEIGHT = 600;
     private RacePanel racePanel;
+    private RaceDetailsPanel raceDetailsPanel;
 
     private int totalDistance;
     private ArrayList<Racer> racers;
@@ -33,7 +34,7 @@ public class Race extends JFrame implements WindowListener {
         // Race panel has same width as the JFrame and 1/4 of his height
         this.racePanel = new RacePanel(WIDTH, HEIGHT / 4, racers, totalDistance);
         // PanelBottom for player stats in the current race has the rest of the windows
-        JPanel raceDetailsPanel = new RaceDetailsPanel(this.racers.get(0).getCar());
+        this.raceDetailsPanel = new RaceDetailsPanel(this.racers, totalDistance);
         raceDetailsPanel.setSize(1200, 3 * HEIGHT / 4);
         raceDetailsPanel.setBackground(Color.red);
         raceDetailsPanel.setLocation(0, HEIGHT / 4);
@@ -60,25 +61,31 @@ public class Race extends JFrame implements WindowListener {
         // Set up the repeated task that will update the subject states (seconds)
         TimerTask repeatedTask = new TimerTask() {
             public void run() {
-
+                System.out.println("dede");
                 if(isRunning){
-
-                    racePanel.repaint();
 
                     // Run a tick
                     for(Racer racer : racers){
-                        racer.runOneTick(2);
+                        racer.runOneTick(2.0);
                     }
 
                     // Check if there is a winner
                     for(Racer racer : racers){
                         if(racer.getCurrentDistanceMeter() >= totalDistance){
-                            isRunning = false;
+                            System.out.println("WINNER : " + racer.getCurrentDistanceMeter());
                             displayWinner(racer);
+                            isRunning = false;
                             break;
                         }
                     }
 
+                    racePanel.repaint();
+                    raceDetailsPanel.updateLeaderBoard();
+
+                }
+                // Race finish -> stop the current timertask
+                else{
+                    this.cancel();
                 }
            }
         };

@@ -5,7 +5,7 @@ import cars.Car;
 import java.awt.*;
 import java.util.Random;
 
-public class Racer {
+public class Racer implements Comparable<Racer>{
     private Car car;
     private double currentDistance; // TODO make all in meters
     private String name;
@@ -90,5 +90,11 @@ public class Racer {
     private void displayLog(String message) {
         if(displayLogs)
             System.out.println(message);
+    }
+
+    @Override
+    public int compareTo(Racer racer) {
+        // Refctor to use only Double value ?
+        return (int) (currentDistance - racer.getCurrentDistanceMeter());
     }
 }

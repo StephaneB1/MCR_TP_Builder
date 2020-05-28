@@ -132,18 +132,34 @@ public class Controller extends JFrame {
                 new Tires("Tires", "tiresTemplate.png", new Stats().randomize(), new Point(90, 130)),
                 new Spoiler("Spoiler", "spoilerTemplate.png", new Stats().randomize(), new Point(35, 35)),
                 Color.BLUE);
+        Car car3 = new Car( "Car3",
+                new Body("Body", "bodyTemplate.png", new Stats().randomize()),
+                new Motor("Motor", "motorTemplate.png", new Stats().randomize(), new Point(80, 70)),
+                new Tires("Tires", "tiresTemplate.png", new Stats().randomize(), new Point(90, 130)),
+                new Spoiler("Spoiler", "spoilerTemplate.png", new Stats().randomize(), new Point(35, 35)),
+                Color.GREEN);
+        Car car4 = new Car( "Car4",
+                new Body("Body", "bodyTemplate.png", new Stats().randomize()),
+                new Motor("Motor", "motorTemplate.png", new Stats().randomize(), new Point(80, 70)),
+                new Tires("Tires", "tiresTemplate.png", new Stats().randomize(), new Point(90, 130)),
+                new Spoiler("Spoiler", "spoilerTemplate.png", new Stats().randomize(), new Point(35, 35)),
+                Color.ORANGE);
 
 
 
         // /!\ RACERS[0] IS ALWAYS THE PLAYER, NOT A BOT /!\
-        Racer racer1 = new Racer("Player1", car1, Color.RED, true);
-        Racer racer2 = new Racer("Player2", car2, Color.GREEN, true);
+        Racer racer1 = new Racer("Player1", car1, Color.RED, false);
+        Racer racer2 = new Racer("Player2", car2, Color.BLUE, false);
+        Racer racer3 = new Racer("Player3", car2, Color.GREEN, false);
+        Racer racer4 = new Racer("Player4", car2, Color.ORANGE, false);
 
         ArrayList<Racer> racers = new ArrayList<>();
         racers.add(racer1);
         racers.add(racer2);
+        racers.add(racer3);
+        racers.add(racer4);
 
-        Race race = new Race(30000, racers);
+        Race race = new Race(3000, racers);
 
         race.start();
     }

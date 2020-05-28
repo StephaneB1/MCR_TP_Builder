@@ -4,14 +4,22 @@ import cars.Car;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class RaceDetailsPanel extends JPanel {
 
-    private Car playerCar;
+    private ArrayList<Racer> racers;
+    private int totalDistance;
+    private Racer playerRacer;
+    private ArrayList<JLabel> learerboardLabels;
 
-    public RaceDetailsPanel(Car playerCar){
-        this.playerCar = playerCar;
-        this.playerCar.setAlphaTransparency(1f);
+    public RaceDetailsPanel(ArrayList<Racer> racers, int totalDistance){
+        this.racers = racers;
+        this.playerRacer = racers.get(0);
+        this.totalDistance = totalDistance;
+        this.playerRacer.getCar().setAlphaTransparency(1f);
+        this.learerboardLabels = new ArrayList<>();
 
         this.setLayout(new GridLayout(1, 2));
 
@@ -24,21 +32,45 @@ public class RaceDetailsPanel extends JPanel {
         lblYourCar.setBounds(260,20,lblYourCar.getPreferredSize().width,lblYourCar.getPreferredSize().height);
         leftPanel.add(lblYourCar);
 
-        playerCar.setLocation(70,150);
-        leftPanel.add(playerCar);
+        playerRacer.getCar().setLocation(70,150);
+        leftPanel.add(playerRacer.getCar());
 
 
         JPanel rightPanel = new JPanel();
-        rightPanel.setBackground(Color.BLUE);
-        rightPanel.add(new JLabel("RIGHT PANEL"));
+        rightPanel.setLayout(null);
+        //rightPanel.setBackground(Color.BLUE);
+        JLabel lblLeaderBoard = new JLabel("Leaderboard");
+        lblLeaderBoard.setFont(new Font("Arial", Font.BOLD, 18));
+        lblLeaderBoard.setBounds(260,20,lblLeaderBoard.getPreferredSize().width,lblLeaderBoard.getPreferredSize().height);
+        rightPanel.add(lblLeaderBoard);
+        for(int i = 0; i < racers.size(); ++i){
+            learerboardLabels.add(new JLabel((i+1) + ". " + racers.get(i).getName() + " - " + (int)(racers.get(i).getCurrentDistanceMeter() * 100 / totalDistance) + "%"));
+            learerboardLabels.get(i).setFont(new Font("Arial", Font.BOLD, 18));
+            rightPanel.add(learerboardLabels.get(i));
+        }
+
 
         this.add(leftPanel);
         this.add(rightPanel);
     }
 
+    public void updateLeaderBoard() {
+        racers.sort(Collections.reverseOrder());
+        int initialxPos = 150;
+        int initialYPos = 80;
+        int yIncrement = 0;
+        for(int i = 0; i < racers.size(); ++i, yIncrement += 30){
+            learerboardLabels.get(i).setBounds(initialxPos ,initialYPos + yIncrement,learerboardLabels.get(i).getPreferredSize().width,learerboardLabels.get(i).getPreferredSize().height);
+            learerboardLabels.get(i).setText((i+1) + ". " + racers.get(i).getName() + " - " + (int)(racers.get(i).getCurrentDistanceMeter() * 100 / totalDistance) + "%");
+            System.out.println((i+1) + ". " + racers.get(i).getName() + " - " + racers.get(i).getCurrentDistanceMeter());
+        }
+        System.out.println("");
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
     }
+
+
 }

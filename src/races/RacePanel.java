@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class RacePanel extends JPanel {
 
     private ArrayList<Racer> racers;
+    private Racer playerRacer;
     private int totalDistance;
     private int raceWidth;
     private int raceBeginX;
@@ -18,6 +19,7 @@ public class RacePanel extends JPanel {
 
     public RacePanel(int width, int height, ArrayList<Racer> racers, int totalDistance) {
         this.setSize(width, height);
+        this.playerRacer = racers.get(0);
 
         // Race width (black line) is the 70% of the windows (15% margin left, 15% margin right)
         this.raceWidth = width - (2 * (width * 15 / 100));
@@ -50,7 +52,7 @@ public class RacePanel extends JPanel {
             int racerPosY = raceBeginY;
 
             // Draw the "you" to display which racer is the current player racer
-            if(racer.equals(racers.get(0))){
+            if(racer.equals(playerRacer)){
                lblYou.setBounds(racerPosX, racerPosY + RACER_SIZE, lblYou.getPreferredSize().width, lblYou.getPreferredSize().height);
             }
 
