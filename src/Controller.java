@@ -22,9 +22,7 @@ public class Controller extends JFrame {
     private final int SCREEN_HEIGHT = 600;
 
     // Car stats
-    private final JLabel accelerationLabel = new JLabel();
-    private final JLabel weightLabel       = new JLabel();
-    private final JLabel adherenceLabel    = new JLabel();
+    private final JLabel speedLabel = new JLabel();
     private final JLabel maniabilityLabel  = new JLabel();
     private final JLabel resistanceLabel   = new JLabel();
 
@@ -101,17 +99,17 @@ public class Controller extends JFrame {
         // Products available in the garage (maybe add the point coordinate in the class)
         // - Car bodies
         GarageProduct bodies = new GarageProduct("Bodies");
-        bodies.addProduct(new Body("Body-1", "bodyTemplate.png", 0, 1200, 0, 0, 50));
-        bodies.addProduct(new Body("Body-2", "Body_1.png", 0, 1200, 0, 0, 50));
+        bodies.addProduct(new Body("Body-1", "bodyTemplate.png", new Stats().randomize()));
+        bodies.addProduct(new Body("Body-2", "Body_1.png", new Stats()));
         // - Car motors
         GarageProduct motors = new GarageProduct("Motors");
-        motors.addProduct(new Motor("Motor-1", "motorTemplate.png", 3, 40, 2, 2, 2, new Point(80, 70)));
+        motors.addProduct(new Motor("Motor-1", "motorTemplate.png", new Stats().randomize(), new Point(80, 70)));
         // - Car tires
         GarageProduct tires = new GarageProduct("Tires");
-        tires.addProduct(new Tires("Tires-1", "tiresTemplate.png", 0.1, 2, 2, 2, 2, new Point(90, 130)));
+        tires.addProduct(new Tires("Tires-1", "tiresTemplate.png", new Stats().randomize(), new Point(90, 130)));
         // - Car spoilers
         GarageProduct spoilers = new GarageProduct("Spoilers");
-        spoilers.addProduct(new Spoiler("Spoiler-1", "spoilerTemplate.png", 2, 2, 2, 2, 2, new Point(35, 35)));
+        spoilers.addProduct(new Spoiler("Spoiler-1", "spoilerTemplate.png", new Stats().randomize(), new Point(35, 35)));
 
         // Adding to the garage inventory
         garage.addToInventory(bodies);
@@ -123,16 +121,16 @@ public class Controller extends JFrame {
     private void startRace() {
 
         Car car1 = new Car( "Car1",
-                new Body("Body", "bodyTemplate.png", 1, 1, 1, 1, 1),
-                new Motor("Motor", "motorTemplate.png",1,1,0.1,0.1,0.1, new Point(80, 70)),
-                new Tires("Tires", "tiresTemplate.png",1,1,0.1,0.1,0.1, new Point(90, 130)),
-                new Spoiler("Spoiler", "spoilerTemplate.png",1,1,0.2,0.5,1, new Point(35, 35)),
+                new Body("Body", "bodyTemplate.png", new Stats().randomize()),
+                new Motor("Motor", "motorTemplate.png", new Stats().randomize(), new Point(80, 70)),
+                new Tires("Tires", "tiresTemplate.png", new Stats().randomize(), new Point(90, 130)),
+                new Spoiler("Spoiler", "spoilerTemplate.png", new Stats().randomize(), new Point(35, 35)),
                 Color.RED);
         Car car2 = new Car( "Car2",
-                new Body("Body", "bodyTemplate.png", 0.5, 1, 1, 1, 11),
-                new Motor("Motor", "motorTemplate.png",0.8,1,1,1,1, new Point(80, 70)),
-                new Tires("Tires", "tiresTemplate.png",0.7,1,1,1,1, new Point(90, 130)),
-                new Spoiler("Spoiler", "spoilerTemplate.png",1,1,1,1,1, new Point(35, 35)),
+                new Body("Body", "bodyTemplate.png", new Stats().randomize()),
+                new Motor("Motor", "motorTemplate.png", new Stats().randomize(), new Point(80, 70)),
+                new Tires("Tires", "tiresTemplate.png", new Stats().randomize(), new Point(90, 130)),
+                new Spoiler("Spoiler", "spoilerTemplate.png", new Stats().randomize(), new Point(35, 35)),
                 Color.BLUE);
 
 
@@ -176,17 +174,11 @@ public class Controller extends JFrame {
         JPanel carStatsPanel = new JPanel();
         carStatsPanel.setOpaque(false);
         carStatsPanel.setLayout(new GridLayout(5, 2));
-        accelerationLabel.setText(playerCar.getAcceleration() + "m/s2");
-        weightLabel.setText(playerCar.getWeight() + "kg");
-        adherenceLabel.setText(playerCar.getAdherence() + "/10");
-        maniabilityLabel.setText(playerCar.getManiability() + "/10");
-        resistanceLabel.setText(playerCar.getResistance() + "%");
-        carStatsPanel.add(new JLabel("acceleration :"));
-        carStatsPanel.add(accelerationLabel);
-        carStatsPanel.add(new JLabel("weight :"));
-        carStatsPanel.add(weightLabel);
-        carStatsPanel.add(new JLabel("adherence :"));
-        carStatsPanel.add(adherenceLabel);
+        speedLabel.setText(playerCar.getStats().getSpeed() + "");
+        maniabilityLabel.setText(playerCar.getStats().getManiability() + "");
+        resistanceLabel.setText(playerCar.getStats().getResistance() + "");
+        carStatsPanel.add(new JLabel("speed :"));
+        carStatsPanel.add(speedLabel);
         carStatsPanel.add(new JLabel("maniability :"));
         carStatsPanel.add(maniabilityLabel);
         carStatsPanel.add(new JLabel("resistance :"));
@@ -253,11 +245,9 @@ public class Controller extends JFrame {
                 playerCar.repaint();
 
                 // Update the stats labels
-                accelerationLabel.setText(playerCar.getAcceleration() + "m/s2");
-                weightLabel.setText(playerCar.getWeight() + "kg");
-                adherenceLabel.setText(playerCar.getAdherence() + "/10");
-                maniabilityLabel.setText(playerCar.getManiability() + "/10");
-                resistanceLabel.setText(playerCar.getResistance() + "%");
+                speedLabel.setText(playerCar.getStats().getSpeed() + "");
+                maniabilityLabel.setText(playerCar.getStats().getManiability() + "");
+                resistanceLabel.setText(playerCar.getStats().getResistance() + "");
             }
         });
         buildCarButton.addActionListener(new ActionListener() {

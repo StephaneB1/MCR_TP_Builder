@@ -1,5 +1,8 @@
 package utils;
 
+import java.util.ArrayList;
+import java.util.function.Function;
+
 public class Utils {
     /**
      * Calculates the average value of the given numbers.
@@ -22,5 +25,21 @@ public class Utils {
             sum += value;
 
         return sum;
+    }
+
+    /**
+     * Calculates the average value of a list of objects, applying a given function on each one of them
+     * @param list ArrayList of the objects to be averaged
+     * @param funcInter function to apply on every item to calculate average
+     * @param <T> type of object in the list
+     * @return average value, type double
+     */
+    public static <T> double averageFunc(ArrayList<T> list, Function<T, Double> funcInter) {
+        double average = 0;
+
+        for(T s : list)
+            average += funcInter.apply(s);
+
+        return average / list.size();
     }
 }
