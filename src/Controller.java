@@ -66,7 +66,6 @@ public class Controller extends JFrame {
         JPanel carStatsPanel = loadCarStatsPanel();
         // BUILDER
         JPanel builderPanel = loadBuilderPanel();
-        builderPanel.setBackground(Color.WHITE);
         // RACE
         JPanel racePanel = loadRacePanel();
 
@@ -111,7 +110,7 @@ public class Controller extends JFrame {
         // - Car spoilers
         GarageProduct spoilers = new GarageProduct("Spoilers");
         spoilers.addProduct(new Spoiler("Spoiler-1", "spoilerTemplate.png", new Stats().randomize(), new Point(35, 35)));
-
+        
         // Adding to the garage inventory
         garage.addToInventory(bodies);
         garage.addToInventory(motors);
@@ -302,7 +301,6 @@ public class Controller extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // Add car part to the player's car
                 CarPart newPart = garage.getInventory().get(currentCategory).getProducts().get(currentProduct);
-                System.out.println("Mounting new part : " + newPart.getName());
                 switch(currentCategory) {
                     case Garage.CATEGORY_BODY:
                         builder.buildBody((Body) newPart);

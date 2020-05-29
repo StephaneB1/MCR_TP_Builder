@@ -4,6 +4,7 @@ import carBuilder.CarBuilder;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class CarDisplayer extends JPanel {
 
@@ -36,6 +37,7 @@ public class CarDisplayer extends JPanel {
         // display the car parts of the car
         if(car != null) {
             for(CarPart carPart : car.getCarParts()) {
+                ((Graphics2D) g).setBackground(Color.BLUE);
                 g.drawImage(carPart.getImage(), carPart.getXCoord(), carPart.getYCoord(), this);
             }
         }
@@ -45,7 +47,22 @@ public class CarDisplayer extends JPanel {
                 if(carPart != null) {
                     AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
                     ((Graphics2D) g).setComposite(ac);
-                    g.drawImage(carPart.getImage(), carPart.getXCoord(), carPart.getYCoord(), this);
+                    Color c = new Color(250, 0, 0);
+                    paintCarPart(carPart.getImage(), c);
+                    g.drawImage(carPart.getImage(), carPart.getXCoord(), carPart.getYCoord(),this);
+                }
+            }
+        }
+    }
+
+    private void paintCarPart(BufferedImage loadImg, Color color) {
+        for(int i = 0; i < loadImg.getWidth(); ++i) {
+            for(int j = 0; j < loadImg.getHeight(); ++j) {
+                Color pixelColor = new Color(loadImg.getRGB(i, j));
+
+                System.out.println(pixelColor.getAlpha() + "/" + pixelColor.getRed() + "-" + pixelColor.getBlue() + "-" + pixelColor.getGreen());
+                if(pixelColor.getAlpha() != 0) {
+                    loadImg.setRGB(i, j, color.getRGB());
                 }
             }
         }
