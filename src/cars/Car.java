@@ -48,10 +48,6 @@ public class Car {
         return color;
     }
 
-    public void setAlphaTransparency(float alphaTransparency) {
-        this.alphaTransparency = alphaTransparency;
-    }
-
     // Not used but don't delete, might need it later
     public void installCarPart(CarPart carPart) {
         if(!carParts.contains(carPart)) {

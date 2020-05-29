@@ -17,6 +17,10 @@ public class CarDisplayer extends JPanel {
         this.setSize(450, 200);
     }
 
+    public CarDisplayer(Car car){
+        this(car, null);
+    }
+
     public void setCar(Car car) {
         this.car = car;
     }
