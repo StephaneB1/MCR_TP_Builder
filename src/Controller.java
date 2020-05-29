@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Random;
 
 import static java.lang.System.exit;
 
@@ -180,6 +181,7 @@ public class Controller extends JFrame {
     }
 
     private void updateStats() {
+        // TODO : refactor
         speedStatPanel.removeAll();
         maniabilityStatPanel.removeAll();
         resistanceStatPanel.removeAll();
@@ -280,14 +282,25 @@ public class Controller extends JFrame {
                 updateSelectionLabels(categoryLabel, productLabel, carPartPanel);
             }
         });
+        JButton randomCarButton = new JButton("Get random");
         JButton mountToCarButton = new JButton("Add to blueprint");
         JButton buildCarButton   = new JButton("Build car");
+        randomCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                Random random = new Random();
+                builder.buildBody((Body) getRandCarPart(random, Garage.CATEGORY_BODY))
+                       .buildMotor((Motor) getRandCarPart(random, Garage.CATEGORY_MOTORS))
+                       .buildTire((Tires) getRandCarPart(random, Garage.CATEGORY_TIRES))
+                       .buildSpoiler((Spoiler) getRandCarPart(random, Garage.CATEGORY_SPOILERS));
+
+                playerCarDisplayer.repaint();
+            }
+        });
         mountToCarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Add car part to the player's car
-                //playerCar.installCarPart(garage.getInventory().get(currentCategory).getProducts().get(currentProduct));
-                //playerCarDisplayer.repaint();
                 CarPart newPart = garage.getInventory().get(currentCategory).getProducts().get(currentProduct);
                 System.out.println("Mounting new part : " + newPart.getName());
                 switch(currentCategory) {
@@ -340,26 +353,30 @@ public class Controller extends JFrame {
         selectionPanel.add(categoryRightButton, c);
         c.gridy = 1;
         c.gridx = 0;
-        c.weightx = 0.2;
         selectionPanel.add(productLeftButton, c);
         c.gridx = 1;
-        c.weightx = 0.6;
         selectionPanel.add(productLabel, c);
         c.gridx = 2;
-        c.weightx = 0.2;
         selectionPanel.add(productRightButton, c);
         c.gridy = 2;
-        c.gridx = 1;
+        c.gridx = 0;
         c.ipady = 30; // make the button bigger
+        selectionPanel.add(randomCarButton, c);
+        c.gridx = 1;
         selectionPanel.add(mountToCarButton, c);
-        c.gridy = 2;
         c.gridx = 2;
-        updateSelectionLabels(categoryLabel, productLabel, carPartPanel);
         selectionPanel.add(buildCarButton, c);
+        updateSelectionLabels(categoryLabel, productLabel, carPartPanel);
         builderPanel.add(carPartPanel);
         builderPanel.add(selectionPanel);
 
         return builderPanel;
+    }
+
+    private CarPart getRandCarPart(Random rand, int category) {
+        return garage.getInventory().get(category).getProducts()
+                .get(rand.nextInt(garage.getInventory().get(category)
+                        .getProducts().size()));
     }
 
     private JPanel loadRacePanel() {
