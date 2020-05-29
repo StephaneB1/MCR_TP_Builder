@@ -1,5 +1,7 @@
 package races;
 
+import cars.CarDisplayer;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -16,7 +18,6 @@ public class RaceDetailsPanel extends JPanel {
         this.racers = racers;
         this.playerRacer = racers.get(0);
         this.totalDistance = totalDistance;
-        this.playerRacer.getCar().setAlphaTransparency(1f);
         this.learerboardLabels = new ArrayList<>();
 
         this.setLayout(new GridLayout(1, 2));
@@ -30,8 +31,9 @@ public class RaceDetailsPanel extends JPanel {
         lblYourCar.setBounds(260,20,lblYourCar.getPreferredSize().width,lblYourCar.getPreferredSize().height);
         leftPanel.add(lblYourCar);
 
-        //playerRacer.getCar().setLocation(70,150);
-        //leftPanel.add(playerRacer.getCar());
+        CarDisplayer carPanel = new CarDisplayer(playerRacer.getCar());
+        carPanel.setLocation(70, 150);
+        leftPanel.add(carPanel);
 
 
         JPanel rightPanel = new JPanel();
