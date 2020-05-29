@@ -190,14 +190,20 @@ public class Controller extends JFrame {
         }
         for(int i = 1; i <= 5; ++i) {
             JPanel stat = new JPanel();
-            stat.setBackground(playerCarDisplayer.getStats().getSpeed() <= i ? Color.GRAY : Color.GREEN);
+            stat.setBackground(playerCarDisplayer.getStats().getManiability() <= i ? Color.GRAY : Color.GREEN);
             maniabilityStatPanel.add(stat);
         }
         for(int i = 1; i <= 5; ++i) {
             JPanel stat = new JPanel();
-            stat.setBackground(playerCarDisplayer.getStats().getSpeed() <= i ? Color.GRAY : Color.GREEN);
+            stat.setBackground(playerCarDisplayer.getStats().getResistance() <= i ? Color.GRAY : Color.GREEN);
             resistanceStatPanel.add(stat);
         }
+        speedStatPanel.validate();
+        maniabilityStatPanel.validate();
+        resistanceStatPanel.validate();
+        speedStatPanel.repaint();
+        maniabilityStatPanel.repaint();
+        resistanceStatPanel.repaint();
     }
 
     /*----------------------------------------------------------------*
