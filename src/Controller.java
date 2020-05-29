@@ -1,7 +1,5 @@
 
 import carBuilder.CarBuilder;
-import carBuilder.CarWithBody;
-import carBuilder.EmptyCar;
 import cars.*;
 import garage.Garage;
 import garage.GarageProduct;
@@ -23,9 +21,10 @@ public class Controller extends JFrame {
     private final int SCREEN_HEIGHT = 600;
 
     // Car stats
-    private final JLabel speedLabel = new JLabel();
-    private final JLabel maniabilityLabel  = new JLabel();
-    private final JLabel resistanceLabel   = new JLabel();
+    private final GridLayout statGrid = new GridLayout(1, 5);
+    private final JPanel speedStatPanel = new JPanel(statGrid);
+    private final JPanel maniabilityStatPanel = new JPanel(statGrid);
+    private final JPanel resistanceStatPanel = new JPanel(statGrid);
 
     private Garage garage;
     private int currentCategory;
@@ -165,10 +164,6 @@ public class Controller extends JFrame {
         race.start();
     }
 
-    public static EmptyCar createNewCar(){
-        return new CarBuilder();
-    }
-
     private void updateSelectionLabels(JLabel categoryLabel, JLabel productLabel, JPanel productPanel) {
         GarageProduct category = garage.getInventory().get(currentCategory);
         CarPart product        = category.getProducts().get(currentProduct);
@@ -184,22 +179,49 @@ public class Controller extends JFrame {
         productPanel.repaint();
     }
 
+    private void updateStats() {
+        speedStatPanel.removeAll();
+        maniabilityStatPanel.removeAll();
+        resistanceStatPanel.removeAll();
+        for(int i = 1; i <= 5; ++i) {
+            JPanel stat = new JPanel();
+            stat.setBackground(playerCarDisplayer.getStats().getSpeed() <= i ? Color.GRAY : Color.GREEN);
+            speedStatPanel.add(stat);
+        }
+        for(int i = 1; i <= 5; ++i) {
+            JPanel stat = new JPanel();
+            stat.setBackground(playerCarDisplayer.getStats().getSpeed() <= i ? Color.GRAY : Color.GREEN);
+            maniabilityStatPanel.add(stat);
+        }
+        for(int i = 1; i <= 5; ++i) {
+            JPanel stat = new JPanel();
+            stat.setBackground(playerCarDisplayer.getStats().getSpeed() <= i ? Color.GRAY : Color.GREEN);
+            resistanceStatPanel.add(stat);
+        }
+    }
+
     /*----------------------------------------------------------------*
      *                      JAVA SWING PANELS                         *
      *----------------------------------------------------------------*/
     private JPanel loadCarStatsPanel() {
         JPanel carStatsPanel = new JPanel();
         carStatsPanel.setOpaque(false);
-        carStatsPanel.setLayout(new GridLayout(5, 2));
-        speedLabel.setText(playerCarDisplayer.getStats().getSpeed() + "");
-        maniabilityLabel.setText(playerCarDisplayer.getStats().getManiability() + "");
-        resistanceLabel.setText(playerCarDisplayer.getStats().getResistance() + "");
-        carStatsPanel.add(new JLabel("speed :"));
-        carStatsPanel.add(speedLabel);
-        carStatsPanel.add(new JLabel("maniability :"));
-        carStatsPanel.add(maniabilityLabel);
-        carStatsPanel.add(new JLabel("resistance :"));
-        carStatsPanel.add(resistanceLabel);
+        GridLayout statsListGrid = new GridLayout(3, 2);
+        statsListGrid.setHgap(10);
+        statsListGrid.setVgap(10);
+        carStatsPanel.setLayout(statsListGrid);
+
+        statGrid.setVgap(10);
+        statGrid.setHgap(10);
+
+        updateStats();
+
+        carStatsPanel.add(new JLabel("SPEED"));
+        carStatsPanel.add(speedStatPanel);
+        carStatsPanel.add(new JLabel("MANIABILITY"));
+        carStatsPanel.add(maniabilityStatPanel);
+        carStatsPanel.add(new JLabel("RESISTANCE"));
+        carStatsPanel.add(resistanceStatPanel);
         return carStatsPanel;
     }
 
@@ -279,10 +301,8 @@ public class Controller extends JFrame {
 
                 playerCarDisplayer.repaint();
 
-                // Update the stats labels
-                speedLabel.setText(playerCarDisplayer.getStats().getSpeed() + "");
-                maniabilityLabel.setText(playerCarDisplayer.getStats().getManiability() + "");
-                resistanceLabel.setText(playerCarDisplayer.getStats().getResistance() + "");
+                // Update the stats grids
+                updateStats();
             }
         });
         buildCarButton.addActionListener(new ActionListener() {
