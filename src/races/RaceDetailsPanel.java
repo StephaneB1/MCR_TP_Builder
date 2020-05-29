@@ -30,8 +30,8 @@ public class RaceDetailsPanel extends JPanel {
         lblYourCar.setBounds(260,20,lblYourCar.getPreferredSize().width,lblYourCar.getPreferredSize().height);
         leftPanel.add(lblYourCar);
 
-        playerRacer.getCar().setLocation(70,150);
-        leftPanel.add(playerRacer.getCar());
+        //playerRacer.getCar().setLocation(70,150);
+        //leftPanel.add(playerRacer.getCar());
 
 
         JPanel rightPanel = new JPanel();

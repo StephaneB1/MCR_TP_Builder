@@ -37,7 +37,7 @@ public class Car {
         carParts.add(tires);
         carParts.add(spoiler);
 
-        updateStats();
+        Stats.updateCarPartStats(stats, carParts);
     }
 
     public Stats getStats() {
@@ -52,6 +52,7 @@ public class Car {
         this.alphaTransparency = alphaTransparency;
     }
 
+    // Not used but don't delete, might need it later
     public void installCarPart(CarPart carPart) {
         if(!carParts.contains(carPart)) {
             carParts.add(carPart);
@@ -64,16 +65,6 @@ public class Car {
                 }
             });
         }
-    }
-
-    /**
-     * Set the Car's Stats values to all CarPart's, averaged
-     */
-    void updateStats() {
-        // Car's stats is its CarParts' averaged
-        stats.setSpeed(Utils.averageFunc(carParts, o -> o.getStats().getSpeed()));
-        stats.setManiability(Utils.averageFunc(carParts, o -> o.getStats().getManiability()));
-        stats.setResistance(Utils.averageFunc(carParts, o -> o.getStats().getResistance()));
     }
 
     public ArrayList<CarPart> getCarParts() {

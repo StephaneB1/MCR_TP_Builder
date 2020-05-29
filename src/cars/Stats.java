@@ -1,5 +1,8 @@
 package cars;
 
+import utils.Utils;
+
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Stats {
@@ -81,5 +84,12 @@ public class Stats {
     @Override
     public String toString() {
         return "S: " + speed + ", M: " + maniability + ", R: " + resistance;
+    }
+
+    public static void updateCarPartStats(Stats stats, ArrayList<CarPart> carParts) {
+        // Car's stats is its CarParts' averaged
+        stats.setSpeed(Utils.averageFunc(carParts, o -> o.getStats().getSpeed()));
+        stats.setManiability(Utils.averageFunc(carParts, o -> o.getStats().getManiability()));
+        stats.setResistance(Utils.averageFunc(carParts, o -> o.getStats().getResistance()));
     }
 }

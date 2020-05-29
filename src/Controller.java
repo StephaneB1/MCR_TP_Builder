@@ -191,9 +191,9 @@ public class Controller extends JFrame {
         JPanel carStatsPanel = new JPanel();
         carStatsPanel.setOpaque(false);
         carStatsPanel.setLayout(new GridLayout(5, 2));
-        speedLabel.setText(playerCar.getStats().getSpeed() + "");
-        maniabilityLabel.setText(playerCar.getStats().getManiability() + "");
-        resistanceLabel.setText(playerCar.getStats().getResistance() + "");
+        speedLabel.setText(playerCarDisplayer.getStats().getSpeed() + "");
+        maniabilityLabel.setText(playerCarDisplayer.getStats().getManiability() + "");
+        resistanceLabel.setText(playerCarDisplayer.getStats().getResistance() + "");
         carStatsPanel.add(new JLabel("speed :"));
         carStatsPanel.add(speedLabel);
         carStatsPanel.add(new JLabel("maniability :"));
@@ -280,9 +280,9 @@ public class Controller extends JFrame {
                 playerCarDisplayer.repaint();
 
                 // Update the stats labels
-                speedLabel.setText(playerCar.getStats().getSpeed() + "");
-                maniabilityLabel.setText(playerCar.getStats().getManiability() + "");
-                resistanceLabel.setText(playerCar.getStats().getResistance() + "");
+                speedLabel.setText(playerCarDisplayer.getStats().getSpeed() + "");
+                maniabilityLabel.setText(playerCarDisplayer.getStats().getManiability() + "");
+                resistanceLabel.setText(playerCarDisplayer.getStats().getResistance() + "");
             }
         });
         buildCarButton.addActionListener(new ActionListener() {

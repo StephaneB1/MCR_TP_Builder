@@ -15,6 +15,8 @@ public class CarBuilder implements EmptyCar, CarWithBody {
     private String name;
     private Color color;
 
+    private Stats tempStats; // to show blueprint stats even if the car is not build yet
+
     public CarBuilder() {
         name = null;
         color = null;
@@ -22,6 +24,7 @@ public class CarBuilder implements EmptyCar, CarWithBody {
         body = null;
         tire = null;
         spoiler = null;
+        tempStats = new Stats();
     }
 
     public EmptyCar getNewCar() {
@@ -43,24 +46,28 @@ public class CarBuilder implements EmptyCar, CarWithBody {
     @Override
     public CarWithBody buildMotor(Motor motor) {
         this.motor = motor;
+        updateStats();
         return this;
     }
 
     @Override
     public CarWithBody buildBody(Body body) {
         this.body = body;
+        updateStats();
         return this;
     }
 
     @Override
     public CarWithBody buildTire(Tires tires) {
         this.tire = tires;
+        updateStats();
         return this;
     }
 
     @Override
     public CarWithBody buildSpoiler(Spoiler spoiler) {
         this.spoiler = spoiler;
+        updateStats();
         return this;
     }
 
@@ -75,5 +82,13 @@ public class CarBuilder implements EmptyCar, CarWithBody {
 
     public ArrayList<CarPart> getCarParts() {
         return new ArrayList<>(Arrays.asList(body, motor, tire, spoiler));
+    }
+
+    public Stats getTempStats() {
+        return tempStats;
+    }
+
+    private void updateStats() {
+        Stats.updateCarPartStats(tempStats, new ArrayList<>(Arrays.asList(body, motor, tire, spoiler)));
     }
 }

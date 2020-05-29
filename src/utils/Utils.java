@@ -38,7 +38,8 @@ public class Utils {
         double average = 0;
 
         for(T s : list)
-            average += funcInter.apply(s);
+            if(s != null)
+                average += funcInter.apply(s);
 
         return average / list.size();
     }
