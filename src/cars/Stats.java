@@ -1,35 +1,85 @@
 package cars;
 
-public interface Stats {
+import java.util.Random;
+
+public class Stats {
+    private double speed;
+    private double maniability;
+    private double resistance;
+
+    // Range between which the attributes above must fit
+    private static final double RANGE_MIN = 1;
+    private static final double RANGE_MAX = 5;
 
     /**
-     * Acceleration factor (average) [0;1]
-     * @return acceleration factor
+     * Standard constructor. The given value will automatically be cut to fit range
+     * @param speed speed factor
+     * @param maniability maniability factor
+     * @param resistance resistance factor
      */
-    public double getAcceleration();
+    public Stats(double speed, double maniability, double resistance) {
+        this.speed = applyRange(speed);
+        this.maniability = applyRange(maniability);
+        this.resistance = applyRange(resistance);
+    }
 
     /**
-     * Numeric value of the weight, expressed in kilograms (sum)
-     * @return total weight
+     * Null constructor: all attributes set to RANGE_MIN
      */
-    public double getWeight();
+    public Stats() {
+        speed = RANGE_MIN;
+        maniability = RANGE_MIN;
+        resistance = RANGE_MIN;
+    }
+    
+    public double getSpeed() {
+        return speed;
+    }
+    
+    public double getManiability() {
+        return maniability;
+    }
+    
+    public double getResistance() {
+        return resistance;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    public void setManiability(double maniability) {
+        this.maniability = maniability;
+    }
+
+    public void setResistance(double resistance) {
+        this.resistance = resistance;
+    }
 
     /**
-     * Adherence factor (average) [0;1]
-     * @return adherence factor
+     * Sets the attributes randomly in range [RANGE_MIN;RANGE_MAX]
+     * @return reference to self
      */
-    public double getAdherence();
+    public Stats randomize() {
+        Random random = new Random();
+        speed = applyRange(random.nextDouble() * (RANGE_MAX - 1) + 1);
+        maniability = applyRange(random.nextDouble() * (RANGE_MAX - 1) + 1);
+        resistance = applyRange(random.nextDouble() * (RANGE_MAX - 1) + 1);
+
+        return this;
+    }
 
     /**
-     * Maniability factor (average) [0;1]
-     * @return maniability factor
+     * Ensures that the value is between class ranges
+     * @param value the numeric value to be checked
+     * @return the given value, cut to range [RANGE_MIN;RANGE_MAX]
      */
-    public double getManiability();
+    private double applyRange(double value) {
+        return value >= RANGE_MIN ? Math.min(value, RANGE_MAX) : RANGE_MIN;
+    }
 
-    /**
-     * Resistance factor (average) [0;1]
-     * @return resistance factor
-     */
-    public double getResistance();
-
+    @Override
+    public String toString() {
+        return "S: " + speed + ", M: " + maniability + ", R: " + resistance;
+    }
 }

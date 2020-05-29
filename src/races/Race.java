@@ -14,11 +14,13 @@ public class Race extends JFrame implements WindowListener {
     private final int WIDTH = 1200;
     private final int HEIGHT = 600;
     private RacePanel racePanel;
+    private RaceDetailsPanel raceDetailsPanel;
 
     private int totalDistance;
     private ArrayList<Racer> racers;
     private Boolean isRunning = false;
     private Timer timer = new Timer();
+    private Racer racerWinner;
 
     public Race(int totalDistance, ArrayList<Racer> racers){
         this.totalDistance = totalDistance;
@@ -33,13 +35,13 @@ public class Race extends JFrame implements WindowListener {
         // Race panel has same width as the JFrame and 1/4 of his height
         this.racePanel = new RacePanel(WIDTH, HEIGHT / 4, racers, totalDistance);
         // PanelBottom for player stats in the current race has the rest of the windows
-        JPanel panelBottom = new JPanel();
-        panelBottom.setSize(1200, 3 * HEIGHT / 4);
-        panelBottom.setBackground(Color.red);
-        panelBottom.setLocation(0, HEIGHT / 4);
+        this.raceDetailsPanel = new RaceDetailsPanel(this.racers, totalDistance);
+        raceDetailsPanel.setSize(1200, 3 * HEIGHT / 4);
+        raceDetailsPanel.setBackground(Color.red);
+        raceDetailsPanel.setLocation(0, HEIGHT / 4);
 
         this.add(racePanel);
-        this.add(panelBottom);
+        this.add(raceDetailsPanel);
         this.setVisible(true);
 
         // Don't forget to stop the race, otherwise it will continue to calculate racers positions
@@ -55,42 +57,46 @@ public class Race extends JFrame implements WindowListener {
     }
 
     public void start(){
+
         isRunning = true;
 
         // Set up the repeated task that will update the subject states (seconds)
         TimerTask repeatedTask = new TimerTask() {
             public void run() {
 
-                while(isRunning){
-
-                    racePanel.repaint();
+                if(isRunning){
 
                     // Run a tick
                     for(Racer racer : racers){
-                        racer.runOneTick(2);
+                        racer.runOneTick(2.0);
                     }
 
                     // Check if there is a winner
                     for(Racer racer : racers){
                         if(racer.getCurrentDistanceMeter() >= totalDistance){
+                            racerWinner = racer;
                             isRunning = false;
-                            displayWinner(racer);
                             break;
                         }
                     }
 
+                    racePanel.repaint();
+                    raceDetailsPanel.updateLeaderBoard();
 
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                }
+                // Race finish -> stop the current timertask and display winner
+                else{
+                    // check we have winner, because we can stop the race when we quit the frame (top left cross icon)
+                    if(racerWinner != null){
+                        displayWinner(racerWinner);
                     }
+                    this.cancel();
                 }
            }
         };
 
         long delay  = 0;
-        long period = 10;
+        long period = 50;
         timer.scheduleAtFixedRate(repeatedTask, delay, period);
 
     }

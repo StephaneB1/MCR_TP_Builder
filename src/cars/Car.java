@@ -1,18 +1,20 @@
 package cars;
 
+import utils.Utils;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.RescaleOp;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class Car implements Stats {
+public class Car {
 
     private static final int BASE_SPEED_KMH = 120; // Unit: km/h
 
     private String name;
+    private Stats stats;
+    private float alphaTransparency = 0.5f; // Transparency is set default to 0.5, use the setter to modify it
 
     private ArrayList<CarPart> carParts;
 
@@ -21,6 +23,7 @@ public class Car implements Stats {
 
     public Car() {
         carParts = new ArrayList<>();
+        stats = new Stats();
     }
 
     public Car(String name, Body body, Motor motor, Tires tires, Spoiler spoiler, Color color) {
@@ -34,6 +37,19 @@ public class Car implements Stats {
         carParts.add(tires);
         carParts.add(spoiler);
 
+        updateStats();
+    }
+
+    public Stats getStats() {
+        return stats;
+    }
+
+    public Color getColor(){
+        return color;
+    }
+
+    public void setAlphaTransparency(float alphaTransparency) {
+        this.alphaTransparency = alphaTransparency;
     }
 
     public void installCarPart(CarPart carPart) {
@@ -50,60 +66,14 @@ public class Car implements Stats {
         }
     }
 
-    // TODO refactor stats getters
-
-    @Override
-    public double getAcceleration() {
-        double averageAcceleration = 0;
-
-        for(CarPart carPart : carParts)
-            averageAcceleration += carPart.getAcceleration();
-
-        return averageAcceleration / carParts.size();
-    }
-
-    @Override
-    public double getWeight() {
-        double totalWeight = 0;
-
-        for(CarPart carPart : carParts)
-            totalWeight += carPart.getWeight();
-
-        return totalWeight;
-    }
-
-    @Override
-    public double getAdherence() {
-        double averageAdherence = 0;
-
-        for(CarPart carPart : carParts)
-            averageAdherence += carPart.getAdherence();
-
-        return averageAdherence / carParts.size();
-    }
-
-    @Override
-    public double getManiability() {
-        double averageManiability = 0;
-
-        for(CarPart carPart : carParts)
-            averageManiability += carPart.getManiability() / carParts.size();
-
-        return averageManiability / carParts.size();
-    }
-
-    @Override
-    public double getResistance() {
-        double averageResistance = 0;
-
-        for(CarPart carPart : carParts)
-            averageResistance += carPart.getResistance() / carParts.size();
-
-        return averageResistance / carParts.size();
-    }
-
-    public Color getColor(){
-        return color;
+    /**
+     * Set the Car's Stats values to all CarPart's, averaged
+     */
+    void updateStats() {
+        // Car's stats is its CarParts' averaged
+        stats.setSpeed(Utils.averageFunc(carParts, o -> o.getStats().getSpeed()));
+        stats.setManiability(Utils.averageFunc(carParts, o -> o.getStats().getManiability()));
+        stats.setResistance(Utils.averageFunc(carParts, o -> o.getStats().getResistance()));
     }
 
     public ArrayList<CarPart> getCarParts() {

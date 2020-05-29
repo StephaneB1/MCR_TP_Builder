@@ -6,8 +6,8 @@ public class Motor extends CarPart {
 
     private static String MOTOR_PATH = "resources/cars/motors/";
 
-    public Motor(String name, String image, double acceleration, double weight, double adherence, double maniability, double resistance, Point relCoord) {
-        super(name, MOTOR_PATH + image, acceleration, weight, adherence, maniability, resistance, relCoord);
+    public Motor(String name, String image, Stats stats, Point relCoord) {
+        super(name, MOTOR_PATH + image, stats, relCoord);
     }
 
     @Override
