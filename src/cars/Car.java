@@ -8,15 +8,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class Car extends JPanel implements Stats{
+public class Car implements Stats {
 
     private static final int BASE_SPEED_KMH = 120; // Unit: km/h
 
     private String name;
-    private Body body;
-    private Motor motor;
-    private Tires tires;
-    private Spoiler spoiler;
 
     private ArrayList<CarPart> carParts;
 
@@ -38,7 +34,6 @@ public class Car extends JPanel implements Stats{
         carParts.add(tires);
         carParts.add(spoiler);
 
-        this.setSize(450, 200);
     }
 
     public void installCarPart(CarPart carPart) {
@@ -49,13 +44,7 @@ public class Car extends JPanel implements Stats{
             Collections.sort(carParts, new Comparator<CarPart>() {
                 @Override
                 public int compare(CarPart a, CarPart b) {
-                    if(a.getLayerIndex() == b.getLayerIndex()) {
-                        return 0;
-                    } else if (a.getLayerIndex() < b.getLayerIndex()) {
-                        return -1;
-                    } else {
-                        return 1;
-                    }
+                    return Integer.compare(a.getLayerIndex(), b.getLayerIndex());
                 }
             });
         }
@@ -117,18 +106,8 @@ public class Car extends JPanel implements Stats{
         return color;
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-
-        Graphics2D g2d = (Graphics2D) g;
-
-        // display the car parts
-        for(CarPart carPart : carParts) {
-            AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
-            ((Graphics2D) g).setComposite(ac);
-            g.drawImage(carPart.getImage(), carPart.getXCoord(), carPart.getYCoord(), this);
-        }
+    public ArrayList<CarPart> getCarParts() {
+        return carParts;
     }
 
     public static int getBaseSpeedKmh() {

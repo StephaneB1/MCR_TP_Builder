@@ -2,7 +2,13 @@ package carBuilder;
 
 import cars.*;
 
-public interface CarWithBody{
+import java.awt.*;
+
+public interface CarWithBody {
+
+    CarWithBody setName(String name);
+
+    CarWithBody setColor(Color color);
 
     CarWithBody buildMotor(Motor motor);
 

@@ -4,11 +4,8 @@ import cars.Body;
 
 import java.awt.*;
 
-public interface EmtpyCar{
+public interface EmptyCar {
 
     CarWithBody buildBody(Body body);
 
-    EmtpyCar setName(String name);
-
-    EmtpyCar setColor(Color color);
 }

@@ -1,6 +1,7 @@
 
 import carBuilder.CarBuilder;
-import carBuilder.EmtpyCar;
+import carBuilder.CarWithBody;
+import carBuilder.EmptyCar;
 import cars.*;
 import garage.Garage;
 import garage.GarageProduct;
@@ -32,13 +33,13 @@ public class Controller extends JFrame {
     private int currentCategory;
     private int currentProduct;
     private Car playerCar;
-
+    private CarDisplayer playerCarDisplayer;
+    private CarBuilder builder;
 
     public Controller() {
 
-        setupGarage();
-
         setTitle("MCR - Racers");
+        setupGarage();
 
         // General app layout (mainPanel) :
         /*---------------------------------------------*
@@ -61,8 +62,8 @@ public class Controller extends JFrame {
         mainPanel.setLayout(mainLayout);
 
         // BLUEPRINTS
-        playerCar = new Car();
-        playerCar.setOpaque(false);
+        builder = new CarBuilder();
+        playerCarDisplayer = new CarDisplayer(playerCar, builder);
         // STATS
         JPanel carStatsPanel = loadCarStatsPanel();
         // BUILDER
@@ -78,7 +79,7 @@ public class Controller extends JFrame {
         carStatsPanel.setBorder(padding_small);
         builderPanel.setBorder(padding_small);
         racePanel.setBorder(padding_small);
-        mainPanel.add(playerCar);
+        mainPanel.add(playerCarDisplayer);
         mainPanel.add(carStatsPanel);
         mainPanel.add(builderPanel);
         mainPanel.add(racePanel);
@@ -148,7 +149,7 @@ public class Controller extends JFrame {
         race.start();
     }
 
-    public static EmtpyCar createNewCar(){
+    public static EmptyCar createNewCar(){
         return new CarBuilder();
     }
 
@@ -174,11 +175,16 @@ public class Controller extends JFrame {
         JPanel carStatsPanel = new JPanel();
         carStatsPanel.setOpaque(false);
         carStatsPanel.setLayout(new GridLayout(5, 2));
-        accelerationLabel.setText(playerCar.getAcceleration() + "m/s2");
+        /*accelerationLabel.setText(playerCar.getAcceleration() + "m/s2");
         weightLabel.setText(playerCar.getWeight() + "kg");
         adherenceLabel.setText(playerCar.getAdherence() + "/10");
         maniabilityLabel.setText(playerCar.getManiability() + "/10");
-        resistanceLabel.setText(playerCar.getResistance() + "%");
+        resistanceLabel.setText(playerCar.getResistance() + "%");*/
+        accelerationLabel.setText("-");
+        weightLabel.setText("-");
+        adherenceLabel.setText("-");
+        maniabilityLabel.setText("-");
+        resistanceLabel.setText("-");
         carStatsPanel.add(new JLabel("acceleration :"));
         carStatsPanel.add(accelerationLabel);
         carStatsPanel.add(new JLabel("weight :"));
@@ -247,21 +253,47 @@ public class Controller extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Add car part to the player's car
-                playerCar.installCarPart(garage.getInventory().get(currentCategory).getProducts().get(currentProduct));
-                playerCar.repaint();
+                //playerCar.installCarPart(garage.getInventory().get(currentCategory).getProducts().get(currentProduct));
+                //playerCarDisplayer.repaint();
+                CarPart newPart = garage.getInventory().get(currentCategory).getProducts().get(currentProduct);
+                System.out.println("Mounting new part : " + newPart.getName());
+                switch(currentCategory) {
+                    case Garage.CATEGORY_BODY:
+                        builder.buildBody((Body) newPart);
+                        break;
+                    case Garage.CATEGORY_MOTORS:
+                        builder.buildMotor((Motor) newPart);
+                        break;
+                    case Garage.CATEGORY_SPOILERS:
+                        builder.buildSpoiler((Spoiler) newPart);
+                        break;
+                    case Garage.CATEGORY_TIRES:
+                        builder.buildTire((Tires) newPart);
+                        break;
+                }
+
+                playerCarDisplayer.repaint();
 
                 // Update the stats labels
-                accelerationLabel.setText(playerCar.getAcceleration() + "m/s2");
+                // TODO : Change with blocs from 1 to 5
+                /*accelerationLabel.setText(playerCar.getAcceleration() + "m/s2");
                 weightLabel.setText(playerCar.getWeight() + "kg");
                 adherenceLabel.setText(playerCar.getAdherence() + "/10");
                 maniabilityLabel.setText(playerCar.getManiability() + "/10");
-                resistanceLabel.setText(playerCar.getResistance() + "%");
+                resistanceLabel.setText(playerCar.getResistance() + "%");*/
             }
         });
         buildCarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 // Build car
+                try {
+                    playerCar = builder.getCar();
+                    playerCarDisplayer.setCar(playerCar);
+                    playerCarDisplayer.repaint();
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace(); // TODO affichage user
+                }
             }
         });
         productLabel.setHorizontalAlignment(SwingConstants.CENTER);

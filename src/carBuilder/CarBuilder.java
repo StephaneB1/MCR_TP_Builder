@@ -3,8 +3,10 @@ package carBuilder;
 import cars.*;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-public class CarBuilder implements EmtpyCar, CarWithBody {
+public class CarBuilder implements EmptyCar, CarWithBody {
 
     private Motor motor;
     private Body body;
@@ -22,14 +24,18 @@ public class CarBuilder implements EmtpyCar, CarWithBody {
         spoiler = null;
     }
 
+    public EmptyCar getNewCar() {
+        return new CarBuilder();
+    }
+
     @Override
-    public EmtpyCar setName(String name) {
+    public CarWithBody setName(String name) {
         this.name = name;
         return this;
     }
 
     @Override
-    public EmtpyCar setColor(Color color) {
+    public CarWithBody setColor(Color color) {
         this.color = color;
         return this;
     }
@@ -59,11 +65,15 @@ public class CarBuilder implements EmtpyCar, CarWithBody {
     }
 
     @Override
-    public Car getCar() {
-        if(motor != null && spoiler != null &&  tire != null && name != null && color != null) {
+    public Car getCar() {                                      // temp, just to make the simple builder work
+        if(motor != null && spoiler != null &&  tire != null /*&& name != null && color != null*/) {
             return new Car(name, body, motor, tire, spoiler, color);
-        }else{
+        } else {
             throw new IllegalArgumentException("Missing some part");
         }
+    }
+
+    public ArrayList<CarPart> getCarParts() {
+        return new ArrayList<>(Arrays.asList(body, motor, tire, spoiler));
     }
 }
