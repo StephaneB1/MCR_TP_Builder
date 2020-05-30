@@ -30,6 +30,7 @@ public class Controller extends JFrame {
     private Garage garage;
     private int currentCategory;
     private int currentProduct;
+    private int currentColor = 0;
     private Car playerCar;
     private CarDisplayer playerCarDisplayer;
     private CarBuilder builder;
@@ -66,7 +67,6 @@ public class Controller extends JFrame {
         JPanel carStatsPanel = loadCarStatsPanel();
         // BUILDER
         JPanel builderPanel = loadBuilderPanel();
-        builderPanel.setBackground(Color.WHITE);
         // RACE
         JPanel racePanel = loadRacePanel();
 
@@ -108,6 +108,7 @@ public class Controller extends JFrame {
         // - Car tires
         GarageProduct tires = new GarageProduct("Tires");
         tires.addProduct(new Tires("Tires-1", "tiresTemplate.png", new Stats().randomize(), new Point(90, 130)));
+        tires.addProduct(new Tires("Tires-2", "tiresTest.png", new Stats().randomize(), new Point(90, 130)));
         // - Car spoilers
         GarageProduct spoilers = new GarageProduct("Spoilers");
         spoilers.addProduct(new Spoiler("Spoiler-1", "spoilerTemplate.png", new Stats().randomize(), new Point(35, 35)));
@@ -117,6 +118,13 @@ public class Controller extends JFrame {
         garage.addToInventory(motors);
         garage.addToInventory(tires);
         garage.addToInventory(spoilers);
+
+        // Adding the paint jobs
+        garage.addPaintJob(new PaintJob("Ocean Blue", Color.BLUE)); // TODO change better colors
+        garage.addPaintJob(new PaintJob("Red Lobster", Color.RED)); // TODO change better colors
+        garage.addPaintJob(new PaintJob("Apple Storm", Color.GREEN)); // TODO change better colors
+        garage.addPaintJob(new PaintJob("Pink Duster", Color.PINK)); // TODO change better colors
+
     }
 
     private void startRace() {
@@ -165,15 +173,18 @@ public class Controller extends JFrame {
         race.start();
     }
 
-    private void updateSelectionLabels(JLabel categoryLabel, JLabel productLabel, JPanel productPanel) {
+    private void updateSelectionLabels(JLabel categoryLabel, JLabel productLabel, JLabel colorLabel, JPanel productPanel) {
         GarageProduct category = garage.getInventory().get(currentCategory);
         CarPart product        = category.getProducts().get(currentProduct);
+        PaintJob paintJob      = garage.getPaintJobs().get(currentColor);
 
         // Selection labels
         categoryLabel.setText(category.getProductLabel());
         productLabel.setText(product.getName());
+        colorLabel.setText(paintJob.getName());
 
         // Product display
+        product.setColor(paintJob.getColor());
         JLabel picLabel = new JLabel(new ImageIcon(product.getImage()));
         productPanel.removeAll();
         productPanel.add(picLabel);
@@ -247,13 +258,16 @@ public class Controller extends JFrame {
         JLabel categoryLabel = new JLabel(garage.getInventory().get(currentCategory).getProductLabel());
         categoryLabel.setHorizontalAlignment(SwingConstants.CENTER);
         JLabel productLabel = new JLabel(garage.getInventory().get(currentCategory).getProducts().get(currentProduct).getName());
+        productLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        JLabel colorLabel   = new JLabel(garage.getPaintJobs().get(currentColor).getName());
+        colorLabel.setHorizontalAlignment(SwingConstants.CENTER);
         JButton categoryLeftButton = new JButton("<");
         categoryLeftButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 currentCategory = (currentCategory - 1 + garage.getInventory().size()) % garage.getInventory().size();
                 currentProduct  = 0;
-                updateSelectionLabels(categoryLabel, productLabel, carPartPanel);
+                updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartPanel);
             }
         });
         JButton categoryRightButton = new JButton(">");
@@ -262,7 +276,7 @@ public class Controller extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 currentCategory = (currentCategory + 1) % garage.getInventory().size();
                 currentProduct  = 0;
-                updateSelectionLabels(categoryLabel, productLabel, carPartPanel);
+                updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartPanel);
             }
         });
         JButton productLeftButton = new JButton("<");
@@ -271,7 +285,7 @@ public class Controller extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 currentProduct = (currentProduct - 1 + garage.getInventory().get(currentCategory).getProducts().size())
                         % garage.getInventory().get(currentCategory).getProducts().size();
-                updateSelectionLabels(categoryLabel, productLabel, carPartPanel);
+                updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartPanel);
             }
         });
         JButton productRightButton = new JButton(">");
@@ -279,7 +293,24 @@ public class Controller extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 currentProduct = (currentProduct + 1) % garage.getInventory().get(currentCategory).getProducts().size();
-                updateSelectionLabels(categoryLabel, productLabel, carPartPanel);
+                updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartPanel);
+            }
+        });
+        JButton colorLeftButton = new JButton("<");
+        colorLeftButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                currentColor = (currentColor - 1 + garage.getPaintJobs().size())
+                        % garage.getPaintJobs().size();
+                updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartPanel);
+            }
+        });
+        JButton colorRightButton = new JButton(">");
+        colorRightButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                currentColor = (currentColor + 1) % garage.getPaintJobs().size();
+                updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartPanel);
             }
         });
         JButton randomCarButton = new JButton("Get random");
@@ -302,7 +333,6 @@ public class Controller extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // Add car part to the player's car
                 CarPart newPart = garage.getInventory().get(currentCategory).getProducts().get(currentProduct);
-                System.out.println("Mounting new part : " + newPart.getName());
                 switch(currentCategory) {
                     case Garage.CATEGORY_BODY:
                         builder.buildBody((Body) newPart);
@@ -337,7 +367,6 @@ public class Controller extends JFrame {
                 }
             }
         });
-        productLabel.setHorizontalAlignment(SwingConstants.CENTER);
         c.insets = new Insets(3,3,3,3); // padding
         c.fill = GridBagConstraints.HORIZONTAL;
         c.anchor=GridBagConstraints.CENTER;
@@ -360,13 +389,20 @@ public class Controller extends JFrame {
         selectionPanel.add(productRightButton, c);
         c.gridy = 2;
         c.gridx = 0;
-        c.ipady = 30; // make the button bigger
+        selectionPanel.add(colorLeftButton, c);
+        c.gridx = 1;
+        selectionPanel.add(colorLabel, c);
+        c.gridx = 2;
+        selectionPanel.add(colorRightButton, c);
+        c.gridy = 3;
+        c.gridx = 0;
+        //c.ipady = 30; // make the button bigger
         selectionPanel.add(randomCarButton, c);
         c.gridx = 1;
         selectionPanel.add(mountToCarButton, c);
         c.gridx = 2;
         selectionPanel.add(buildCarButton, c);
-        updateSelectionLabels(categoryLabel, productLabel, carPartPanel);
+        updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartPanel);
         builderPanel.add(carPartPanel);
         builderPanel.add(selectionPanel);
 
@@ -374,9 +410,11 @@ public class Controller extends JFrame {
     }
 
     private CarPart getRandCarPart(Random rand, int category) {
-        return garage.getInventory().get(category).getProducts()
+        CarPart result = garage.getInventory().get(category).getProducts()
                 .get(rand.nextInt(garage.getInventory().get(category)
                         .getProducts().size()));
+        result.setColor(garage.getPaintJobs().get(rand.nextInt(garage.getPaintJobs().size())).getColor());
+        return result;
     }
 
     private JPanel loadRacePanel() {

@@ -4,6 +4,7 @@ import carBuilder.CarBuilder;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class CarDisplayer extends JPanel {
 
@@ -43,9 +44,7 @@ public class CarDisplayer extends JPanel {
         else if (builder != null) {
             for(CarPart carPart : builder.getCarParts()) {
                 if(carPart != null) {
-                    AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
-                    ((Graphics2D) g).setComposite(ac);
-                    g.drawImage(carPart.getImage(), carPart.getXCoord(), carPart.getYCoord(), this);
+                    g.drawImage(carPart.getImage(), carPart.getXCoord(), carPart.getYCoord(),this);
                 }
             }
         }
