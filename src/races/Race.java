@@ -68,12 +68,12 @@ public class Race extends JFrame implements WindowListener {
 
                     // Run a tick
                     for(Racer racer : racers){
-                        racer.runOneTick(2.0);
+                        racer.runOneTick();
                     }
 
                     // Check if there is a winner
                     for(Racer racer : racers){
-                        if(racer.getCurrentDistanceMeter() >= totalDistance){
+                        if(racer.getCurrentDistance() >= totalDistance){
                             racerWinner = racer;
                             isRunning = false;
                             break;

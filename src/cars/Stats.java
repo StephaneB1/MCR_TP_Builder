@@ -73,6 +73,15 @@ public class Stats {
     }
 
     /**
+     * Converts stat value [RANGE_MIN;RANGE_MAX] to proportional factor [RANGE_MIN/RANGE_MAX;1]
+     * @param value te stat to be converted
+     * @return factor value [RANGE_MIN/RANGE_MAX;1]
+     */
+    public static double toPercent(double value) {
+        return value / RANGE_MAX;
+    }
+
+    /**
      * Ensures that the value is between class ranges
      * @param value the numeric value to be checked
      * @return the given value, cut to range [RANGE_MIN;RANGE_MAX]

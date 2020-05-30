@@ -52,7 +52,7 @@ public class RaceDetailsPanel extends JPanel {
         int initialYPos = 80;
         int yIncrement = 0;
         for(int i = 0; i < racers.size(); ++i, yIncrement += 30){
-            learerboardLabels.add(new JLabel((i+1) + ". " + racers.get(i).getName() + " - " + (int)(racers.get(i).getCurrentDistanceMeter() * 100 / totalDistance) + "%"));
+            learerboardLabels.add(new JLabel((i+1) + ". " + racers.get(i).getName() + " - " + (int)(racers.get(i).getCurrentDistance() * 100 / totalDistance) + "%"));
             learerboardLabels.get(i).setFont(new Font("Arial", Font.BOLD, 18));
             // Add +40 to be able to display all the label text when we pass from ...99% to ...100%
             learerboardLabels.get(i).setBounds(initialxPos ,initialYPos + yIncrement,learerboardLabels.get(i).getPreferredSize().width + 40,learerboardLabels.get(i).getPreferredSize().height);
@@ -69,8 +69,8 @@ public class RaceDetailsPanel extends JPanel {
 
         for(int i = 0; i < racers.size(); ++i){
             learerboardLabels.get(i).setForeground(racers.get(i).getColor());
-            learerboardLabels.get(i).setText((i+1) + ". " + racers.get(i).getName() + " - " + (int)(racers.get(i).getCurrentDistanceMeter() * 100 / totalDistance) + "%");
-            System.out.println((i+1) + ". " + racers.get(i).getName() + " - " + racers.get(i).getCurrentDistanceMeter());
+            learerboardLabels.get(i).setText((i+1) + ". " + racers.get(i).getName() + " - " + (int)(racers.get(i).getCurrentDistance() * 100 / totalDistance) + "%");
+            System.out.println((i+1) + ". " + racers.get(i).getName() + " - " + racers.get(i).getCurrentDistance());
         }
         System.out.println("");
     }

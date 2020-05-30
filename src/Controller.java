@@ -130,22 +130,22 @@ public class Controller extends JFrame {
     private void startRace() {
 
         Car car1 = new Car( "Car1",
-                new Body("Body", "bodyTemplate.png", new Stats().randomize()),
-                new Motor("Motor", "motorTemplate.png", new Stats().randomize(), new Point(80, 70)),
-                new Tires("Tires", "tiresTemplate.png", new Stats().randomize(), new Point(90, 130)),
-                new Spoiler("Spoiler", "spoilerTemplate.png", new Stats().randomize(), new Point(35, 35)),
+                new Body("Body", "bodyTemplate.png", new Stats(5, 1, 1)),
+                new Motor("Motor", "motorTemplate.png", new Stats(5, 1, 1), new Point(80, 70)),
+                new Tires("Tires", "tiresTemplate.png", new Stats(5, 1, 1), new Point(90, 130)),
+                new Spoiler("Spoiler", "spoilerTemplate.png", new Stats(5, 1, 1), new Point(35, 35)),
                 Color.RED);
         Car car2 = new Car( "Car2",
-                new Body("Body", "bodyTemplate.png", new Stats().randomize()),
-                new Motor("Motor", "motorTemplate.png", new Stats().randomize(), new Point(80, 70)),
-                new Tires("Tires", "tiresTemplate.png", new Stats().randomize(), new Point(90, 130)),
-                new Spoiler("Spoiler", "spoilerTemplate.png", new Stats().randomize(), new Point(35, 35)),
+                new Body("Body", "bodyTemplate.png", new Stats(2.5, 2.5, 2.5)),
+                new Motor("Motor", "motorTemplate.png", new Stats(2.5, 2.5, 2.5), new Point(80, 70)),
+                new Tires("Tires", "tiresTemplate.png", new Stats(2.5, 2.5, 2.5), new Point(90, 130)),
+                new Spoiler("Spoiler", "spoilerTemplate.png", new Stats(2.5, 2.5, 2.5), new Point(35, 35)),
                 Color.BLUE);
         Car car3 = new Car( "Car3",
-                new Body("Body", "bodyTemplate.png", new Stats().randomize()),
-                new Motor("Motor", "motorTemplate.png", new Stats().randomize(), new Point(80, 70)),
-                new Tires("Tires", "tiresTemplate.png", new Stats().randomize(), new Point(90, 130)),
-                new Spoiler("Spoiler", "spoilerTemplate.png", new Stats().randomize(), new Point(35, 35)),
+                new Body("Body", "bodyTemplate.png", new Stats(1.5, 4, 4)),
+                new Motor("Motor", "motorTemplate.png", new Stats(1.5, 4, 4), new Point(80, 70)),
+                new Tires("Tires", "tiresTemplate.png", new Stats(1.5, 4, 4), new Point(90, 130)),
+                new Spoiler("Spoiler", "spoilerTemplate.png", new Stats(1, 4, 4), new Point(35, 35)),
                 Color.GREEN);
         Car car4 = new Car( "Car4",
                 new Body("Body", "bodyTemplate.png", new Stats().randomize()),
@@ -157,10 +157,10 @@ public class Controller extends JFrame {
 
 
         // /!\ RACERS[0] IS ALWAYS THE PLAYER, NOT A BOT /!\
-        Racer racer1 = new Racer("Player1", car1, Color.RED, false);
-        Racer racer2 = new Racer("Player2", car2, Color.BLUE, false);
-        Racer racer3 = new Racer("Player3", car2, Color.GREEN, false);
-        Racer racer4 = new Racer("Player4", car2, Color.ORANGE, false);
+        Racer racer1 = new Racer("SpeedMaster", car1, Color.RED, false);
+        Racer racer2 = new Racer("Balanced", car2, Color.BLUE, false);
+        Racer racer3 = new Racer("Tank", car3, Color.GREEN, false);
+        Racer racer4 = new Racer("Random", car4, Color.ORANGE, false);
 
         ArrayList<Racer> racers = new ArrayList<>();
         racers.add(racer1);

@@ -30,7 +30,7 @@ public class RacePanel extends JPanel {
 
 
         this.raceBeginY = height * 40 / 100;
-        this.lblDistanceTraveled = new JLabel(racers.get(0).getCurrentDistanceMeter() + " / " + totalDistance + " meters traveled", SwingConstants.CENTER);
+        this.lblDistanceTraveled = new JLabel(racers.get(0).getCurrentDistance() + " / " + totalDistance + " meters traveled", SwingConstants.CENTER);
         this.lblDistanceTraveled.setFont(new Font("Arial", Font.BOLD, 18));
 
         this.lblYou = new JLabel("You");
@@ -48,7 +48,7 @@ public class RacePanel extends JPanel {
         g2d.drawLine(raceBeginX, raceBeginY + (RACER_SIZE / 2), raceWidth + raceBeginX, raceBeginY + (RACER_SIZE / 2));
 
         for(Racer racer : racers){
-            int distanceInPixel = (int)(racer.getCurrentDistanceMeter() * raceWidth / totalDistance);
+            int distanceInPixel = (int)(racer.getCurrentDistance() * raceWidth / totalDistance);
             int racerPosX = (raceBeginX - RACER_SIZE / 2) + distanceInPixel;
             int racerPosY = raceBeginY;
 
@@ -61,6 +61,6 @@ public class RacePanel extends JPanel {
             g2d.fillOval(racerPosX, racerPosY, RACER_SIZE, RACER_SIZE);
         }
 
-        this.lblDistanceTraveled.setText((int)racers.get(0).getCurrentDistanceMeter() + " / " + totalDistance + " meters traveled");
+        this.lblDistanceTraveled.setText((int)racers.get(0).getCurrentDistance() + " / " + totalDistance + " meters traveled");
     }
 }
