@@ -14,9 +14,11 @@ public class Garage {
     public static final int CATEGORY_COLOR = 4;
 
     private ArrayList<GarageProduct> inventory;
+    private ArrayList<PaintJob> paintJobs;
 
     public Garage() {
         inventory = new ArrayList<>();
+        paintJobs = new ArrayList<>();
     }
 
     public void addToInventory(GarageProduct product) {
@@ -27,4 +29,11 @@ public class Garage {
         return inventory;
     }
 
+    public void addPaintJob(PaintJob pj) {
+        this.paintJobs.add(pj);
+    }
+
+    public ArrayList<PaintJob> getPaintJobs() {
+        return paintJobs;
+    }
 }

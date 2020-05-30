@@ -50,6 +50,7 @@ public abstract class CarPart implements Displayable {
 
     public void setColor(Color color) {
         this.color = color;
+        paintCarPart(image, color);
     }
 
     public Color getColor() {
@@ -71,13 +72,15 @@ public abstract class CarPart implements Displayable {
         return relCoord.y;
     }
 
-    /*public static int compareThem(CarPart a, CarPart b) {
-        if(a.getLayerIndex() == b.getLayerIndex()) {
-            return 0;
-        } else if (a.getLayerIndex() < b.getLayerIndex()) {
-            return -1;
-        } else {
-            return 1;
+    private void paintCarPart(BufferedImage loadImg, Color color) {
+        for(int i = 0; i < loadImg.getWidth(); ++i) {
+            for(int j = 0; j < loadImg.getHeight(); ++j) {
+                Color pixelColor = new Color(loadImg.getRGB(i, j) , true);
+
+                if(pixelColor.getAlpha() != 0) {
+                    loadImg.setRGB(i, j, color.getRGB());
+                }
+            }
         }
-    }*/
+    }
 }
