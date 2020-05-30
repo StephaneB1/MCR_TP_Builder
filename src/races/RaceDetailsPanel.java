@@ -31,6 +31,11 @@ public class RaceDetailsPanel extends JPanel {
         lblYourCar.setBounds(260,20,lblYourCar.getPreferredSize().width,lblYourCar.getPreferredSize().height);
         leftPanel.add(lblYourCar);
 
+        Icon imgIcon = new ImageIcon(RaceDetailsPanel.class.getClassLoader().getResource("smoke_anim_1.gif"));
+        JLabel smokeAnim = new JLabel(imgIcon);
+        smokeAnim.setBounds(40, -170, 300, 500);
+        leftPanel.add(smokeAnim);
+
         CarDisplayer carPanel = new CarDisplayer(playerRacer.getCar());
         carPanel.setLocation(70, 150);
         leftPanel.add(carPanel);
