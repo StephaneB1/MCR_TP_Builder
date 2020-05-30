@@ -12,7 +12,6 @@ public abstract class CarPart implements Displayable {
 
     // Graphic display
     private BufferedImage image;
-    private BufferedImage image2;
     private Point relCoord;
     private Color color;
 
@@ -50,7 +49,6 @@ public abstract class CarPart implements Displayable {
 
     public void setColor(Color color) {
         this.color = color;
-        paintCarPart(image, color);
     }
 
     public Color getColor() {
@@ -59,7 +57,7 @@ public abstract class CarPart implements Displayable {
 
     @Override
     public BufferedImage getImage() {
-        return image;
+        return getTintedImage(image, color);
     }
 
     @Override
@@ -72,15 +70,33 @@ public abstract class CarPart implements Displayable {
         return relCoord.y;
     }
 
-    private void paintCarPart(BufferedImage loadImg, Color color) {
+    private BufferedImage getTintedImage(BufferedImage loadImg, Color color) {
+        BufferedImage result = new BufferedImage(loadImg.getWidth(),
+                loadImg.getHeight(), BufferedImage.TYPE_INT_ARGB);
         for(int i = 0; i < loadImg.getWidth(); ++i) {
             for(int j = 0; j < loadImg.getHeight(); ++j) {
                 Color pixelColor = new Color(loadImg.getRGB(i, j) , true);
 
+                Color tintedColor = new Color(getTint(pixelColor.getRed(), color.getRed()),
+                        getTint(pixelColor.getGreen(), color.getGreen()),
+                        getTint(pixelColor.getBlue(), color.getBlue()));
+
                 if(pixelColor.getAlpha() != 0) {
-                    loadImg.setRGB(i, j, color.getRGB());
+                    result.setRGB(i, j, tintedColor.getRGB());
                 }
             }
         }
+
+        return result;
+    }
+
+    private int getTint(int original, int tint) {
+        // 255 -> 1.0
+        // 0   -> 0.0
+        double whitePercentage = original / 255.0;
+
+        int tintedColor = (int) ((original * (1 - whitePercentage)) + (tint * whitePercentage));
+
+        return tintedColor;
     }
 }

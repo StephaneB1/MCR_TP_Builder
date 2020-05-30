@@ -108,6 +108,7 @@ public class Controller extends JFrame {
         // - Car tires
         GarageProduct tires = new GarageProduct("Tires");
         tires.addProduct(new Tires("Tires-1", "tiresTemplate.png", new Stats().randomize(), new Point(90, 130)));
+        tires.addProduct(new Tires("Tires-2", "tiresTest.png", new Stats().randomize(), new Point(90, 130)));
         // - Car spoilers
         GarageProduct spoilers = new GarageProduct("Spoilers");
         spoilers.addProduct(new Spoiler("Spoiler-1", "spoilerTemplate.png", new Stats().randomize(), new Point(35, 35)));
@@ -257,6 +258,7 @@ public class Controller extends JFrame {
         JLabel categoryLabel = new JLabel(garage.getInventory().get(currentCategory).getProductLabel());
         categoryLabel.setHorizontalAlignment(SwingConstants.CENTER);
         JLabel productLabel = new JLabel(garage.getInventory().get(currentCategory).getProducts().get(currentProduct).getName());
+        productLabel.setHorizontalAlignment(SwingConstants.CENTER);
         JLabel colorLabel   = new JLabel(garage.getPaintJobs().get(currentColor).getName());
         colorLabel.setHorizontalAlignment(SwingConstants.CENTER);
         JButton categoryLeftButton = new JButton("<");
@@ -365,7 +367,6 @@ public class Controller extends JFrame {
                 }
             }
         });
-        productLabel.setHorizontalAlignment(SwingConstants.CENTER);
         c.insets = new Insets(3,3,3,3); // padding
         c.fill = GridBagConstraints.HORIZONTAL;
         c.anchor=GridBagConstraints.CENTER;

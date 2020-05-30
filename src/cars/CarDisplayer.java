@@ -37,7 +37,6 @@ public class CarDisplayer extends JPanel {
         // display the car parts of the car
         if(car != null) {
             for(CarPart carPart : car.getCarParts()) {
-                ((Graphics2D) g).setBackground(Color.BLUE);
                 g.drawImage(carPart.getImage(), carPart.getXCoord(), carPart.getYCoord(), this);
             }
         }
@@ -45,13 +44,10 @@ public class CarDisplayer extends JPanel {
         else if (builder != null) {
             for(CarPart carPart : builder.getCarParts()) {
                 if(carPart != null) {
-                    AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
-                    ((Graphics2D) g).setComposite(ac);
                     g.drawImage(carPart.getImage(), carPart.getXCoord(), carPart.getYCoord(),this);
                 }
             }
         }
     }
-
 
 }
