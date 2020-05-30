@@ -95,8 +95,6 @@ public abstract class CarPart implements Displayable {
         // 0   -> 0.0
         double whitePercentage = original / 255.0;
 
-        int tintedColor = (int) ((original * (1 - whitePercentage)) + (tint * whitePercentage));
-
-        return tintedColor;
+        return (int) ((original * (1 - whitePercentage)) + (tint * whitePercentage));
     }
 }
