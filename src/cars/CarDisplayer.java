@@ -47,7 +47,6 @@ public class CarDisplayer extends JPanel {
                 if(carPart != null) {
                     AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
                     ((Graphics2D) g).setComposite(ac);
-                    //paintCarPart(carPart.getImage(), carPart.getColor());
                     g.drawImage(carPart.getImage(), carPart.getXCoord(), carPart.getYCoord(),this);
                 }
             }

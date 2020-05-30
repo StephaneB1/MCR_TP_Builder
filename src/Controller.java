@@ -175,7 +175,7 @@ public class Controller extends JFrame {
     private void updateSelectionLabels(JLabel categoryLabel, JLabel productLabel, JLabel colorLabel, JPanel productPanel) {
         GarageProduct category = garage.getInventory().get(currentCategory);
         CarPart product        = category.getProducts().get(currentProduct);
-        PaintJob paintJob            = garage.getPaintJobs().get(currentColor);
+        PaintJob paintJob      = garage.getPaintJobs().get(currentColor);
 
         // Selection labels
         categoryLabel.setText(category.getProductLabel());
@@ -409,9 +409,11 @@ public class Controller extends JFrame {
     }
 
     private CarPart getRandCarPart(Random rand, int category) {
-        return garage.getInventory().get(category).getProducts()
+        CarPart result = garage.getInventory().get(category).getProducts()
                 .get(rand.nextInt(garage.getInventory().get(category)
                         .getProducts().size()));
+        result.setColor(garage.getPaintJobs().get(rand.nextInt(garage.getPaintJobs().size())).getColor());
+        return result;
     }
 
     private JPanel loadRacePanel() {
