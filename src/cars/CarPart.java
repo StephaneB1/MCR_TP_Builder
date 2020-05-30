@@ -2,33 +2,36 @@ package cars;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public abstract class CarPart implements Stats{
+public abstract class CarPart implements Displayable {
 
     private String name;
-    private String imagePath;
-    private Image image;
+
+    // Graphic display
+    private BufferedImage image;
+    private Point relCoord;
+    private Color color;
 
     // Stats
-    private double acceleration;
-    private double weight;
-    private double adherence;
-    private double maniability;
-    private double resistance;
+    private Stats stats;
 
-    public CarPart(String name, String imagePath, double acceleration, double weight, double adherence, double maniability, double resistance) {
+    public CarPart(String name, String imagePath, Stats stats, Point relCoord) {
         this.name = name;
-        this.imagePath = imagePath;
-        this.acceleration = acceleration;
-        this.weight = weight;
-        this.adherence = adherence;
-        this.maniability = maniability;
-        this.resistance = resistance;
-
+        this.stats = stats;
+        this.relCoord = relCoord;
+        this.color = Color.BLACK;
         try {
-            image = ImageIO.read(new File(imagePath));
+            BufferedImage in = ImageIO.read(new File(imagePath));
+
+            image = new BufferedImage(
+                    in.getWidth(), in.getHeight(), BufferedImage.TRANSLUCENT);
+
+            Graphics2D g = image.createGraphics();
+            g.drawImage(in, 0, 0, null);
+            g.dispose();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -36,32 +39,62 @@ public abstract class CarPart implements Stats{
 
     public abstract String getCategory();
 
-    @Override
-    public double getAcceleration() {
-        return 0;
+    public Stats getStats() {
+        return stats;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     @Override
-    public double getWeight() {
-        return 0;
+    public BufferedImage getImage() {
+        return getTintedImage(image, color);
     }
 
     @Override
-    public double getAdherence() {
-        return 0;
+    public int getXCoord() {
+        return relCoord.x;
     }
 
     @Override
-    public double getManiability() {
-        return 0;
+    public int getYCoord() {
+        return relCoord.y;
     }
 
-    @Override
-    public double getResistance() {
-        return 0;
+    private BufferedImage getTintedImage(BufferedImage loadImg, Color color) {
+        BufferedImage result = new BufferedImage(loadImg.getWidth(),
+                loadImg.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        for(int i = 0; i < loadImg.getWidth(); ++i) {
+            for(int j = 0; j < loadImg.getHeight(); ++j) {
+                Color pixelColor = new Color(loadImg.getRGB(i, j) , true);
+
+                Color tintedColor = new Color(getTint(pixelColor.getRed(), color.getRed()),
+                        getTint(pixelColor.getGreen(), color.getGreen()),
+                        getTint(pixelColor.getBlue(), color.getBlue()));
+
+                if(pixelColor.getAlpha() != 0) {
+                    result.setRGB(i, j, tintedColor.getRGB());
+                }
+            }
+        }
+
+        return result;
     }
 
-    public Image getImage() {
-        return image;
+    private int getTint(int original, int tint) {
+        // 255 -> 1.0
+        // 0   -> 0.0
+        double whitePercentage = original / 255.0;
+
+        return (int) ((original * (1 - whitePercentage)) + (tint * whitePercentage));
     }
 }

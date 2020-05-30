@@ -1,9 +1,13 @@
 package cars;
 
+import java.awt.*;
+
 public class Body extends CarPart {
 
-    public Body(String name, String imagePath, double acceleration, double weight, double adherence, double maniability, double resistance) {
-        super(name, imagePath, acceleration, weight, adherence, maniability, resistance);
+    private static String BODY_PATH = "resources/cars/bodies/";
+
+    public Body(String name, String image, Stats stats) {
+        super(name, BODY_PATH + image, stats, new Point(50, 50));
     }
 
     @Override
@@ -11,4 +15,8 @@ public class Body extends CarPart {
         return "Body";
     }
 
+    @Override
+    public int getLayerIndex() {
+        return 0;
+    }
 }

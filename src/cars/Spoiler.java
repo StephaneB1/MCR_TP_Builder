@@ -1,9 +1,13 @@
 package cars;
 
+import java.awt.*;
+
 public class Spoiler extends CarPart {
 
-    public Spoiler(String name, String imagePath, double acceleration, double weight, double adherence, double maniability, double resistance) {
-        super(name, imagePath, acceleration, weight, adherence, maniability, resistance);
+    private static String SPOILER_PATH = "resources/cars/spoilers/";
+
+    public Spoiler(String name, String image, Stats stats, Point relCoord) {
+        super(name, SPOILER_PATH + image, stats, relCoord);
     }
 
     @Override
@@ -11,4 +15,8 @@ public class Spoiler extends CarPart {
         return "Spoiler";
     }
 
+    @Override
+    public int getLayerIndex() {
+        return 1;
+    }
 }
