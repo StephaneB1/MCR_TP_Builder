@@ -54,8 +54,8 @@ public class RaceDetailsPanel extends JPanel {
         for(int i = 0; i < racers.size(); ++i, yIncrement += 30){
             learerboardLabels.add(new JLabel((i+1) + ". " + racers.get(i).getName() + " - " + (int)(racers.get(i).getCurrentDistance() * 100 / totalDistance) + "%"));
             learerboardLabels.get(i).setFont(new Font("Arial", Font.BOLD, 18));
-            // Add +40 to be able to display all the label text when we pass from ...99% to ...100%
-            learerboardLabels.get(i).setBounds(initialxPos ,initialYPos + yIncrement,learerboardLabels.get(i).getPreferredSize().width + 40,learerboardLabels.get(i).getPreferredSize().height);
+            // Add +100 to be able to display all the label text on the good size when leaderboard changes, etc... 
+            learerboardLabels.get(i).setBounds(initialxPos ,initialYPos + yIncrement,learerboardLabels.get(i).getPreferredSize().width + 100,learerboardLabels.get(i).getPreferredSize().height);
             rightPanel.add(learerboardLabels.get(i));
         }
 
