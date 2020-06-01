@@ -5,6 +5,8 @@ import carBuilder.CarBuilder;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Random;
+import java.util.TimerTask;
 
 public class CarDisplayer extends JPanel {
 

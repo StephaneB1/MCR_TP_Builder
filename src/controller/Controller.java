@@ -29,6 +29,8 @@ public class Controller extends JFrame {
     private CarDisplayer playerCarDisplayer;
     private CarBuilder builder;
 
+    private BuilderPanel builderPanel;
+
     public Controller() {
 
         setTitle("MCR - Racers");
@@ -42,7 +44,7 @@ public class Controller extends JFrame {
          * - Car preview         | - Car performances  *
          *                       |                     *
          *=============================================*
-         * BUILDER               | RACE                *
+         * BUILDER / OPPONENT   | RACE                *
          * - Car components      | - Race information  *
          *                       |                     *
          *---------------------------------------------*/
@@ -52,8 +54,7 @@ public class Controller extends JFrame {
         GridLayout mainLayout = new GridLayout(2, 2);
         mainLayout.setHgap(10);
         mainLayout.setVgap(10);
-        mainPanel.setLayout(mainLayout);
-
+        mainPanel.setLayout(new GridBagLayout());
         // BLUEPRINTS
         builder = new CarBuilder();
         playerCarDisplayer = new CarDisplayer(playerCar, builder);
@@ -61,20 +62,42 @@ public class Controller extends JFrame {
         // STATS
         StatsPanel carStatsPanel = new StatsPanel(playerCarDisplayer);
         carStatsPanel.setBorder(getPanelBorder("S T A T I S T I C S"));
-        // BUILDER
-        BuilderPanel builderPanel = new BuilderPanel(garage, builder, playerCarDisplayer, playerCar, carStatsPanel);
-        builderPanel.setBorder(getPanelBorder("C A R    B U I L D E R"));
         // RACE
         JPanel racePanel = loadRacePanel();
         racePanel.setBorder(getPanelBorder("R A C E    I N F O R M A T I O N"));
+        // OPPONENTS
+        JPanel opponentsPanel = new JPanel(new GridLayout(2, 2));
+        opponentsPanel.setBorder(getPanelBorder("O P P O N E N T S"));
+        // BUILDER
+        builderPanel = new BuilderPanel(garage, builder, playerCarDisplayer, playerCar, carStatsPanel, racePanel, opponentsPanel);
+        builderPanel.setBorder(getPanelBorder("C A R    B U I L D E R"));
+
 
         // Add panels with padding
         Border padding = BorderFactory.createEmptyBorder(20, 20, 20, 20);
         mainPanel.setBorder(padding);
-        mainPanel.add(playerCarDisplayer);
-        mainPanel.add(carStatsPanel);
-        mainPanel.add(builderPanel);
-        mainPanel.add(racePanel);
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.BOTH;
+        c.insets = new Insets(3,3,3,3); // padding
+        c.gridx = 0;
+        c.gridy = 0;
+        c.weightx = 0.5;
+        c.weighty = 0.5;
+        mainPanel.add(playerCarDisplayer, c);
+        c.gridx = 1;
+        mainPanel.add(carStatsPanel, c);
+        c.gridx = 0;
+        c.gridy = 1;
+        c.gridwidth = 2;
+        mainPanel.add(builderPanel, c);
+        racePanel.setVisible(false);
+        c.gridwidth = 1;
+        c.gridx = 0;
+        c.gridy = 1;
+        mainPanel.add(opponentsPanel, c);
+        c.gridx = 1;
+        c.gridy = 1;
+        mainPanel.add(racePanel, c);
 
         add(mainPanel);
 
@@ -121,8 +144,8 @@ public class Controller extends JFrame {
 
     }
 
-    private void startRace() {
-
+    private void startRace(ArrayList<Racer> racers) {
+/*
         Car car1 = new Car( "Car1",
                 new Body("Body", "bodyTemplate.png", new Stats(5, 1, 1)),
                 new Motor("Motor", "motorTemplate.png", new Stats(5, 1, 1), new Point(80, 70)),
@@ -159,7 +182,7 @@ public class Controller extends JFrame {
         racers.add(racer2);
         racers.add(racer3);
         racers.add(racer4);
-
+*/
         Race race = new Race(3000, racers);
 
         race.start();
@@ -180,7 +203,7 @@ public class Controller extends JFrame {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                startRace();
+                startRace(builderPanel.getRacers());
             }
         });
         racePanel.add(new JLabel("Racers :"));

@@ -4,31 +4,42 @@ import carBuilder.CarBuilder;
 import cars.*;
 import garage.Garage;
 import garage.GarageProduct;
+import races.Racer;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class BuilderPanel extends JPanel {
+
+    private static final int TOTAL_RACERS = 4;
 
     private Garage garage;
     private CarDisplayer displayer;
     private CarBuilder builder;
     private Car car;
     private StatsPanel statsPanel;
+    private JPanel racePanel;
+    private JPanel opponentsPanel;
     private int currentCategory;
     private int currentProduct;
     private int currentColor;
 
+    private ArrayList<Racer> racers;
+
     public BuilderPanel(Garage garage, CarBuilder builder, CarDisplayer displayer,
-                        Car car, StatsPanel statsPanel) {
+                        Car car, StatsPanel statsPanel, JPanel racePanel, JPanel opponentsPanel) {
         this.garage     = garage;
         this.builder    = builder;
         this.displayer  = displayer;
         this.car        = car;
         this.statsPanel = statsPanel;
+        this.racePanel  = racePanel;
+        this.opponentsPanel = opponentsPanel;
+        racers = new ArrayList<>();
         setupPanel();
     }
 
@@ -107,12 +118,7 @@ public class BuilderPanel extends JPanel {
         randomCarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                Random random = new Random();
-                builder.buildBody((Body) getRandCarPart(random, Garage.CATEGORY_BODY))
-                        .buildMotor((Motor) getRandCarPart(random, Garage.CATEGORY_MOTORS))
-                        .buildTire((Tires) getRandCarPart(random, Garage.CATEGORY_TIRES))
-                        .buildSpoiler((Spoiler) getRandCarPart(random, Garage.CATEGORY_SPOILERS));
-
+                buildRandomCar(builder);
                 displayer.repaint();
             }
         });
@@ -148,6 +154,21 @@ public class BuilderPanel extends JPanel {
             public void actionPerformed(ActionEvent actionEvent) {
                 // Build car
                 try {
+
+                    builder.getCar();
+                    // Reaches here : car can be build
+
+                    // Building and displaying the opponents
+                    generateRacers();
+                    for(int i = 1; i < racers.size(); ++i) {
+                        CarDisplayer carDisplayer = new CarDisplayer(racers.get(i).getCar());
+                        opponentsPanel.add(carDisplayer);
+                    }
+
+                    // Changing the layout to start a race
+                    setVisible(false);
+                    racePanel.setVisible(true);
+                    opponentsPanel.setVisible(true);
                     car = builder.getCar();
                     displayer.setCar(car);
                     displayer.repaint();
@@ -185,6 +206,7 @@ public class BuilderPanel extends JPanel {
         selectionPanel.add(colorRightButton, c);
         c.gridy = 3;
         c.gridx = 0;
+        c.ipady = 30;
         selectionPanel.add(randomCarButton, c);
         c.gridx = 1;
         selectionPanel.add(mountToCarButton, c);
@@ -227,5 +249,29 @@ public class BuilderPanel extends JPanel {
 
     private int getPrevious(int current, int size) {
         return (current - 1 + size) % size;
+    }
+
+    private void buildRandomCar(CarBuilder builder) {
+        Random random = new Random();
+        builder.buildBody((Body) getRandCarPart(random, Garage.CATEGORY_BODY))
+                .buildMotor((Motor) getRandCarPart(random, Garage.CATEGORY_MOTORS))
+                .buildTire((Tires) getRandCarPart(random, Garage.CATEGORY_TIRES))
+                .buildSpoiler((Spoiler) getRandCarPart(random, Garage.CATEGORY_SPOILERS));
+    }
+
+    private void generateRacers() {
+        // Add the player
+        racers.add(new Racer("Player", builder.getCar(), Color.RED, true));
+
+        // Generate random racers
+        CarBuilder opponentBuilder = new CarBuilder();
+        for(int i = 1; i < TOTAL_RACERS; ++i) {
+            buildRandomCar(opponentBuilder);
+            racers.add(new Racer("Racer" + i, opponentBuilder.getCar(), Color.BLACK, true));
+        }
+    }
+
+    public ArrayList<Racer> getRacers() {
+        return racers;
     }
 }
