@@ -56,20 +56,20 @@ public class Controller extends JFrame {
         // BLUEPRINTS
         builder = new CarBuilder();
         playerCarDisplayer = new CarDisplayer(playerCar, builder);
+        playerCarDisplayer.setBorder(BorderFactory.createTitledBorder("B L U E P R I N T"));
         // STATS
         StatsPanel carStatsPanel = new StatsPanel(playerCarDisplayer);
+        carStatsPanel.setBorder(BorderFactory.createTitledBorder("S T A T I S T I C S"));
         // BUILDER
         BuilderPanel builderPanel = new BuilderPanel(garage, builder, playerCarDisplayer, playerCar, carStatsPanel);
+        builderPanel.setBorder(BorderFactory.createTitledBorder("C A R    B U I L D E R"));
         // RACE
         JPanel racePanel = loadRacePanel();
+        racePanel.setBorder(BorderFactory.createTitledBorder("R A C E    I N F O R M A T I O N"));
 
         // Add panels with padding
         Border padding = BorderFactory.createEmptyBorder(20, 20, 20, 20);
-        Border padding_small = BorderFactory.createEmptyBorder(5, 5, 5, 5);
         mainPanel.setBorder(padding);
-        carStatsPanel.setBorder(padding_small);
-        builderPanel.setBorder(padding_small);
-        racePanel.setBorder(padding_small);
         mainPanel.add(playerCarDisplayer);
         mainPanel.add(carStatsPanel);
         mainPanel.add(builderPanel);

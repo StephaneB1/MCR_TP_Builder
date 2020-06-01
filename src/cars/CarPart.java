@@ -100,8 +100,6 @@ public abstract class CarPart implements Displayable, Cloneable {
     }
 
     private int getTint(int original, int tint) {
-        // 255 -> 1.0
-        // 0   -> 0.0
         double whitePercentage = original / 255.0;
 
         return (int) ((original * (1 - whitePercentage)) + (tint * whitePercentage));
