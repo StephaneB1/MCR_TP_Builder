@@ -185,7 +185,6 @@ public class BuilderPanel extends JPanel {
         selectionPanel.add(colorRightButton, c);
         c.gridy = 3;
         c.gridx = 0;
-        //c.ipady = 30; // make the button bigger
         selectionPanel.add(randomCarButton, c);
         c.gridx = 1;
         selectionPanel.add(mountToCarButton, c);

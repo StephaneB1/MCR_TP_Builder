@@ -9,6 +9,7 @@ import races.Racer;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +21,7 @@ import static java.lang.System.exit;
 public class Controller extends JFrame {
 
     private final int SCREEN_WIDTH  = 1200;
-    private final int SCREEN_HEIGHT = 600;
+    private final int SCREEN_HEIGHT = 800;
 
     private Garage garage;
 
@@ -56,16 +57,16 @@ public class Controller extends JFrame {
         // BLUEPRINTS
         builder = new CarBuilder();
         playerCarDisplayer = new CarDisplayer(playerCar, builder);
-        playerCarDisplayer.setBorder(BorderFactory.createTitledBorder("B L U E P R I N T"));
+        playerCarDisplayer.setBorder(getPanelBorder("B L U E P R I N T"));
         // STATS
         StatsPanel carStatsPanel = new StatsPanel(playerCarDisplayer);
-        carStatsPanel.setBorder(BorderFactory.createTitledBorder("S T A T I S T I C S"));
+        carStatsPanel.setBorder(getPanelBorder("S T A T I S T I C S"));
         // BUILDER
         BuilderPanel builderPanel = new BuilderPanel(garage, builder, playerCarDisplayer, playerCar, carStatsPanel);
-        builderPanel.setBorder(BorderFactory.createTitledBorder("C A R    B U I L D E R"));
+        builderPanel.setBorder(getPanelBorder("C A R    B U I L D E R"));
         // RACE
         JPanel racePanel = loadRacePanel();
-        racePanel.setBorder(BorderFactory.createTitledBorder("R A C E    I N F O R M A T I O N"));
+        racePanel.setBorder(getPanelBorder("R A C E    I N F O R M A T I O N"));
 
         // Add panels with padding
         Border padding = BorderFactory.createEmptyBorder(20, 20, 20, 20);
@@ -190,5 +191,13 @@ public class Controller extends JFrame {
         racePanel.add(startButton);
 
         return racePanel;
+    }
+
+    private Border getPanelBorder(String title) {
+        Border comp;
+        Border border = BorderFactory.createTitledBorder(title);
+        Border margin = BorderFactory.createEmptyBorder(10,10,10,10);
+        comp = BorderFactory.createCompoundBorder(border, margin);
+        return comp;
     }
 }
