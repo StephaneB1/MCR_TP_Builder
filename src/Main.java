@@ -1,12 +1,4 @@
-import cars.*;
-import garage.Garage;
-import races.Race;
-import races.Racer;
-
-import javax.swing.*;
-import java.awt.*;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import controller.Controller;
 
 public class Main {
 

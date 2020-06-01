@@ -1,10 +1,11 @@
 package cars;
-
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public interface Displayable {
 
-    Image getImage();
+    BufferedImage getImage();
+    BufferedImage getTintedImage(Color color);
 
     int getXCoord();
     int getYCoord();

@@ -6,23 +6,25 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public abstract class CarPart implements Displayable {
+public abstract class CarPart implements Displayable, Cloneable {
 
-    private String name;
+    String name;
 
     // Graphic display
-    private BufferedImage image;
-    private Point relCoord;
-    private Color color;
+    String imagePath;
+    BufferedImage image;
+    Point relCoord;
+    Color color;
 
     // Stats
-    private Stats stats;
+    Stats stats;
 
     public CarPart(String name, String imagePath, Stats stats, Point relCoord) {
         this.name = name;
         this.stats = stats;
+        this.imagePath = imagePath;
         this.relCoord = relCoord;
-        this.color = Color.BLACK;
+        this.color = Color.WHITE;
         try {
             BufferedImage in = ImageIO.read(new File(imagePath));
 
@@ -38,6 +40,8 @@ public abstract class CarPart implements Displayable {
     }
 
     public abstract String getCategory();
+
+    public abstract CarPart clone();
 
     public Stats getStats() {
         return stats;
@@ -57,7 +61,12 @@ public abstract class CarPart implements Displayable {
 
     @Override
     public BufferedImage getImage() {
-        return getTintedImage(image, color);
+        return tintImage(image, color);
+    }
+
+    @Override
+    public BufferedImage getTintedImage(Color color) {
+        return tintImage(image, color);
     }
 
     @Override
@@ -70,7 +79,7 @@ public abstract class CarPart implements Displayable {
         return relCoord.y;
     }
 
-    private BufferedImage getTintedImage(BufferedImage loadImg, Color color) {
+    public BufferedImage tintImage(BufferedImage loadImg, Color color) {
         BufferedImage result = new BufferedImage(loadImg.getWidth(),
                 loadImg.getHeight(), BufferedImage.TYPE_INT_ARGB);
         for(int i = 0; i < loadImg.getWidth(); ++i) {

@@ -4,10 +4,10 @@ import java.awt.*;
 
 public class Tires extends CarPart {
 
-    private static String TIRES_PATH = "resources/cars/tires/";
+    public static String TIRES_PATH = "resources/cars/tires/";
 
     public Tires(String name, String image, Stats stats, Point relCoord) {
-        super(name, TIRES_PATH + image, stats, relCoord);
+        super(name, image, stats, relCoord);
     }
 
     @Override
@@ -18,5 +18,10 @@ public class Tires extends CarPart {
     @Override
     public int getLayerIndex() {
         return 1;
+    }
+
+    @Override
+    public CarPart clone() {
+        return new Tires(this.name, this.imagePath, this.stats, this.relCoord);
     }
 }

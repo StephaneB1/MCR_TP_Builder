@@ -4,10 +4,10 @@ import java.awt.*;
 
 public class Spoiler extends CarPart {
 
-    private static String SPOILER_PATH = "resources/cars/spoilers/";
+    public static String SPOILER_PATH = "resources/cars/spoilers/";
 
     public Spoiler(String name, String image, Stats stats, Point relCoord) {
-        super(name, SPOILER_PATH + image, stats, relCoord);
+        super(name, image, stats, relCoord);
     }
 
     @Override
@@ -18,5 +18,10 @@ public class Spoiler extends CarPart {
     @Override
     public int getLayerIndex() {
         return 1;
+    }
+
+    @Override
+    public CarPart clone() {
+        return new Spoiler(this.name, this.imagePath, this.stats, this.relCoord);
     }
 }
