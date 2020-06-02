@@ -44,9 +44,9 @@ public class Controller extends JFrame {
          * - Car preview         | - Car performances  *
          *                       |                     *
          *=============================================*
-         * BUILDER / OPPONENT   | RACE                *
-         * - Car components      | - Race information  *
-         *                       |                     *
+         * BUILDER / OPPONENT + RACE                   *
+         * - Car components / Race information         *
+         *                                             *
          *---------------------------------------------*/
 
         JPanel mainPanel = new JPanel();
@@ -126,6 +126,7 @@ public class Controller extends JFrame {
         GarageProduct tires = new GarageProduct("Tires");
         tires.addProduct(new Tires("Tires-1", Tires.TIRES_PATH + "tiresTemplate.png", new Stats().randomize(), new Point(90, 130)));
         tires.addProduct(new Tires("Tires-2", Tires.TIRES_PATH + "tiresTest.png", new Stats().randomize(), new Point(90, 130)));
+        tires.addProduct(new Tires("Tires-3", Tires.TIRES_PATH + "tires-sport.png", new Stats().randomize(), new Point(90, 130)));
         // - Car spoilers
         GarageProduct spoilers = new GarageProduct("Spoilers");
         spoilers.addProduct(new Spoiler("Spoiler-1", Spoiler.SPOILER_PATH + "spoilerTemplate.png", new Stats().randomize(), new Point(35, 35)));
@@ -137,10 +138,17 @@ public class Controller extends JFrame {
         garage.addToInventory(spoilers);
 
         // Adding the paint jobs
-        garage.addPaintJob(new PaintJob("Ocean Blue", Color.BLUE)); // TODO change better colors
-        garage.addPaintJob(new PaintJob("Red Lobster", Color.RED)); // TODO change better colors
-        garage.addPaintJob(new PaintJob("Apple Storm", Color.GREEN)); // TODO change better colors
-        garage.addPaintJob(new PaintJob("Pink Duster", Color.PINK)); // TODO change better colors
+        garage.addPaintJob(new PaintJob("Expired Mojito", new Color(0, 102, 0)));
+        garage.addPaintJob(new PaintJob("Apple Storm", new Color(51, 204, 51)));
+        garage.addPaintJob(new PaintJob("Squeezy Lemon", new Color(255, 255, 82)));
+        garage.addPaintJob(new PaintJob("Autumn Sprinkle", new Color(255, 153, 51)));
+        garage.addPaintJob(new PaintJob("Red Lobster", new Color(231, 42, 29)));
+        garage.addPaintJob(new PaintJob("Pink Duster", new Color(255, 51, 204)));
+        garage.addPaintJob(new PaintJob("Ocean Blue", new Color(0, 50, 205)));
+        garage.addPaintJob(new PaintJob("Soft Blue", new Color(92, 255, 222)));
+        garage.addPaintJob(new PaintJob("Dark Knight", new Color(40, 40, 40)));
+        garage.addPaintJob(new PaintJob("Grey Day", new Color(150, 150, 150)));
+        garage.addPaintJob(new PaintJob("White Smoke", new Color(200, 200, 200)));
 
     }
 
