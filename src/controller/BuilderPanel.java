@@ -15,7 +15,7 @@ import java.util.Random;
 
 public class BuilderPanel extends JPanel {
 
-    private static final int TOTAL_RACERS = 4;
+    private static final int TOTAL_RACERS = 5;
 
     private Garage garage;
     private CarDisplayer displayer;
