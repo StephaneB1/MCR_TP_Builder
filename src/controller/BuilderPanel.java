@@ -161,7 +161,7 @@ public class BuilderPanel extends JPanel {
                     // Building and displaying the opponents
                     generateRacers();
                     for(int i = 1; i < racers.size(); ++i) {
-                        CarDisplayer carDisplayer = new CarDisplayer(racers.get(i).getCar());
+                        CarDisplayer carDisplayer = new CarDisplayer(racers.get(i).getCar(), null, 0.5);
                         opponentsPanel.add(carDisplayer);
                     }
 
