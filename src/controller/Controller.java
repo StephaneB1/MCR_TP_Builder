@@ -118,14 +118,14 @@ public class Controller extends JFrame {
         // - Car bodies
         GarageProduct bodies = new GarageProduct("Bodies");
         bodies.addProduct(new Body("Body-1", Body.BODY_PATH + "bodyTemplate.png", new Stats().randomize()));
-        bodies.addProduct(new Body("Body-2", Body.BODY_PATH + "Body_1.png", new Stats()));
+        bodies.addProduct(new Body("Body-3", Body.BODY_PATH + "body-camouflage.png", new Stats()));
         // - Car motors
         GarageProduct motors = new GarageProduct("Motors");
         motors.addProduct(new Motor("Motor-1", Motor.MOTOR_PATH + "motorTemplate.png", new Stats().randomize(), new Point(80, 70)));
         // - Car tires
         GarageProduct tires = new GarageProduct("Tires");
-        tires.addProduct(new Tires("Sport Socks", Tires.TIRES_PATH + "tires-sport.png", new Stats().randomize(), new Point(90, 130)));
-        tires.addProduct(new Tires("Flat Disks", Tires.TIRES_PATH + "tires-disk.png", new Stats().randomize(), new Point(90, 130)));
+        tires.addProduct(new Tires("Sport Socks", Tires.TIRES_PATH + "tires-sport.png", new Stats().randomize(), new Point(90, 120)));
+        tires.addProduct(new Tires("Flat Disks", Tires.TIRES_PATH + "tires-disk.png", new Stats().randomize(), new Point(90, 120)));
         // - Car spoilers
         GarageProduct spoilers = new GarageProduct("Spoilers");
         spoilers.addProduct(new Spoiler("Spoiler-1", Spoiler.SPOILER_PATH + "spoilerTemplate.png", new Stats().randomize(), new Point(35, 35)));
