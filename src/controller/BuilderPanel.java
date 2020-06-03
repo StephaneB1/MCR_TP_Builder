@@ -24,6 +24,7 @@ public class BuilderPanel extends JPanel {
     private StatsPanel statsPanel;
     private JPanel racePanel;
     private JPanel opponentsPanel;
+    private JLabel debug;
     private int currentCategory;
     private int currentProduct;
     private int currentColor;
@@ -31,14 +32,16 @@ public class BuilderPanel extends JPanel {
     private ArrayList<Racer> racers;
 
     public BuilderPanel(Garage garage, CarBuilder builder, CarDisplayer displayer,
-                        Car car, StatsPanel statsPanel, JPanel racePanel, JPanel opponentsPanel) {
-        this.garage     = garage;
-        this.builder    = builder;
-        this.displayer  = displayer;
-        this.car        = car;
-        this.statsPanel = statsPanel;
-        this.racePanel  = racePanel;
+                        Car car, StatsPanel statsPanel, JPanel racePanel, JPanel opponentsPanel,
+                        JLabel debug) {
+        this.garage         = garage;
+        this.builder        = builder;
+        this.displayer      = displayer;
+        this.car            = car;
+        this.statsPanel     = statsPanel;
+        this.racePanel      = racePanel;
         this.opponentsPanel = opponentsPanel;
+        this.debug          = debug;
         racers = new ArrayList<>();
         setupPanel();
     }
@@ -46,9 +49,9 @@ public class BuilderPanel extends JPanel {
     private void setupPanel() {
 
         setOpaque(true);
-        setLayout(new GridLayout(2, 1));
+        setLayout(new GridLayout(1, 2));
         // Car Part display
-        JPanel carPartPanel = new JPanel();
+        JPanel carPartPanel = new JPanel(new GridBagLayout());
         carPartPanel.setOpaque(false);
         // Car Part selection display
         JPanel selectionPanel = new JPanel();
@@ -62,7 +65,7 @@ public class BuilderPanel extends JPanel {
         productLabel.setHorizontalAlignment(SwingConstants.CENTER);
         JLabel colorLabel   = new JLabel(garage.getPaintJobs().get(currentColor).getName());
         colorLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        JButton categoryLeftButton = new JButton("<");
+        JButton categoryLeftButton = getIconJButton("resources/GUI/left-arrow.png");
         categoryLeftButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -71,7 +74,7 @@ public class BuilderPanel extends JPanel {
                 updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartPanel);
             }
         });
-        JButton categoryRightButton = new JButton(">");
+        JButton categoryRightButton = getIconJButton("resources/GUI/right-arrow.png");
         categoryRightButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -80,7 +83,7 @@ public class BuilderPanel extends JPanel {
                 updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartPanel);
             }
         });
-        JButton productLeftButton = new JButton("<");
+        JButton productLeftButton = getIconJButton("resources/GUI/left-arrow.png");
         productLeftButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -88,7 +91,7 @@ public class BuilderPanel extends JPanel {
                 updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartPanel);
             }
         });
-        JButton productRightButton = new JButton(">");
+        JButton productRightButton = getIconJButton("resources/GUI/right-arrow.png");
         productRightButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -96,7 +99,7 @@ public class BuilderPanel extends JPanel {
                 updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartPanel);
             }
         });
-        JButton colorLeftButton = new JButton("<");
+        JButton colorLeftButton = getIconJButton("resources/GUI/left-arrow.png");
         colorLeftButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -104,7 +107,7 @@ public class BuilderPanel extends JPanel {
                 updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartPanel);
             }
         });
-        JButton colorRightButton = new JButton(">");
+        JButton colorRightButton = getIconJButton("resources/GUI/right-arrow.png");
         colorRightButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -112,9 +115,9 @@ public class BuilderPanel extends JPanel {
                 updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartPanel);
             }
         });
-        JButton randomCarButton = new JButton("Get random");
-        JButton mountToCarButton = new JButton("Add to blueprint");
-        JButton buildCarButton   = new JButton("Build car");
+        JButton randomCarButton = getIconJButton("resources/GUI/random-button.png");
+        JButton mountToCarButton =  getIconJButton("resources/GUI/add-blueprint.png");
+        JButton buildCarButton   =  getIconJButton("resources/GUI/build-car.png");
         randomCarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -142,6 +145,8 @@ public class BuilderPanel extends JPanel {
                         builder.buildTire((Tires) newPart);
                         break;
                 }
+                debug.setForeground(Color.BLACK);
+                debug.setText("Added a new car part to the blueprint : " + newPart.getName() + " !");
 
                 displayer.repaint();
 
@@ -172,8 +177,11 @@ public class BuilderPanel extends JPanel {
                     car = builder.getCar();
                     displayer.setCar(car);
                     displayer.repaint();
+                    debug.setForeground(Color.BLACK);
+                    debug.setText("Well done, it's a beauty. Now let's race!");
                 } catch (IllegalArgumentException e) {
-                    e.printStackTrace(); // TODO affichage user
+                    debug.setForeground(Color.RED);
+                    debug.setText("Your blueprint is incomplete! You're missing some parts!");
                 }
             }
         });
@@ -206,7 +214,7 @@ public class BuilderPanel extends JPanel {
         selectionPanel.add(colorRightButton, c);
         c.gridy = 3;
         c.gridx = 0;
-        c.ipady = 30;
+        c.ipady = 20;
         selectionPanel.add(randomCarButton, c);
         c.gridx = 1;
         selectionPanel.add(mountToCarButton, c);
@@ -274,4 +282,14 @@ public class BuilderPanel extends JPanel {
     public ArrayList<Racer> getRacers() {
         return racers;
     }
+
+    private JButton getIconJButton(String iconPath) {
+        JButton result = new JButton("",new ImageIcon(iconPath));
+        result.setBorderPainted(false);
+        result.setContentAreaFilled(false);
+        result.setFocusPainted(false);
+        result.setOpaque(false);
+        return result;
+    }
+
 }

@@ -28,6 +28,7 @@ public class Controller extends JFrame {
     private Car playerCar;
     private CarDisplayer playerCarDisplayer;
     private CarBuilder builder;
+    private JLabel debug;
 
     private BuilderPanel builderPanel;
 
@@ -40,6 +41,8 @@ public class Controller extends JFrame {
         /*---------------------------------------------*
          * MCR - Racers                                *
          *---------------------------------------------*
+         * DEBUG MESSAGES                              *
+         *---------------------------------------------*
          * BLUEPRINTS            | STATS               *
          * - Car preview         | - Car performances  *
          *                       |                     *
@@ -51,10 +54,11 @@ public class Controller extends JFrame {
 
         JPanel mainPanel = new JPanel();
         mainPanel.setOpaque(false);
-        GridLayout mainLayout = new GridLayout(2, 2);
-        mainLayout.setHgap(10);
-        mainLayout.setVgap(10);
         mainPanel.setLayout(new GridBagLayout());
+        // DEBUG / INFO
+        debug = new JLabel("Welcome! Build your dream car and then you can start the race!");
+        debug.setBorder(getPanelBorder("C O N S O L E"));
+        debug.setFont(new Font("Consolas", Font.PLAIN, 14));
         // BLUEPRINTS
         builder = new CarBuilder();
         playerCarDisplayer = new CarDisplayer(playerCar, builder);
@@ -69,7 +73,7 @@ public class Controller extends JFrame {
         JPanel opponentsPanel = new JPanel(new GridLayout(2, 2));
         opponentsPanel.setBorder(getPanelBorder("O P P O N E N T S"));
         // BUILDER
-        builderPanel = new BuilderPanel(garage, builder, playerCarDisplayer, playerCar, carStatsPanel, racePanel, opponentsPanel);
+        builderPanel = new BuilderPanel(garage, builder, playerCarDisplayer, playerCar, carStatsPanel, racePanel, opponentsPanel, debug);
         builderPanel.setBorder(getPanelBorder("C A R    B U I L D E R"));
 
 
@@ -79,24 +83,29 @@ public class Controller extends JFrame {
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
         c.insets = new Insets(3,3,3,3); // padding
+        c.weightx = 1;
+        c.weighty = 0.1;
         c.gridx = 0;
         c.gridy = 0;
-        c.weightx = 0.5;
-        c.weighty = 0.5;
+        c.gridwidth = 2;
+        mainPanel.add(debug, c);
+        c.weighty = 1;
+        c.gridwidth = 1;
+        c.gridy = 1;
         mainPanel.add(playerCarDisplayer, c);
         c.gridx = 1;
+        c.weightx = 0.2;
         mainPanel.add(carStatsPanel, c);
         c.gridx = 0;
-        c.gridy = 1;
+        c.gridy = 2;
         c.gridwidth = 2;
         mainPanel.add(builderPanel, c);
         racePanel.setVisible(false);
         c.gridwidth = 1;
         c.gridx = 0;
-        c.gridy = 1;
+        c.gridy = 2;
         mainPanel.add(opponentsPanel, c);
         c.gridx = 1;
-        c.gridy = 1;
         mainPanel.add(racePanel, c);
 
         add(mainPanel);
@@ -129,7 +138,7 @@ public class Controller extends JFrame {
         // - Car spoilers
         GarageProduct spoilers = new GarageProduct("Spoilers");
         spoilers.addProduct(new Spoiler("Spoiler-1", Spoiler.SPOILER_PATH + "spoilerTemplate.png", new Stats().randomize(), new Point(35, 35)));
-        spoilers.addProduct(new Spoiler("Back Street", Spoiler.SPOILER_PATH + "spoiler-street.png", new Stats().randomize(), new Point(35, 35)));
+        spoilers.addProduct(new Spoiler("Back Street", Spoiler.SPOILER_PATH + "spoiler-street.png", new Stats().randomize(), new Point(35, 60)));
 
         // Adding to the garage inventory
         garage.addToInventory(bodies);

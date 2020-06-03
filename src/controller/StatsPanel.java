@@ -32,11 +32,17 @@ public class StatsPanel extends JPanel {
 
         updateStats();
 
-        add(new JLabel("SPEED"));
+        JLabel speedLabel       = new JLabel("SPEED          :");
+        JLabel maniabilityLabel = new JLabel("MANIABILITY    :");
+        JLabel resistanceLabel  = new JLabel("RESISTANCE     :");
+        speedLabel.setFont(new Font("Consolas", Font.BOLD, 14));
+        maniabilityLabel.setFont(new Font("Consolas", Font.BOLD, 14));
+        resistanceLabel.setFont(new Font("Consolas", Font.BOLD, 14));
+        add(speedLabel);
         add(speedStatPanel);
-        add(new JLabel("MANIABILITY"));
+        add(maniabilityLabel);
         add(maniabilityStatPanel);
-        add(new JLabel("RESISTANCE"));
+        add(resistanceLabel);
         add(resistanceStatPanel);
     }
 
@@ -50,8 +56,13 @@ public class StatsPanel extends JPanel {
         statPanel.removeAll();
 
         for(int i = 1; i <= TOTAL_STAT_UNIT; ++i) {
-            JPanel stat = new JPanel();
-            stat.setBackground(statValue <= i ? Color.GRAY : Color.GREEN);
+            JLabel stat = new JLabel(statValue <= i ?
+                    new ImageIcon("resources/GUI/statOff.png") :
+                    new ImageIcon("resources/GUI/statOn.png")
+            );
+
+            /*JPanel stat = new JPanel();
+            stat.setBackground(statValue <= i ? Color.GRAY : Color.GREEN);*/
             statPanel.add(stat);
         }
 
