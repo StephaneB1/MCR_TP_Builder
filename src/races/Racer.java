@@ -17,14 +17,14 @@ public class Racer implements Comparable<Racer>{
     private final double crashDuration;
     private final double crashChance;
     private final double distancePerTick;
-
-    // Global constants the Stats factors will affect/use
-    private static final double CRASH_DURATION = 200; // [tick]
-    private static final double CRASH_CHANCE = 0.005;
-    private static final double DISTANCE_PER_TICK = 5; // [meter], base velocity
-    // [0;1] amount of realtime global randomness (0 = no randomness, 1 = a lot)
-    private static final double REALTIME_RANDOMNESS = 0; // TODO WIP
     private static final Random rand = new Random();
+
+    /***** GLOBAL PARAMETERS *****/
+    private static final double REALTIME_RANDOMNESS = 0.5;  // [0;1] global randomness factor (0 = no randomness)
+    private static final double CRASH_DURATION = 200;       // [tick]
+    private static final double CRASH_CHANCE = 0.004;       // [0;1]
+    private static final double DISTANCE_PER_TICK = 5;      // [meter], base velocity
+
 
     public Racer(String name, Car car, Color color, boolean displayLogs) {
         this.name = name;
@@ -32,19 +32,11 @@ public class Racer implements Comparable<Racer>{
         this.color = color;
         this.displayLogs = displayLogs;
 
-        // Apply Car's Stats to environment constants
+        // Apply Car's Stats to global constants
         Stats carStats = car.getStats();
         crashDuration = CRASH_DURATION * (1 - Stats.toPercent(carStats.getResistance()));
         crashChance = CRASH_CHANCE * (1 - Stats.toPercent(carStats.getManiability()));
         distancePerTick = DISTANCE_PER_TICK * Stats.toPercent(carStats.getSpeed());
-
-        displayLog(
-                "==========\n" + name
-                + "\n" + car.getStats()
-                + "\nCrash duration: " + crashDuration
-                + "\nCrash chance  : " + crashChance
-                + "\nmeter pertick : " + distancePerTick
-        );
     }
 
     /**
@@ -79,12 +71,17 @@ public class Racer implements Comparable<Racer>{
         return currentDistance;
     }
 
+    /**
+     * Check if the Racer is crashed
+     * @return true if Racer is currently crashed
+     */
     public boolean isCrashed() {
         return crashTimeout > 0;
     }
 
     /**
-     * TODO WIP
+     * Make the Racer run with randomness and chances to crash
+     * c.f. global parameters constants above
      */
     public void runOneTick() {
         if(crashTimeout > 0) {
@@ -93,10 +90,11 @@ public class Racer implements Comparable<Racer>{
             }
         } else { // Racer runs
             if(rand.nextDouble() < crashChance) { // Bad luck, Racer crashes
-                crashTimeout = crashDuration; // Racer has to wait crashDuration ticks
-                displayLog(name + " crashes");
+                crashTimeout = crashDuration * globalRandomMultiplier(); // Racer has to wait crashDuration ticks
+                displayLog(name + " crashes and waits for " + crashTimeout);
             } else { // Racer runs normally
-                currentDistance += distancePerTick;
+                double tickDistance = distancePerTick * globalRandomMultiplier();
+                currentDistance += tickDistance;
             }
         }
     }
@@ -108,6 +106,16 @@ public class Racer implements Comparable<Racer>{
     private void displayLog(String message) {
         if(displayLogs)
             System.out.println(message);
+    }
+
+    /**
+     * Generates a factor between 1-GLOBAL_REALTIME_RANDOMNESS and 1+GLOBAL_REALTIME_RANDOMNESS)
+     * e.g. if GLOBAL_REALTIME_RANDOMNESS = 0.4, methods return range will be [0.6;1.4]
+     * @return factor in percent
+     */
+    private double globalRandomMultiplier() {
+        //return 1 + (new Random()).nextDouble() * GLOBAL_REALTIME_RANDOMNESS * 2 - GLOBAL_REALTIME_RANDOMNESS;
+        return 1 + REALTIME_RANDOMNESS * (2 * (new Random()).nextDouble() - 1);
     }
 
     @Override
