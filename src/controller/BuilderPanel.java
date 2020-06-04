@@ -1,8 +1,6 @@
 package controller;
 
 import carBuilder.CarBuilder;
-import carBuilder.CarWithBody;
-import carBuilder.EmptyCar;
 import cars.*;
 import garage.Garage;
 import garage.GarageProduct;
