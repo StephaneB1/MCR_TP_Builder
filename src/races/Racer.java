@@ -100,6 +100,14 @@ public class Racer implements Comparable<Racer>{
     }
 
     /**
+     * The Racer gets back into initial state
+     */
+    public void reset() {
+        currentDistance = 0;
+        crashTimeout = 0;
+    }
+
+    /**
      * Displays message to console if displayLogs attribute is set to true
      * @param message text to display in console
      */
