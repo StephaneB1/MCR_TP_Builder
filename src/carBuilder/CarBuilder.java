@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class CarBuilder implements EmptyCar, CarWithBody {
+public class CarBuilder {
 
     private Motor motor;
     private Body body;
@@ -27,54 +27,51 @@ public class CarBuilder implements EmptyCar, CarWithBody {
         tempStats = new Stats();
     }
 
-    public EmptyCar getNewCar() {
-        return new CarBuilder();
-    }
-
-    @Override
-    public CarWithBody setName(String name) {
+    public CarBuilder setName(String name) {
         this.name = name;
         return this;
     }
 
-    @Override
-    public CarWithBody setColor(Color color) {
+    public CarBuilder setColor(Color color) {
         this.color = color;
         return this;
     }
 
-    @Override
-    public CarWithBody buildMotor(Motor motor) {
-        // Check body etc...
+    public CarBuilder buildMotor(Motor motor) {
+        if (body == null) {
+            return null;
+        }
         this.motor = motor;
         updateStats();
         return this;
     }
 
-    @Override
-    public CarWithBody buildBody(Body body) {
+    public CarBuilder buildBody(Body body) {
         this.body = body;
         updateStats();
         return this;
     }
 
-    @Override
-    public CarWithBody buildTire(Tires tires) {
+    public CarBuilder buildTire(Tires tires) {
+        if (body == null) {
+            return null;
+        }
         this.tire = tires;
         updateStats();
         return this;
     }
 
-    @Override
-    public CarWithBody buildSpoiler(Spoiler spoiler) {
+    public CarBuilder buildSpoiler(Spoiler spoiler) {
+        if (body == null) {
+            return null;
+        }
         this.spoiler = spoiler;
         updateStats();
         return this;
     }
 
-    @Override
     public Car getCar() {                                      // temp, just to make the simple builder work
-        if(motor != null && spoiler != null &&  tire != null /*&& name != null && color != null*/) {
+        if (motor != null && spoiler != null && tire != null /*&& name != null && color != null*/) {
             return new Car(name, body, motor, tire, spoiler, color);
         } else {
             return null;

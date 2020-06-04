@@ -1,8 +1,6 @@
 package controller;
 
 import carBuilder.CarBuilder;
-import carBuilder.CarWithBody;
-import carBuilder.EmptyCar;
 import cars.*;
 import garage.Garage;
 import garage.GarageProduct;
@@ -37,14 +35,14 @@ public class BuilderPanel extends JPanel {
     public BuilderPanel(Garage garage, CarBuilder builder, CarDisplayer displayer,
                         Car car, StatsPanel statsPanel, JPanel racePanel, JPanel opponentsPanel,
                         JLabel debug) {
-        this.garage         = garage;
-        this.builder        = builder;
-        this.displayer      = displayer;
-        this.car            = car;
-        this.statsPanel     = statsPanel;
-        this.racePanel      = racePanel;
+        this.garage = garage;
+        this.builder = builder;
+        this.displayer = displayer;
+        this.car = car;
+        this.statsPanel = statsPanel;
+        this.racePanel = racePanel;
         this.opponentsPanel = opponentsPanel;
-        this.debug          = debug;
+        this.debug = debug;
         racers = new ArrayList<>();
         setupPanel();
     }
@@ -79,7 +77,7 @@ public class BuilderPanel extends JPanel {
         categoryLabel.setHorizontalAlignment(SwingConstants.CENTER);
         JLabel productLabel = new JLabel(garage.getInventory().get(currentCategory).getProducts().get(currentProduct).getName());
         productLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        JLabel colorLabel   = new JLabel(garage.getPaintJobs().get(currentColor).getName());
+        JLabel colorLabel = new JLabel(garage.getPaintJobs().get(currentColor).getName());
         colorLabel.setHorizontalAlignment(SwingConstants.CENTER);
         JButton categoryLeftButton = getIconJButton("resources/GUI/left-arrow.png");
         categoryLeftButton.addActionListener(new ActionListener() {
@@ -132,8 +130,8 @@ public class BuilderPanel extends JPanel {
             }
         });
         JButton randomCarButton = getIconJButton("resources/GUI/random-button.png");
-        JButton mountToCarButton =  getIconJButton("resources/GUI/add-blueprint.png");
-        JButton buildCarButton   =  getIconJButton("resources/GUI/build-car.png");
+        JButton mountToCarButton = getIconJButton("resources/GUI/add-blueprint.png");
+        JButton buildCarButton = getIconJButton("resources/GUI/build-car.png");
         randomCarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -148,22 +146,36 @@ public class BuilderPanel extends JPanel {
                 // Add car part to the player's car (by cloning a template from the garage)
                 CarPart newPart = garage.getInventory().get(currentCategory).getProducts().get(currentProduct).clone();
                 newPart.setColor(garage.getPaintJobs().get(currentColor).getColor());
-                switch(currentCategory) {
+
+                boolean success = true;
+                switch (currentCategory) {
                     case Garage.CATEGORY_BODY:
                         builder.buildBody((Body) newPart);
                         break;
                     case Garage.CATEGORY_MOTORS:
-                        builder.buildMotor((Motor) newPart);
+                        if (builder.buildMotor((Motor) newPart) == null) {
+                            setNotBodyErrorMessage("a motor");
+                            success = false;
+                        }
                         break;
                     case Garage.CATEGORY_SPOILERS:
-                        builder.buildSpoiler((Spoiler) newPart);
+                        if (builder.buildSpoiler((Spoiler) newPart) == null) {
+                            setNotBodyErrorMessage("a spoiler");
+                            success = false;
+                        }
                         break;
                     case Garage.CATEGORY_TIRES:
-                        builder.buildTire((Tires) newPart);
+                        if (builder.buildTire((Tires) newPart) == null) {
+                            setNotBodyErrorMessage("tires");
+                            success = false;
+                        }
                         break;
                 }
-                debug.setForeground(Color.BLACK);
-                debug.setText("Added a new car part to the blueprint : " + newPart.getName() + " !");
+
+                if (success) {
+                    debug.setForeground(Color.BLACK);
+                    debug.setText("Added a new car part to the blueprint : " + newPart.getName() + " !");
+                }
 
                 displayer.repaint();
 
@@ -175,10 +187,10 @@ public class BuilderPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 // Build car
-                if(builder.getCar() != null) {
+                if (builder.getCar() != null) {
                     // Building and displaying the opponents
                     generateRacers();
-                    for(int i = 1; i < racers.size(); ++i) {
+                    for (int i = 1; i < racers.size(); ++i) {
                         CarDisplayer carDisplayer = new CarDisplayer(racers.get(i).getCar(), null, 0.5);
                         opponentsPanel.add(carDisplayer);
                     }
@@ -198,9 +210,9 @@ public class BuilderPanel extends JPanel {
                 }
             }
         });
-        c.insets = new Insets(3,3,3,3); // padding
+        c.insets = new Insets(3, 3, 3, 3); // padding
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.anchor=GridBagConstraints.CENTER;
+        c.anchor = GridBagConstraints.CENTER;
         c.gridy = 0;
         c.gridx = 0;
         c.weightx = 0.2;
@@ -243,8 +255,8 @@ public class BuilderPanel extends JPanel {
     private void updateSelectionLabels(JLabel categoryLabel, JLabel productLabel,
                                        JLabel colorLabel, JPanel carPartLabel) {
         GarageProduct category = garage.getInventory().get(currentCategory);
-        CarPart product        = category.getProducts().get(currentProduct);
-        PaintJob paintJob      = garage.getPaintJobs().get(currentColor);
+        CarPart product = category.getProducts().get(currentProduct);
+        PaintJob paintJob = garage.getPaintJobs().get(currentColor);
 
         // Selection labels
         categoryLabel.setText(category.getProductLabel());
@@ -289,7 +301,7 @@ public class BuilderPanel extends JPanel {
 
         // Generate random racers
         CarBuilder opponentBuilder = new CarBuilder();
-        for(int i = 1; i < TOTAL_RACERS; ++i) {
+        for (int i = 1; i < TOTAL_RACERS; ++i) {
             buildRandomCar(opponentBuilder);
             racers.add(new Racer("Racer" + i, opponentBuilder.getCar(), Color.BLACK, true));
         }
@@ -300,7 +312,7 @@ public class BuilderPanel extends JPanel {
     }
 
     private JButton getIconJButton(String iconPath) {
-        JButton result = new JButton("",new ImageIcon(iconPath));
+        JButton result = new JButton("", new ImageIcon(iconPath));
         result.setBorderPainted(false);
         result.setContentAreaFilled(false);
         result.setFocusPainted(false);
@@ -308,4 +320,9 @@ public class BuilderPanel extends JPanel {
         return result;
     }
 
+
+    private void setNotBodyErrorMessage(String part) {
+        debug.setForeground(Color.RED);
+        debug.setText("Can't add " + part + " without a body");
+    }
 }
