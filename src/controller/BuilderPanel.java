@@ -297,7 +297,8 @@ public class BuilderPanel extends JPanel {
 
     private void generateRacers() {
         // Add the player
-        racers.add(new Racer("Player", builder.getCar(), Color.RED, true));
+        racers.add(new Racer("Player1", builder.getCar(), Color.RED, true));
+        racers.add(new Racer("Player2", builder.getCar(), Color.BLUE, true));
 
         // Generate random racers
         CarBuilder opponentBuilder = new CarBuilder();
