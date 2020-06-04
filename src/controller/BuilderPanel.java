@@ -24,6 +24,7 @@ public class BuilderPanel extends JPanel {
     private CarBuilder builder;
     private Car car;
     private StatsPanel statsPanel;
+    private StatsPanel carPartStatsPanel;
     private JPanel racePanel;
     private JPanel opponentsPanel;
     private JLabel debug;
@@ -52,9 +53,22 @@ public class BuilderPanel extends JPanel {
 
         setOpaque(true);
         setLayout(new GridLayout(1, 2));
-        // Car Part display
+        // Car Part display with stats
         JPanel carPartPanel = new JPanel(new GridBagLayout());
-        carPartPanel.setOpaque(false);
+        JPanel carPartDisplay = new JPanel(new GridBagLayout());
+        carPartDisplay.setOpaque(false);
+        GridBagConstraints c1 = new GridBagConstraints();
+        c1.insets = new Insets(3,3,3,3); // padding
+        c1.fill = GridBagConstraints.HORIZONTAL;
+        c1.anchor=GridBagConstraints.CENTER;
+        c1.gridy = 0;
+        c1.gridx = 0;
+        c1.weighty = 0.8;
+        carPartPanel.add(carPartDisplay, c1);
+        c1.gridy = 1;
+        c1.weighty = 0.2;
+        carPartStatsPanel = new StatsPanel(null);
+        carPartPanel.add(carPartStatsPanel, c1);
         // Car Part selection display
         JPanel selectionPanel = new JPanel();
         selectionPanel.setOpaque(false);
@@ -73,7 +87,7 @@ public class BuilderPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 currentCategory = getPrevious(currentCategory, garage.getInventory().size());
                 currentProduct  = 0;
-                updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartPanel);
+                updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartDisplay);
             }
         });
         JButton categoryRightButton = getIconJButton("resources/GUI/right-arrow.png");
@@ -82,7 +96,7 @@ public class BuilderPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 currentCategory = getNext(currentCategory, garage.getInventory().size());
                 currentProduct  = 0;
-                updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartPanel);
+                updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartDisplay);
             }
         });
         JButton productLeftButton = getIconJButton("resources/GUI/left-arrow.png");
@@ -90,7 +104,7 @@ public class BuilderPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 currentProduct = getPrevious(currentProduct, garage.getInventory().get(currentCategory).getProducts().size());
-                updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartPanel);
+                updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartDisplay);
             }
         });
         JButton productRightButton = getIconJButton("resources/GUI/right-arrow.png");
@@ -98,7 +112,7 @@ public class BuilderPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 currentProduct = getNext(currentProduct, garage.getInventory().get(currentCategory).getProducts().size());
-                updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartPanel);
+                updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartDisplay);
             }
         });
         JButton colorLeftButton = getIconJButton("resources/GUI/left-arrow.png");
@@ -106,7 +120,7 @@ public class BuilderPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 currentColor = getPrevious(currentColor, garage.getPaintJobs().size());
-                updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartPanel);
+                updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartDisplay);
             }
         });
         JButton colorRightButton = getIconJButton("resources/GUI/right-arrow.png");
@@ -114,7 +128,7 @@ public class BuilderPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 currentColor = getNext(currentColor, garage.getPaintJobs().size());
-                updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartPanel);
+                updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartDisplay);
             }
         });
         JButton randomCarButton = getIconJButton("resources/GUI/random-button.png");
@@ -219,9 +233,11 @@ public class BuilderPanel extends JPanel {
         selectionPanel.add(mountToCarButton, c);
         c.gridx = 2;
         selectionPanel.add(buildCarButton, c);
-        updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartPanel);
+        updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartDisplay);
         add(carPartPanel);
         add(selectionPanel);
+
+        carPartStatsPanel.updateStats(garage.getInventory().get(currentCategory).getProducts().get(currentProduct).getStats());
     }
 
     private void updateSelectionLabels(JLabel categoryLabel, JLabel productLabel,
@@ -240,6 +256,7 @@ public class BuilderPanel extends JPanel {
         carPartLabel.removeAll();
         carPartLabel.add(picLabel);
         carPartLabel.repaint();
+        carPartStatsPanel.updateStats(product.getStats());
     }
 
     private CarPart getRandCarPart(Random rand, int category) {

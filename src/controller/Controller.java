@@ -111,7 +111,10 @@ public class Controller extends JFrame {
         add(mainPanel);
 
         //Resizing frame
-        setSize(SCREEN_WIDTH,SCREEN_HEIGHT);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setResizable(false);
+        pack();
+        setVisible(true);
         //position center of screen
         setLocationRelativeTo(null);
         //set visible

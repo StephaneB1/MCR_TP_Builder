@@ -1,6 +1,7 @@
 package controller;
 
 import cars.CarDisplayer;
+import cars.Stats;
 
 import javax.swing.*;
 import java.awt.*;
@@ -47,9 +48,17 @@ public class StatsPanel extends JPanel {
     }
 
     public void updateStats() {
-        updateStat(speedStatPanel, displayer.getStats().getSpeed());
-        updateStat(maniabilityStatPanel, displayer.getStats().getManiability());
-        updateStat(resistanceStatPanel, displayer.getStats().getResistance());
+        if(displayer != null) {
+            updateStat(speedStatPanel, displayer.getStats().getSpeed());
+            updateStat(maniabilityStatPanel, displayer.getStats().getManiability());
+            updateStat(resistanceStatPanel, displayer.getStats().getResistance());
+        }
+    }
+
+    public void updateStats(Stats stat) {
+        updateStat(speedStatPanel, stat.getSpeed());
+        updateStat(maniabilityStatPanel, stat.getManiability());
+        updateStat(resistanceStatPanel, stat.getResistance());
     }
 
     private void updateStat(JPanel statPanel, double statValue) {
