@@ -45,7 +45,9 @@ public class CarBuilder implements EmptyCar, CarWithBody {
 
     @Override
     public CarWithBody buildMotor(Motor motor) {
-        // Check body etc...
+        if (body == null) {
+            return null;
+        }
         this.motor = motor;
         updateStats();
         return this;
@@ -60,6 +62,9 @@ public class CarBuilder implements EmptyCar, CarWithBody {
 
     @Override
     public CarWithBody buildTire(Tires tires) {
+        if (body == null) {
+            return null;
+        }
         this.tire = tires;
         updateStats();
         return this;
@@ -67,6 +72,9 @@ public class CarBuilder implements EmptyCar, CarWithBody {
 
     @Override
     public CarWithBody buildSpoiler(Spoiler spoiler) {
+        if (body == null) {
+            return null;
+        }
         this.spoiler = spoiler;
         updateStats();
         return this;
@@ -74,7 +82,7 @@ public class CarBuilder implements EmptyCar, CarWithBody {
 
     @Override
     public Car getCar() {                                      // temp, just to make the simple builder work
-        if(motor != null && spoiler != null &&  tire != null /*&& name != null && color != null*/) {
+        if (motor != null && spoiler != null && tire != null /*&& name != null && color != null*/) {
             return new Car(name, body, motor, tire, spoiler, color);
         } else {
             return null;
