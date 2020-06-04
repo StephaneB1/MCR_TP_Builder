@@ -27,6 +27,10 @@ public class Race extends JFrame implements WindowListener {
         this.totalDistance = totalDistance;
         this.racers = racers;
 
+        for(Racer racer : this.racers){
+            racer.reset();
+        }
+
         this.setSize(WIDTH, HEIGHT);
         this.setTitle("Race");
         this.setLocationRelativeTo(null);
@@ -85,6 +89,7 @@ public class Race extends JFrame implements WindowListener {
 
                     racePanel.repaint();
                     raceDetailsPanel.updateLeaderBoard();
+                    raceDetailsPanel.checkRacersCrash();
 
                 }
                 // Race finish -> stop the current timertask and display winner
