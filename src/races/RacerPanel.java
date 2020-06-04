@@ -6,6 +6,7 @@ import controller.Controller;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -19,9 +20,12 @@ public class RacerPanel extends JPanel {
     private TimerTask repeatedTask;
     private Timer timerWarning;
     private JLabel lblWarningImg;
+    private JLabel lblSmokeAnim;
 
     public RacerPanel(Racer racer, String panelTitle) {
         this.racer = racer;
+
+        setBackground(Color.WHITE);
 
         BufferedImage warningImg = null;
         try {
@@ -33,19 +37,21 @@ public class RacerPanel extends JPanel {
 
         setLayout(null);
         setBorder(Controller.getPanelBorder(panelTitle));
-        //leftPanel.setBackground(Color.RED);
-        //Icon imgIcon = new ImageIcon(RaceDetailsPanel.class.getClassLoader().getResource("smoke_anim_1.gif"));
-        //JLabel smokeAnim = new JLabel(imgIcon);
-        //smokeAnim.setBounds(40, -170, 300, 500);
-        //leftPanel.add(smokeAnim);
-        CarDisplayer carPanel1 = new CarDisplayer(racer.getCar());
-        carPanel1.setLocation(20, 150);
+
+        Icon imgIcon = new ImageIcon(RaceDetailsPanel.class.getClassLoader().getResource("smoke_anim.gif"));
+        lblSmokeAnim = new JLabel(imgIcon);
+        lblSmokeAnim.setBounds(40, 0, lblSmokeAnim.getPreferredSize().width, lblSmokeAnim.getPreferredSize().height);
+        lblSmokeAnim.setVisible(false);
+
+        CarDisplayer carPanel = new CarDisplayer(racer.getCar());
+        carPanel.setLocation(20, 150);
 
         lblWarningImg = new JLabel(new ImageIcon(warningImg));
         lblWarningImg.setBounds(420 ,20,lblWarningImg.getPreferredSize().width, lblWarningImg.getPreferredSize().height);
         lblWarningImg.setVisible(false);
 
-        add(carPanel1);
+        add(lblSmokeAnim);
+        add(carPanel);
         add(lblWarningImg);
     }
 
@@ -53,6 +59,8 @@ public class RacerPanel extends JPanel {
         System.out.println(racer.getName() + " : " + racer.isCrashed());
         if(racer.isCrashed() && !animCrashedRunning){
             animCrashedRunning = true;
+
+            lblSmokeAnim.setVisible(true);
 
             repeatedTask = new TimerTask() {
                 @Override
@@ -69,6 +77,7 @@ public class RacerPanel extends JPanel {
             timerWarning.scheduleAtFixedRate(repeatedTask, 0, 500);
         }else if(!racer.isCrashed() && animCrashedRunning){
             animCrashedRunning = false;
+            lblSmokeAnim.setVisible(false);
             lblWarningImg.setVisible(false);
             timerWarning.cancel();
             timerWarning.purge();

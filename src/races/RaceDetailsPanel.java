@@ -25,6 +25,7 @@ public class RaceDetailsPanel extends JPanel {
     private ArrayList<JLabel> learerboardLabels;
 
     public RaceDetailsPanel(ArrayList<Racer> racers, int totalDistance){
+        setBackground(Color.WHITE);
         this.racersPanels = new ArrayList<>();
         this.racers = racers;
         this.player1Racer = racers.get(0);
@@ -45,6 +46,7 @@ public class RaceDetailsPanel extends JPanel {
 
     private JPanel loadLeaderboardPanel() {
         JPanel panel = new JPanel();
+        panel.setBackground(Color.WHITE);
         panel.setLayout(null);
         panel.setBorder(Controller.getPanelBorder("L E A D E R  B O A R D"));
         //rightPanel.setBackground(Color.BLUE);

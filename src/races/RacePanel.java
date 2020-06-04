@@ -15,12 +15,12 @@ public class RacePanel extends JPanel {
     private int raceBeginY;
     private final int RACER_SIZE = 28;
 
-    private JLabel lblDistanceTraveled;
     private JLabel lblPlayer1;
     private JLabel lblPlayer2;
 
     public RacePanel(int width, int height, ArrayList<Racer> racers, int totalDistance) {
         this.setSize(width, height);
+        setBackground(Color.WHITE);
         this.player1Racer = racers.get(0);
         this.player2Racer = racers.get(1);
 
@@ -32,8 +32,8 @@ public class RacePanel extends JPanel {
         this.totalDistance = totalDistance;
 
         this.raceBeginY = height * 40 / 100;
-        this.lblDistanceTraveled = new JLabel(racers.get(0).getCurrentDistance() + " / " + totalDistance + " meters traveled", SwingConstants.CENTER);
-        this.lblDistanceTraveled.setFont(new Font("Arial", Font.BOLD, 18));
+        JLabel lblDistanceTraveled = new JLabel("Race distance: " + totalDistance + " meters", SwingConstants.CENTER);
+        lblDistanceTraveled.setFont(new Font("Arial", Font.BOLD, 18));
 
         this.lblPlayer1 = new JLabel("P1");
         this.lblPlayer2 = new JLabel("P2");
@@ -67,7 +67,5 @@ public class RacePanel extends JPanel {
             g2d.setColor(racer.getColor());
             g2d.fillOval(racerPosX, racerPosY, RACER_SIZE, RACER_SIZE);
         }
-
-        this.lblDistanceTraveled.setText((int)racers.get(0).getCurrentDistance() + " / " + totalDistance + " meters traveled");
     }
 }
