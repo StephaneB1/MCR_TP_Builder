@@ -45,6 +45,7 @@ public class CarBuilder implements EmptyCar, CarWithBody {
 
     @Override
     public CarWithBody buildMotor(Motor motor) {
+        // Check body etc...
         this.motor = motor;
         updateStats();
         return this;
@@ -76,7 +77,7 @@ public class CarBuilder implements EmptyCar, CarWithBody {
         if(motor != null && spoiler != null &&  tire != null /*&& name != null && color != null*/) {
             return new Car(name, body, motor, tire, spoiler, color);
         } else {
-            throw new IllegalArgumentException("Missing some part");
+            return null;
         }
     }
 

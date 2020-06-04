@@ -79,16 +79,18 @@ public abstract class CarPart implements Displayable, Cloneable {
         return relCoord.y;
     }
 
-    public BufferedImage tintImage(BufferedImage loadImg, Color color) {
+    private BufferedImage tintImage(BufferedImage loadImg, Color color) {
         BufferedImage result = new BufferedImage(loadImg.getWidth(),
                 loadImg.getHeight(), BufferedImage.TYPE_INT_ARGB);
         for(int i = 0; i < loadImg.getWidth(); ++i) {
             for(int j = 0; j < loadImg.getHeight(); ++j) {
                 Color pixelColor = new Color(loadImg.getRGB(i, j) , true);
 
-                Color tintedColor = new Color(getTint(pixelColor.getRed(), color.getRed()),
-                        getTint(pixelColor.getGreen(), color.getGreen()),
-                        getTint(pixelColor.getBlue(), color.getBlue()));
+                Color tintedColor = new Color(
+                        getGrayScaleTint(pixelColor.getRed(), color.getRed()),
+                        getGrayScaleTint(pixelColor.getGreen(), color.getGreen()),
+                        getGrayScaleTint(pixelColor.getBlue(), color.getBlue())
+                );
 
                 if(pixelColor.getAlpha() != 0) {
                     result.setRGB(i, j, tintedColor.getRGB());
@@ -99,9 +101,22 @@ public abstract class CarPart implements Displayable, Cloneable {
         return result;
     }
 
-    private int getTint(int original, int tint) {
-        double whitePercentage = original / 255.0;
+    private int getHalfAlphaTint(int original, int tint) {
+        return (int) (original + (tint - original) * 0.5);
+    }
 
-        return (int) ((original * (1 - whitePercentage)) + (tint * whitePercentage));
+    private int getGrayScaleTint(int original, int tint) {
+        double whitePercentage = original / 255.0;
+        double blackPercentage = 1 - whitePercentage;
+
+        return (int) (original * blackPercentage + tint * whitePercentage);
+    }
+
+    // Metallic paint job in case we add different textures (found the formula by mistake)
+    private int getTintMetallic(int original, int tint) {
+        double whitePercentage = original / 255.0;
+        double blackPercentage = 1 - whitePercentage;
+
+        return (int) (original * (((blackPercentage * tint)) % 1) + tint * whitePercentage) % 255;
     }
 }

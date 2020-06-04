@@ -58,7 +58,6 @@ public class CarDisplayer extends JPanel {
                 } else {
                     g.drawImage(carPart.getImage(), carPart.getXCoord(), carPart.getYCoord(), this);
                 }
-
             }
         }
         // Or the blueprint of the builder

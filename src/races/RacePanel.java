@@ -28,7 +28,6 @@ public class RacePanel extends JPanel {
         this.racers = racers;
         this.totalDistance = totalDistance;
 
-
         this.raceBeginY = height * 40 / 100;
         this.lblDistanceTraveled = new JLabel(racers.get(0).getCurrentDistance() + " / " + totalDistance + " meters traveled", SwingConstants.CENTER);
         this.lblDistanceTraveled.setFont(new Font("Arial", Font.BOLD, 18));

@@ -65,7 +65,7 @@ public class Controller extends JFrame {
         playerCarDisplayer.setBorder(getPanelBorder("B L U E P R I N T"));
         // STATS
         StatsPanel carStatsPanel = new StatsPanel(playerCarDisplayer);
-        carStatsPanel.setBorder(getPanelBorder("S T A T I S T I C S"));
+        carStatsPanel.setBorder(getPanelBorder("C A R    S T A T I S T I C S"));
         // RACE
         JPanel racePanel = loadRacePanel();
         racePanel.setBorder(getPanelBorder("R A C E    I N F O R M A T I O N"));
@@ -234,7 +234,7 @@ public class Controller extends JFrame {
         return racePanel;
     }
 
-    private Border getPanelBorder(String title) {
+    public static Border getPanelBorder(String title) {
         Border comp;
         Border border = BorderFactory.createTitledBorder(title);
         Border margin = BorderFactory.createEmptyBorder(10,10,10,10);

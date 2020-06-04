@@ -1,6 +1,8 @@
 package controller;
 
 import carBuilder.CarBuilder;
+import carBuilder.CarWithBody;
+import carBuilder.EmptyCar;
 import cars.*;
 import garage.Garage;
 import garage.GarageProduct;
@@ -123,6 +125,7 @@ public class BuilderPanel extends JPanel {
             public void actionPerformed(ActionEvent actionEvent) {
                 buildRandomCar(builder);
                 displayer.repaint();
+                statsPanel.updateStats();
             }
         });
         mountToCarButton.addActionListener(new ActionListener() {
@@ -158,11 +161,7 @@ public class BuilderPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 // Build car
-                try {
-
-                    builder.getCar();
-                    // Reaches here : car can be build
-
+                if(builder.getCar() != null) {
                     // Building and displaying the opponents
                     generateRacers();
                     for(int i = 1; i < racers.size(); ++i) {
@@ -179,7 +178,7 @@ public class BuilderPanel extends JPanel {
                     displayer.repaint();
                     debug.setForeground(Color.BLACK);
                     debug.setText("Well done, it's a beauty. Now let's race!");
-                } catch (IllegalArgumentException e) {
+                } else {
                     debug.setForeground(Color.RED);
                     debug.setText("Your blueprint is incomplete! You're missing some parts!");
                 }

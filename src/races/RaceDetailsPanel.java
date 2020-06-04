@@ -1,6 +1,7 @@
 package races;
 
 import cars.CarDisplayer;
+import controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,6 +25,7 @@ public class RaceDetailsPanel extends JPanel {
 
         JPanel leftPanel = new JPanel();
         leftPanel.setLayout(null);
+        leftPanel.setBorder(Controller.getPanelBorder("Y O U R    C A R"));
         //leftPanel.setBackground(Color.RED);
         JLabel lblYourCar = new JLabel("Your car");
         lblYourCar.setVisible(true);
