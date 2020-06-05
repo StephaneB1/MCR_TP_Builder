@@ -2,6 +2,7 @@ package races;
 
 import cars.CarDisplayer;
 import controller.Controller;
+import controller.StatsPanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -40,19 +41,26 @@ public class RacerPanel extends JPanel {
 
         Icon imgIcon = new ImageIcon(RaceDetailsPanel.class.getClassLoader().getResource("smoke_anim.gif"));
         lblSmokeAnim = new JLabel(imgIcon);
-        lblSmokeAnim.setBounds(40, 0, lblSmokeAnim.getPreferredSize().width, lblSmokeAnim.getPreferredSize().height);
+        lblSmokeAnim.setBounds(50, -60, lblSmokeAnim.getPreferredSize().width, lblSmokeAnim.getPreferredSize().height);
         lblSmokeAnim.setVisible(false);
 
         CarDisplayer carPanel = new CarDisplayer(racer.getCar());
-        carPanel.setLocation(20, 150);
+        carPanel.setLocation(20, 90);
 
         lblWarningImg = new JLabel(new ImageIcon(warningImg));
         lblWarningImg.setBounds(420 ,20,lblWarningImg.getPreferredSize().width, lblWarningImg.getPreferredSize().height);
         lblWarningImg.setVisible(false);
 
+        StatsPanel statsPanel = new StatsPanel(carPanel);
+        statsPanel.setBackground(Color.RED);
+        statsPanel.updateStats();
+        statsPanel.setLocation(50, 340);
+        statsPanel.setSize(400,120);
+
+        add(statsPanel);
+        add(lblWarningImg);
         add(lblSmokeAnim);
         add(carPanel);
-        add(lblWarningImg);
     }
 
     public void checkCrash(){

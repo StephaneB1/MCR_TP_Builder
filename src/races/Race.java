@@ -13,7 +13,7 @@ import java.util.Timer;
 public class Race extends JFrame implements WindowListener {
 
     private final int WIDTH = 1600;
-    private final int HEIGHT = 660;
+    private final int HEIGHT = 720;
     private RacePanel racePanel;
     private RaceDetailsPanel raceDetailsPanel;
 

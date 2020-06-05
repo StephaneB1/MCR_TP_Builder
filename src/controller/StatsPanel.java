@@ -22,6 +22,10 @@ public class StatsPanel extends JPanel {
 
         this.displayer = displayer;
 
+        speedStatPanel.setBackground(Color.WHITE);
+        maniabilityStatPanel.setBackground(Color.WHITE);
+        resistanceStatPanel.setBackground(Color.WHITE);
+
         setOpaque(false);
         GridLayout statsListGrid = new GridLayout(3, 2);
         statsListGrid.setHgap(10);
