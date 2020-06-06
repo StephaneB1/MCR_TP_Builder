@@ -53,8 +53,8 @@ public class Controller extends JFrame {
          *---------------------------------------------*/
 
         JPanel mainPanel = new JPanel();
-        mainPanel.setOpaque(false);
         mainPanel.setLayout(new GridBagLayout());
+        mainPanel.setBackground(Color.WHITE);
         // DEBUG / INFO
         debug = new JLabel("Welcome! Build your dream car and then you can start the race!");
         debug.setBorder(getPanelBorder("C O N S O L E"));
@@ -72,6 +72,8 @@ public class Controller extends JFrame {
         // OPPONENTS
         JPanel opponentsPanel = new JPanel(new GridLayout(2, 2));
         opponentsPanel.setBorder(getPanelBorder("O P P O N E N T S"));
+        opponentsPanel.setVisible(false);
+        opponentsPanel.setOpaque(false);
         // BUILDER
         builderPanel = new BuilderPanel(garage, builder, playerCarDisplayer, playerCar, carStatsPanel, racePanel, opponentsPanel, debug);
         builderPanel.setBorder(getPanelBorder("C A R    B U I L D E R"));

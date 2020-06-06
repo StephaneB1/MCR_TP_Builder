@@ -48,12 +48,12 @@ public class BuilderPanel extends JPanel {
     }
 
     private void setupPanel() {
-
-        setOpaque(true);
         setLayout(new GridLayout(1, 2));
+        setOpaque(false);
         // Car Part display with stats
         JPanel carPartPanel = new JPanel(new GridBagLayout());
         JPanel carPartDisplay = new JPanel(new GridBagLayout());
+        carPartPanel.setOpaque(false);
         carPartDisplay.setOpaque(false);
         GridBagConstraints c1 = new GridBagConstraints();
         c1.insets = new Insets(3,3,3,3); // padding
