@@ -1,6 +1,7 @@
 package races;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -11,8 +12,8 @@ import java.util.Timer;
 
 public class Race extends JFrame implements WindowListener {
 
-    private final int WIDTH = 1200;
-    private final int HEIGHT = 600;
+    private final int WIDTH = 1600;
+    private final int HEIGHT = 720;
     private RacePanel racePanel;
     private RaceDetailsPanel raceDetailsPanel;
 
@@ -26,6 +27,10 @@ public class Race extends JFrame implements WindowListener {
         this.totalDistance = totalDistance;
         this.racers = racers;
 
+        for(Racer racer : this.racers){
+            racer.reset();
+        }
+
         this.setSize(WIDTH, HEIGHT);
         this.setTitle("Race");
         this.setLocationRelativeTo(null);
@@ -36,8 +41,10 @@ public class Race extends JFrame implements WindowListener {
         this.racePanel = new RacePanel(WIDTH, HEIGHT / 4, racers, totalDistance);
         // PanelBottom for player stats in the current race has the rest of the windows
         this.raceDetailsPanel = new RaceDetailsPanel(this.racers, totalDistance);
-        raceDetailsPanel.setSize(1200, 3 * HEIGHT / 4);
-        raceDetailsPanel.setBackground(Color.red);
+        Border padding = BorderFactory.createEmptyBorder(20, 20, 40, 20);
+        raceDetailsPanel.setBorder(padding);
+        raceDetailsPanel.setSize(WIDTH, 3 * HEIGHT / 4);
+
         raceDetailsPanel.setLocation(0, HEIGHT / 4);
 
         this.add(racePanel);
@@ -82,6 +89,7 @@ public class Race extends JFrame implements WindowListener {
 
                     racePanel.repaint();
                     raceDetailsPanel.updateLeaderBoard();
+                    raceDetailsPanel.checkRacersCrash();
 
                 }
                 // Race finish -> stop the current timertask and display winner

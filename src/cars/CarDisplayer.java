@@ -25,6 +25,7 @@ public class CarDisplayer extends JPanel {
         this.ratio   = ratio;
 
         this.setSize(WIDTH, HEIGHT);
+        setBackground(Color.WHITE);
     }
 
     public CarDisplayer(Car car){

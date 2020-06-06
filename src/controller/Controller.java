@@ -204,7 +204,7 @@ public class Controller extends JFrame {
         racers.add(racer3);
         racers.add(racer4);
 */
-        Race race = new Race(3000, racers);
+        Race race = new Race(1000, racers);
 
         race.start();
     }
