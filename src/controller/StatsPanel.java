@@ -2,6 +2,7 @@ package controller;
 
 import cars.CarDisplayer;
 import cars.Stats;
+import utils.Utils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -70,12 +71,10 @@ public class StatsPanel extends JPanel {
 
         for(int i = 1; i <= TOTAL_STAT_UNIT; ++i) {
             JLabel stat = new JLabel(statValue <= i ?
-                    new ImageIcon("resources/GUI/statOff.png") :
-                    new ImageIcon("resources/GUI/statOn.png")
+                    Utils.getSizedIcon("resources/GUI/statOff_v2.png", 0.1, Image.SCALE_DEFAULT) :
+                    Utils.getSizedIcon("resources/GUI/statOn_v2.png", 0.1, Image.SCALE_DEFAULT)
             );
 
-            /*JPanel stat = new JPanel();
-            stat.setBackground(statValue <= i ? Color.GRAY : Color.GREEN);*/
             statPanel.add(stat);
         }
 

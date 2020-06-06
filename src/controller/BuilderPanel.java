@@ -5,6 +5,7 @@ import cars.*;
 import garage.Garage;
 import garage.GarageProduct;
 import races.Racer;
+import utils.Utils;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -83,7 +84,7 @@ public class BuilderPanel extends JPanel {
         productLabel.setHorizontalAlignment(SwingConstants.CENTER);
         JLabel colorLabel = new JLabel(garage.getPaintJobs().get(currentColor).getName());
         colorLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        JButton categoryLeftButton = getIconJButton("resources/GUI/left-arrow.png");
+        JButton categoryLeftButton = Utils.getIconJButton("resources/GUI/left-arrow.png");
         categoryLeftButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -92,7 +93,7 @@ public class BuilderPanel extends JPanel {
                 updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartDisplay);
             }
         });
-        JButton categoryRightButton = getIconJButton("resources/GUI/right-arrow.png");
+        JButton categoryRightButton = Utils.getIconJButton("resources/GUI/right-arrow.png");
         categoryRightButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -101,7 +102,7 @@ public class BuilderPanel extends JPanel {
                 updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartDisplay);
             }
         });
-        JButton productLeftButton = getIconJButton("resources/GUI/left-arrow.png");
+        JButton productLeftButton = Utils.getIconJButton("resources/GUI/left-arrow.png");
         productLeftButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -109,7 +110,7 @@ public class BuilderPanel extends JPanel {
                 updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartDisplay);
             }
         });
-        JButton productRightButton = getIconJButton("resources/GUI/right-arrow.png");
+        JButton productRightButton = Utils.getIconJButton("resources/GUI/right-arrow.png");
         productRightButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -117,7 +118,7 @@ public class BuilderPanel extends JPanel {
                 updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartDisplay);
             }
         });
-        JButton colorLeftButton = getIconJButton("resources/GUI/left-arrow.png");
+        JButton colorLeftButton = Utils.getIconJButton("resources/GUI/left-arrow.png");
         colorLeftButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -125,7 +126,7 @@ public class BuilderPanel extends JPanel {
                 updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartDisplay);
             }
         });
-        JButton colorRightButton = getIconJButton("resources/GUI/right-arrow.png");
+        JButton colorRightButton = Utils.getIconJButton("resources/GUI/right-arrow.png");
         colorRightButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -133,9 +134,9 @@ public class BuilderPanel extends JPanel {
                 updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartDisplay);
             }
         });
-        JButton randomCarButton = getIconJButton("resources/GUI/random-button_v2.png", 0.35);
-        JButton mountToCarButton = getIconJButton("resources/GUI/add-blueprint_v2.png", 0.35);
-        JButton buildCarButton = getIconJButton("resources/GUI/build-car_v2.png", 0.35);
+        JButton randomCarButton = Utils.getIconJButton("resources/GUI/random-button_v2.png", 0.35);
+        JButton mountToCarButton = Utils.getIconJButton("resources/GUI/add-blueprint_v2.png", 0.35);
+        JButton buildCarButton = Utils.getIconJButton("resources/GUI/build-car_v2.png", 0.35);
         randomCarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -318,29 +319,6 @@ public class BuilderPanel extends JPanel {
     public ArrayList<Racer> getRacers() {
         return racers;
     }
-
-    private JButton getIconJButton(String iconPath) {
-        return getIconJButton(iconPath, 1.0);
-    }
-
-    private JButton getIconJButton(String iconPath, double ratio) {
-
-        ImageIcon imageIcon = new ImageIcon(iconPath); // load the image to a imageIcon
-        Image image = imageIcon.getImage(); // transform it
-        Image newimg = image.getScaledInstance(
-                (int) (image.getWidth(null) * ratio),
-                (int) (image.getHeight(null) * ratio),
-                Image.SCALE_SMOOTH); // scale it the smooth way
-        imageIcon = new ImageIcon(newimg);  // transform it back
-
-        JButton result = new JButton("", imageIcon);
-        result.setBorderPainted(false);
-        result.setContentAreaFilled(false);
-        result.setFocusPainted(false);
-        result.setOpaque(false);
-        return result;
-    }
-
 
     private void setNotBodyErrorMessage(String part) {
         debug.setForeground(Color.RED);

@@ -1,5 +1,7 @@
 package utils;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.function.Function;
 
@@ -43,4 +45,34 @@ public class Utils {
 
         return average / list.size();
     }
+
+
+    public static JButton getIconJButton(String iconPath) {
+        return getIconJButton(iconPath, 1.0);
+    }
+
+    public static JButton getIconJButton(String iconPath, double ratio) {
+
+
+        JButton result = new JButton("", getSizedIcon(iconPath, ratio, Image.SCALE_SMOOTH));
+        result.setBorderPainted(false);
+        result.setContentAreaFilled(false);
+        result.setFocusPainted(false);
+        result.setOpaque(false);
+        return result;
+    }
+
+    public static ImageIcon getSizedIcon(String path, double ratio, int scaleType) {
+        ImageIcon imageIcon = new ImageIcon(path); // load the image to a imageIcon
+        Image image = imageIcon.getImage(); // transform it
+        Image newimg = image.getScaledInstance(
+                (int) (image.getWidth(null) * ratio),
+                (int) (image.getHeight(null) * ratio),
+                scaleType); // scale it the smooth way
+        imageIcon = new ImageIcon(newimg);  // transform it back
+
+        return imageIcon;
+    }
+
+
 }
