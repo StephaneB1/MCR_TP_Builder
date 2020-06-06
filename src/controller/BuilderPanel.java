@@ -59,14 +59,14 @@ public class BuilderPanel extends JPanel {
         carPartDisplay.setOpaque(false);
         GridBagConstraints c1 = new GridBagConstraints();
         c1.insets = new Insets(3,3,3,3); // padding
-        c1.fill = GridBagConstraints.HORIZONTAL;
+        c1.fill = GridBagConstraints.BOTH;
         c1.anchor=GridBagConstraints.CENTER;
         c1.gridy = 0;
         c1.gridx = 0;
-        c1.weighty = 0.8;
+        c1.weighty = 0.9;
         carPartPanel.add(carPartDisplay, c1);
         c1.gridy = 1;
-        c1.weighty = 0.2;
+        c1.weighty = 0.1;
         carPartStatsPanel = new StatsPanel(null);
         carPartPanel.add(carPartStatsPanel, c1);
         // Car Part selection display

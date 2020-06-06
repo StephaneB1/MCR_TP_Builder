@@ -94,7 +94,7 @@ public class Controller extends JFrame {
         c.gridy = 1;
         mainPanel.add(playerCarDisplayer, c);
         c.gridx = 1;
-        c.weightx = 0.2;
+        c.weightx = 0.1;
         mainPanel.add(carStatsPanel, c);
         c.gridx = 0;
         c.gridy = 2;
