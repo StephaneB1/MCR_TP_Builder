@@ -4,6 +4,7 @@ import carBuilder.CarBuilder;
 import cars.*;
 import garage.Garage;
 import garage.GarageProduct;
+import javafx.util.Builder;
 import races.Race;
 import races.Racer;
 import utils.Utils;
@@ -169,74 +170,62 @@ public class Controller extends JFrame {
 
     }
 
-    private void startRace(ArrayList<Racer> racers) {
-/*
-        Car car1 = new Car( "Car1",
-                new Body("Body", "bodyTemplate.png", new Stats(5, 1, 1)),
-                new Motor("Motor", "motorTemplate.png", new Stats(5, 1, 1), new Point(80, 70)),
-                new Tires("Tires", "tiresTemplate.png", new Stats(5, 1, 1), new Point(90, 130)),
-                new Spoiler("Spoiler", "spoilerTemplate.png", new Stats(5, 1, 1), new Point(35, 35)),
-                Color.RED);
-        Car car2 = new Car( "Car2",
-                new Body("Body", "bodyTemplate.png", new Stats(2.5, 2.5, 2.5)),
-                new Motor("Motor", "motorTemplate.png", new Stats(2.5, 2.5, 2.5), new Point(80, 70)),
-                new Tires("Tires", "tiresTemplate.png", new Stats(2.5, 2.5, 2.5), new Point(90, 130)),
-                new Spoiler("Spoiler", "spoilerTemplate.png", new Stats(2.5, 2.5, 2.5), new Point(35, 35)),
-                Color.BLUE);
-        Car car3 = new Car( "Car3",
-                new Body("Body", "bodyTemplate.png", new Stats(1.5, 4, 4)),
-                new Motor("Motor", "motorTemplate.png", new Stats(1.5, 4, 4), new Point(80, 70)),
-                new Tires("Tires", "tiresTemplate.png", new Stats(1.5, 4, 4), new Point(90, 130)),
-                new Spoiler("Spoiler", "spoilerTemplate.png", new Stats(1, 4, 4), new Point(35, 35)),
-                Color.GREEN);
-        Car car4 = new Car( "Car4",
-                new Body("Body", "bodyTemplate.png", new Stats().randomize()),
-                new Motor("Motor", "motorTemplate.png", new Stats().randomize(), new Point(80, 70)),
-                new Tires("Tires", "tiresTemplate.png", new Stats().randomize(), new Point(90, 130)),
-                new Spoiler("Spoiler", "spoilerTemplate.png", new Stats().randomize(), new Point(35, 35)),
-                Color.ORANGE);
-
-        // /!\ RACERS[0] IS ALWAYS THE PLAYER, NOT A BOT /!\
-        Racer racer1 = new Racer("SpeedMaster", car1, Color.RED, false);
-        Racer racer2 = new Racer("Balanced", car2, Color.BLUE, false);
-        Racer racer3 = new Racer("Tank", car3, Color.GREEN, false);
-        Racer racer4 = new Racer("Random", car4, Color.ORANGE, false);
-
-        ArrayList<Racer> racers = new ArrayList<>();
-        racers.add(racer1);
-        racers.add(racer2);
-        racers.add(racer3);
-        racers.add(racer4);
-*/
-        Race race = new Race(1000, racers);
-
-        race.start();
+    private void startRace(ArrayList<Racer> racers, int distance) {
+        new Race(distance, racers).start();
     }
 
     private JPanel loadRacePanel() {
         JPanel racePanel = new JPanel();
         racePanel.setOpaque(false);
-        racePanel.setLayout(new GridLayout(3, 2));
-        JButton quitButton = new JButton("Quit");
+        racePanel.setLayout(new GridBagLayout());
+        JLabel raceTitle = new JLabel("Total racers : 6");
+        JLabel distance  = new JLabel("Total distance (m) : ");
+        SpinnerModel model = new SpinnerNumberModel(3000, 500, 50000, 100);
+        JSpinner spinner = new JSpinner(model);
+        JButton quitButton = Utils.getIconJButton("resources/GUI/quit.png", 0.3);
         quitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 exit(0);
             }
         });
-        JButton startButton = new JButton("Start");
+        JButton restartButton = Utils.getIconJButton("resources/GUI/restart.png", 0.3);
+        restartButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO
+            }
+        });
+        JButton startButton = Utils.getIconJButton("resources/GUI/start_race.png", 0.3);
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                startRace(builderPanel.getRacers());
+                startRace(builderPanel.getRacers(), (int) spinner.getValue());
             }
         });
-        racePanel.add(new JLabel("Racers :"));
-        racePanel.add(new JLabel("5"));
-        racePanel.add(new JLabel("Total distance :"));
-        racePanel.add(new JLabel("5km"));
-        racePanel.add(quitButton);
-        racePanel.add(startButton);
+
+
+        GridBagConstraints c = new GridBagConstraints();
+        c.insets = new Insets(3,3,3,3); // padding
+        c.fill = GridBagConstraints.BOTH;
+        c.anchor=GridBagConstraints.CENTER;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridwidth = 2;
+        racePanel.add(raceTitle, c);
+        c.gridy = 1;
+        c.gridwidth = 1;
+        racePanel.add(distance, c);
+        c.gridx = 1;
+        racePanel.add(spinner, c);
+        c.gridx = 0;
+        c.gridy = 2;
+        c.gridwidth = 2;
+        racePanel.add(quitButton, c);
+        c.gridy = 3;
+        racePanel.add(restartButton, c);
+        c.gridy = 4;
+        racePanel.add(startButton, c);
 
         return racePanel;
     }
