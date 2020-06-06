@@ -6,10 +6,12 @@ import garage.Garage;
 import garage.GarageProduct;
 import races.Race;
 import races.Racer;
+import utils.Utils;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -241,9 +243,10 @@ public class Controller extends JFrame {
 
     public static Border getPanelBorder(String title) {
         Border comp;
-        Border border = BorderFactory.createTitledBorder(title);
+        TitledBorder titledBorder =BorderFactory.createTitledBorder(title);
+        titledBorder.setTitleFont(Utils.getDefaultFont(15));
         Border margin = BorderFactory.createEmptyBorder(10,10,10,10);
-        comp = BorderFactory.createCompoundBorder(border, margin);
+        comp = BorderFactory.createCompoundBorder(titledBorder, margin);
         return comp;
     }
 }

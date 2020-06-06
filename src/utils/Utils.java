@@ -6,6 +6,13 @@ import java.util.ArrayList;
 import java.util.function.Function;
 
 public class Utils {
+
+    public static Font DEFAULT_FONT = getDefaultFont(20);
+
+    public static Font getDefaultFont(int size) {
+        return new Font("Arial", Font.PLAIN, size);
+    }
+
     /**
      * Calculates the average value of the given numbers.
      * @param values decimal numbers to be averaged

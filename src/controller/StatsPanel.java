@@ -38,12 +38,12 @@ public class StatsPanel extends JPanel {
 
         updateStats();
 
-        JLabel speedLabel       = new JLabel("SPEED          :");
-        JLabel maniabilityLabel = new JLabel("MANIABILITY    :");
-        JLabel resistanceLabel  = new JLabel("RESISTANCE     :");
-        speedLabel.setFont(new Font("Consolas", Font.BOLD, 14));
-        maniabilityLabel.setFont(new Font("Consolas", Font.BOLD, 14));
-        resistanceLabel.setFont(new Font("Consolas", Font.BOLD, 14));
+        JLabel speedLabel       = new JLabel("SPEED");
+        JLabel maniabilityLabel = new JLabel("MANIABILITY");
+        JLabel resistanceLabel  = new JLabel("RESISTANCE");
+        speedLabel.setFont(Utils.getDefaultFont(14));
+        maniabilityLabel.setFont(Utils.getDefaultFont(14));
+        resistanceLabel.setFont(Utils.getDefaultFont(14));
         add(speedLabel);
         add(speedStatPanel);
         add(maniabilityLabel);

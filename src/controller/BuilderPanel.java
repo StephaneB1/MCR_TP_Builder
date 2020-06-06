@@ -49,6 +49,7 @@ public class BuilderPanel extends JPanel {
         this.opponentsPanel = opponentsPanel;
         this.debug = debug;
         racers = new ArrayList<>();
+
         setupPanel();
     }
 
@@ -84,6 +85,12 @@ public class BuilderPanel extends JPanel {
         productLabel.setHorizontalAlignment(SwingConstants.CENTER);
         JLabel colorLabel = new JLabel(garage.getPaintJobs().get(currentColor).getName());
         colorLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        // Fonts
+        categoryLabel.setFont(Utils.DEFAULT_FONT);
+        productLabel.setFont(Utils.DEFAULT_FONT);
+        colorLabel.setFont(Utils.DEFAULT_FONT);
+
+
         JButton categoryLeftButton = Utils.getIconJButton("resources/GUI/left-arrow.png");
         categoryLeftButton.addActionListener(new ActionListener() {
             @Override
@@ -134,9 +141,9 @@ public class BuilderPanel extends JPanel {
                 updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartDisplay);
             }
         });
-        JButton randomCarButton = Utils.getIconJButton("resources/GUI/random-button_v2.png", 0.35);
-        JButton mountToCarButton = Utils.getIconJButton("resources/GUI/add-blueprint_v2.png", 0.35);
-        JButton buildCarButton = Utils.getIconJButton("resources/GUI/build-car_v2.png", 0.35);
+        JButton mountToCarButton = Utils.getIconJButton("resources/GUI/add-blueprint_v2.png", 0.5);
+        JButton randomCarButton = Utils.getIconJButton("resources/GUI/random-button_v2.png", 0.5);
+        JButton buildCarButton = Utils.getIconJButton("resources/GUI/build-car_v2.png", 0.5);
         randomCarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -245,12 +252,15 @@ public class BuilderPanel extends JPanel {
         c.gridy = 3;
         c.gridx = 0;
         c.gridwidth = 3;
+        c.weighty = 0.3;
         selectionPanel.add(mountToCarButton, c);
         c.gridy = 4;
         c.gridwidth = 3;
+        c.weighty = 0.3;
         selectionPanel.add(randomCarButton, c);
         c.gridy = 5;
         c.gridwidth = 3;
+        c.weighty = 0.3;
         selectionPanel.add(buildCarButton, c);
         updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartDisplay);
         add(carPartPanel);
