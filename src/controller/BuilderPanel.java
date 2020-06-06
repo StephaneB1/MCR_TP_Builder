@@ -6,10 +6,14 @@ import garage.Garage;
 import garage.GarageProduct;
 import races.Racer;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -129,9 +133,9 @@ public class BuilderPanel extends JPanel {
                 updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartDisplay);
             }
         });
-        JButton randomCarButton = getIconJButton("resources/GUI/random-button.png");
-        JButton mountToCarButton = getIconJButton("resources/GUI/add-blueprint.png");
-        JButton buildCarButton = getIconJButton("resources/GUI/build-car.png");
+        JButton randomCarButton = getIconJButton("resources/GUI/random-button_v2.png", 0.35);
+        JButton mountToCarButton = getIconJButton("resources/GUI/add-blueprint_v2.png", 0.35);
+        JButton buildCarButton = getIconJButton("resources/GUI/build-car_v2.png", 0.35);
         randomCarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -239,11 +243,13 @@ public class BuilderPanel extends JPanel {
         selectionPanel.add(colorRightButton, c);
         c.gridy = 3;
         c.gridx = 0;
-        c.ipady = 20;
-        selectionPanel.add(randomCarButton, c);
-        c.gridx = 1;
+        c.gridwidth = 3;
         selectionPanel.add(mountToCarButton, c);
-        c.gridx = 2;
+        c.gridy = 4;
+        c.gridwidth = 3;
+        selectionPanel.add(randomCarButton, c);
+        c.gridy = 5;
+        c.gridwidth = 3;
         selectionPanel.add(buildCarButton, c);
         updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartDisplay);
         add(carPartPanel);
@@ -314,7 +320,20 @@ public class BuilderPanel extends JPanel {
     }
 
     private JButton getIconJButton(String iconPath) {
-        JButton result = new JButton("", new ImageIcon(iconPath));
+        return getIconJButton(iconPath, 1.0);
+    }
+
+    private JButton getIconJButton(String iconPath, double ratio) {
+
+        ImageIcon imageIcon = new ImageIcon(iconPath); // load the image to a imageIcon
+        Image image = imageIcon.getImage(); // transform it
+        Image newimg = image.getScaledInstance(
+                (int) (image.getWidth(null) * ratio),
+                (int) (image.getHeight(null) * ratio),
+                Image.SCALE_SMOOTH); // scale it the smooth way
+        imageIcon = new ImageIcon(newimg);  // transform it back
+
+        JButton result = new JButton("", imageIcon);
         result.setBorderPainted(false);
         result.setContentAreaFilled(false);
         result.setFocusPainted(false);
