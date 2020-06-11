@@ -53,8 +53,14 @@ public class CarDisplayer extends JPanel {
                             (int) (carPart.getImage().getHeight() * ratio),
                             Image.SCALE_DEFAULT);
                     g.drawImage(sizedImage, (int) (carPart.getXCoord() * ratio), (int) (carPart.getYCoord() * ratio), this);
+                    if (carPart.isDuplicateOnX){
+                        g.drawImage(sizedImage, (int) ((carPart.getXCoord() + carPart.getDuplicateDistanceX())*ratio),  (int) (carPart.getYCoord() * ratio) ,this);
+                    }
                 } else {
                     g.drawImage(carPart.getImage(), carPart.getXCoord(), carPart.getYCoord(), this);
+                    if (carPart.isDuplicateOnX){
+                        g.drawImage(carPart.getImage(), carPart.getXCoord() + carPart.getDuplicateDistanceX(), carPart.getYCoord() ,this);
+                    }
                 }
             }
         }
@@ -63,6 +69,9 @@ public class CarDisplayer extends JPanel {
             for(CarPart carPart : builder.getCarParts()) {
                 if(carPart != null) {
                     g.drawImage(carPart.getImage(), carPart.getXCoord(), carPart.getYCoord(),this);
+                    if (carPart.isDuplicateOnX){
+                        g.drawImage(carPart.getImage(), carPart.getXCoord() + carPart.getDuplicateDistanceX(), carPart.getYCoord() ,this);
+                    }
                 }
             }
         }

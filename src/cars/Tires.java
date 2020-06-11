@@ -6,8 +6,8 @@ public class Tires extends CarPart {
 
     public static String TIRES_PATH = "resources/cars/tires/";
 
-    public Tires(String name, String image, Stats stats, Point relCoord) {
-        super(name, image, stats, relCoord);
+    public Tires(String name, String image, Stats stats, Point relCoord, int duplicateDistance) {
+        super(name, image, relCoord, true, duplicateDistance, stats );
     }
 
     @Override
@@ -22,6 +22,6 @@ public class Tires extends CarPart {
 
     @Override
     public CarPart clone() {
-        return new Tires(this.name, this.imagePath, this.stats, this.relCoord);
+        return new Tires(this.name, this.imagePath, this.stats, this.relCoord, this.duplicateDistance);
     }
 }
