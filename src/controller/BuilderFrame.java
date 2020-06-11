@@ -8,56 +8,64 @@ import races.Racer;
 import utils.Utils;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class BuilderPanel extends JFrame {
+public class BuilderFrame extends JFrame {
+
+    private final int SCREEN_WIDTH  = 900;
+    private final int SCREEN_HEIGHT = 600;
+
 
     private static final int TOTAL_RACERS = 5;
     private static int totalBuilder = 0;
 
+    // Reference to this frame to close is on action event
+    private final BuilderFrame mainFrame = this;
+
+    // Garage data
     private Garage garage;
-    private CarDisplayer displayer;
-    private CarBuilder builder;
-    private Car car;
-    private StatsPanel statsPanel;
-    private StatsPanel carPartStatsPanel;
-    private JPanel racePanel;
-    private JPanel opponentsPanel;
-    private JLabel debug;
     private int currentCategory;
     private int currentProduct;
     private int currentColor;
 
-    private ArrayList<Racer> racers;
+    // Blueprint
+    private CarDisplayer displayer;
+    private CarBuilder builder;
+    private Car car;
 
-    public BuilderPanel(Garage garage, CarBuilder builder, CarDisplayer displayer,
-                        Car car, StatsPanel statsPanel, JPanel racePanel, JPanel opponentsPanel,
-                        JLabel debug) {
-        this.garage = garage;
-        this.builder = builder;
-        this.displayer = displayer;
-        this.car = car;
-        this.statsPanel = statsPanel;
-        this.racePanel = racePanel;
-        this.opponentsPanel = opponentsPanel;
-        this.debug = debug;
-        racers = new ArrayList<>();
+    // Stats
+    private StatsPanel statsPanel;
+    private StatsPanel carPartStatsPanel;
 
-        totalBuilder++;
 
-        setupFrame();
-    }
+    public BuilderFrame() {
+        garage = Controller.getInstance().getGarage();
 
-    private void setupFrame() {
+        setTitle("MCR - Racers : Car Builder #" + ++totalBuilder);
 
-        setTitle("MCR - Racers : Car Builder #" + totalBuilder);
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new GridBagLayout());
+        mainPanel.setBackground(Color.WHITE);
+        GridBagConstraints c2 = new GridBagConstraints();
 
-        setLayout(new GridLayout(1, 2));
-        //setOpaque(false);
+        // BLUEPRINTS
+        builder = new CarBuilder();
+        displayer = new CarDisplayer(car, builder);
+        displayer.setBorder(Utils.getPanelBorder("B L U E P R I N T"));
+        // STATS
+        statsPanel = new StatsPanel(displayer);
+        statsPanel.setBorder(Utils.getPanelBorder("C A R    S T A T I S T I C S"));
+
+        // BUILDER PANEL
+        JPanel builderPanel = new JPanel();
+        builderPanel.setLayout(new GridLayout(1, 2));
+        builderPanel.setBorder(Utils.getPanelBorder("G A R A G E    P R O D U C T S"));
+        builderPanel.setOpaque(false);
         // Car Part display with stats
         JPanel carPartPanel = new JPanel(new GridBagLayout());
         JPanel carPartDisplay = new JPanel(new GridBagLayout());
@@ -186,8 +194,8 @@ public class BuilderPanel extends JFrame {
                 }
 
                 if (success) {
-                    debug.setForeground(Color.BLACK);
-                    debug.setText("Added a new car part to the blueprint : " + newPart.getName() + " !");
+                    //debug.setForeground(Color.BLACK);
+                    //debug.setText("Added a new car part to the blueprint : " + newPart.getName() + " !");
                 }
 
                 displayer.repaint();
@@ -201,25 +209,40 @@ public class BuilderPanel extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
                 // Build car
                 if (builder.getCar() != null) {
+
+                    mainFrame.dispose();
+
+                    Controller.getInstance().addRacer(
+                            new Racer("Player1",
+                                    builder.getCar(),
+                                    Color.RED,
+                                    true)
+                    );
+
+
+                    //System.exit(0);
+
                     // Building and displaying the opponents
-                    generateRacers();
+
+                    /*generateRacers();
                     for (int i = 1; i < racers.size(); ++i) {
                         CarDisplayer carDisplayer = new CarDisplayer(racers.get(i).getCar(), null, 0.5);
                         opponentsPanel.add(carDisplayer);
-                    }
+                    }*/
 
                     // Changing the layout to start a race
-                    setVisible(false);
-                    racePanel.setVisible(true);
-                    opponentsPanel.setVisible(true);
-                    car = builder.getCar();
+                    //setVisible(false);
+                    //racePanel.setVisible(true);
+                    //opponentsPanel.setVisible(true);
+                    /*car = builder.getCar();
                     displayer.setCar(car);
-                    displayer.repaint();
-                    debug.setForeground(Color.BLACK);
-                    debug.setText("Well done, it's a beauty. Now let's race!");
+                    displayer.repaint();*/
+
+                    //debug.setForeground(Color.BLACK);
+                    //debug.setText("Well done, it's a beauty. Now let's race!");
                 } else {
-                    debug.setForeground(Color.RED);
-                    debug.setText("Your blueprint is incomplete! You're missing some parts!");
+                    //debug.setForeground(Color.RED);
+                    //debug.setText("Your blueprint is incomplete! You're missing some parts!");
                 }
             }
         });
@@ -260,10 +283,35 @@ public class BuilderPanel extends JFrame {
         c.gridwidth = 3;
         selectionPanel.add(buildCarButton, c);
         updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartDisplay);
-        add(carPartPanel);
-        add(selectionPanel);
+        builderPanel.add(carPartPanel);
+        builderPanel.add(selectionPanel);
 
         carPartStatsPanel.updateStats(garage.getInventory().get(currentCategory).getProducts().get(currentProduct).getStats());
+
+        c2.insets = new Insets(3,3,3,3); // padding
+        c2.fill = GridBagConstraints.BOTH;
+        c2.anchor = GridBagConstraints.CENTER;
+        c2.gridy = 0;
+        c2.gridx = 0;
+        c2.weightx = 0.6;
+        mainPanel.add(displayer, c2);
+        c2.gridx = 1;
+        c2.weightx = 0.2;
+        mainPanel.add(statsPanel, c2);
+        c2.gridx = 0;
+        c2.gridy = 1;
+        c2.gridwidth = 2;
+        mainPanel.add(builderPanel, c2);
+
+        Border padding = BorderFactory.createEmptyBorder(20, 20, 20, 20);
+        mainPanel.setBorder(padding);
+        add(mainPanel);
+
+        //Resizing frame
+        setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+        setResizable(false);
+        setLocationRelativeTo(null);
+        setVisible(true);
     }
 
     private void updateSelectionLabels(JLabel categoryLabel, JLabel productLabel,
@@ -309,7 +357,7 @@ public class BuilderPanel extends JFrame {
                 .buildSpoiler((Spoiler) getRandCarPart(random, Garage.CATEGORY_SPOILERS));
     }
 
-    private void generateRacers() {
+    /*private void generateRacers() {
         // Add the player
         racers.add(new Racer("Player1", builder.getCar(), Color.RED, true));
 
@@ -321,14 +369,14 @@ public class BuilderPanel extends JFrame {
             buildRandomCar(opponentBuilder);
             racers.add(new Racer("Racer" + i, opponentBuilder.getCar(), Color.BLACK, true));
         }
-    }
+    }*/
 
-    public ArrayList<Racer> getRacers() {
-        return racers;
-    }
+    //public ArrayList<Racer> getRacers() {
+        //return racers;
+    //}
 
     private void setNotBodyErrorMessage(String part) {
-        debug.setForeground(Color.RED);
-        debug.setText("Can't add " + part + " without a body");
+        //debug.setForeground(Color.RED);
+        //debug.setText("Can't add " + part + " without a body");
     }
 }

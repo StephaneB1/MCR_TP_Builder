@@ -3,6 +3,7 @@ package races;
 import cars.CarDisplayer;
 import controller.Controller;
 import controller.StatsPanel;
+import utils.Utils;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -37,7 +38,7 @@ public class RacerPanel extends JPanel {
 
 
         setLayout(null);
-        setBorder(Controller.getPanelBorder(panelTitle));
+        setBorder(Utils.getPanelBorder(panelTitle));
 
         Icon imgIcon = new ImageIcon(RaceDetailsPanel.class.getClassLoader().getResource("smoke_anim.gif"));
         lblSmokeAnim = new JLabel(imgIcon);

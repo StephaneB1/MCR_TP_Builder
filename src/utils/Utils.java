@@ -1,6 +1,8 @@
 package utils;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.function.Function;
@@ -79,6 +81,16 @@ public class Utils {
         imageIcon = new ImageIcon(newimg);  // transform it back
 
         return imageIcon;
+    }
+
+
+    public static Border getPanelBorder(String title) {
+        Border comp;
+        TitledBorder titledBorder =BorderFactory.createTitledBorder(title);
+        titledBorder.setTitleFont(getDefaultFont(15));
+        Border margin = BorderFactory.createEmptyBorder(10,10,10,10);
+        comp = BorderFactory.createCompoundBorder(titledBorder, margin);
+        return comp;
     }
 
 

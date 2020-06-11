@@ -2,6 +2,7 @@ package races;
 
 import cars.CarDisplayer;
 import controller.Controller;
+import utils.Utils;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -48,7 +49,7 @@ public class RaceDetailsPanel extends JPanel {
         JPanel panel = new JPanel();
         panel.setBackground(Color.WHITE);
         panel.setLayout(null);
-        panel.setBorder(Controller.getPanelBorder("L E A D E R  B O A R D"));
+        panel.setBorder(Utils.getPanelBorder("L E A D E R  B O A R D"));
         //rightPanel.setBackground(Color.BLUE);
         int initialxPos = 150;
         int initialYPos = 80;
