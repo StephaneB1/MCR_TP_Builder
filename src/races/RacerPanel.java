@@ -64,6 +64,10 @@ public class RacerPanel extends JPanel {
         add(carPanel);
     }
 
+    /**
+     * Check if the current racer has crashed. While is crashing, we'll display smoke animation
+     * as a GIF, and a flashing warning signal image.
+     */
     public void checkCrash(){
         if(!racer.hasFinished()) {
             if (racer.isCrashed() && !animCrashedRunning) {
