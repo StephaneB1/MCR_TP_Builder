@@ -63,8 +63,7 @@ public class BuilderPanel extends JPanel {
         carPartDisplay.setOpaque(false);
         GridBagConstraints c1 = new GridBagConstraints();
         c1.insets = new Insets(3,3,3,3); // padding
-        c1.fill = GridBagConstraints.BOTH;
-        c1.anchor=GridBagConstraints.CENTER;
+        c1.anchor = GridBagConstraints.CENTER;
         c1.gridy = 0;
         c1.gridx = 0;
         c1.weighty = 0.9;
@@ -141,9 +140,9 @@ public class BuilderPanel extends JPanel {
                 updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartDisplay);
             }
         });
-        JButton mountToCarButton = Utils.getIconJButton("resources/GUI/add-blueprint_v2.png", 0.5);
-        JButton randomCarButton = Utils.getIconJButton("resources/GUI/random-button_v2.png", 0.5);
-        JButton buildCarButton = Utils.getIconJButton("resources/GUI/build-car_v2.png", 0.5);
+        JButton mountToCarButton = Utils.getIconJButton("resources/GUI/add-blueprint_v2.png", 0.4);
+        JButton randomCarButton = Utils.getIconJButton("resources/GUI/random-button_v2.png", 0.4);
+        JButton buildCarButton = Utils.getIconJButton("resources/GUI/build-car_v2.png", 0.4);
         randomCarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -223,7 +222,6 @@ public class BuilderPanel extends JPanel {
             }
         });
         c.insets = new Insets(3, 3, 3, 3); // padding
-        c.fill = GridBagConstraints.HORIZONTAL;
         c.anchor = GridBagConstraints.CENTER;
         c.gridy = 0;
         c.gridx = 0;
@@ -252,15 +250,12 @@ public class BuilderPanel extends JPanel {
         c.gridy = 3;
         c.gridx = 0;
         c.gridwidth = 3;
-        c.weighty = 0.3;
         selectionPanel.add(mountToCarButton, c);
         c.gridy = 4;
         c.gridwidth = 3;
-        c.weighty = 0.3;
         selectionPanel.add(randomCarButton, c);
         c.gridy = 5;
         c.gridwidth = 3;
-        c.weighty = 0.3;
         selectionPanel.add(buildCarButton, c);
         updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartDisplay);
         add(carPartPanel);
