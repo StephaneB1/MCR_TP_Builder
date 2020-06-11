@@ -140,9 +140,9 @@ public class Controller extends JFrame {
 
         // - Car motors
         GarageProduct motors = new GarageProduct("Motors");
-        motors.addProduct(new Motor("Motor-2", Motor.MOTOR_PATH + "Motor_1.png", new Stats().randomize(), new Point(85, 40)));
+        motors.addProduct(new Motor("Motor-1", Motor.MOTOR_PATH + "Motor_1.png", new Stats().randomize(), new Point(85, 40)));
         motors.addProduct(new Motor("Motor-2", Motor.MOTOR_PATH + "Motor_2.png", new Stats().randomize(), new Point(85, 40)));
-        motors.addProduct(new Motor("Motor-2", Motor.MOTOR_PATH + "Motor_3.png", new Stats().randomize(), new Point(85, 40)));
+        motors.addProduct(new Motor("Motor-3", Motor.MOTOR_PATH + "Motor_3.png", new Stats().randomize(), new Point(85, 40)));
 
         // - Car tires
         GarageProduct tires = new GarageProduct("Tires");
