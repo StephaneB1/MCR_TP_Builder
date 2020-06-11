@@ -48,22 +48,38 @@ public class RacePanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
+
+        // Draw the race line
         g2d.setStroke(new BasicStroke(4.0F));
         g2d.setColor(Color.BLACK);
         g2d.drawLine(raceBeginX, raceBeginY + (RACER_SIZE / 2), raceWidth + raceBeginX, raceBeginY + (RACER_SIZE / 2));
 
-        for(Racer racer : racers){
-            int distanceInPixel = (int)(racer.getCurrentDistance() * raceWidth / totalDistance);
-            int racerPosX = (raceBeginX - RACER_SIZE / 2) + distanceInPixel;
-            int racerPosY = raceBeginY;
+        int racerPosX;
+        int racerPosY;
 
-            // Draw the "you" to display which racer is the current player racer
+        for(Racer racer : racers){
+            // Racer is still running, update X pos
+            if(!racer.hasFinished()){
+                int distanceInPixel = (int)(racer.getCurrentDistance() * raceWidth / totalDistance);
+                racerPosX = (raceBeginX - RACER_SIZE / 2) + distanceInPixel;
+            }
+            // Racer has finished, just wait at the end of the race
+            else{
+                racerPosX = raceWidth + raceBeginX - (RACER_SIZE / 2);
+            }
+
+            // All the time same Y pos
+            racerPosY = raceBeginY;
+
+
+            // Draw the P1, P2 to display which racer is the player1 or 2
             if(racer.equals(player1Racer)){
                 lblPlayer1.setBounds(racerPosX + (RACER_SIZE / 2) - (lblPlayer1.getPreferredSize().width / 2), racerPosY + RACER_SIZE, lblPlayer1.getPreferredSize().width, lblPlayer1.getPreferredSize().height);
             }else if(racer.equals(player2Racer)){
                 lblPlayer2.setBounds(racerPosX + (RACER_SIZE / 2) - (lblPlayer2.getPreferredSize().width / 2),  racerPosY + RACER_SIZE, lblPlayer2.getPreferredSize().width, lblPlayer2.getPreferredSize().height);
             }
 
+            // Draw the circles
             g2d.setColor(racer.getColor());
             g2d.fillOval(racerPosX, racerPosY, RACER_SIZE, RACER_SIZE);
         }

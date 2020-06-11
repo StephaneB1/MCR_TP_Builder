@@ -2,15 +2,13 @@ package races;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.TimerTask;
 import java.util.Timer;
 
-public class Race extends JFrame implements WindowListener {
+public class Race extends JFrame {
 
     private final int WIDTH = 1600;
     private final int HEIGHT = 720;
@@ -19,13 +17,15 @@ public class Race extends JFrame implements WindowListener {
 
     private int totalDistance;
     private ArrayList<Racer> racers;
-    private Boolean isRunning = false;
+    private Boolean abort = false;
     private Timer timer = new Timer();
-    private Racer racerWinner;
+    private int nbRacers;
+    private int nbRacersFinished;
 
     public Race(int totalDistance, ArrayList<Racer> racers){
         this.totalDistance = totalDistance;
         this.racers = racers;
+        this.nbRacers = this.racers.size();
 
         for(Racer racer : this.racers){
             racer.reset();
@@ -56,7 +56,7 @@ public class Race extends JFrame implements WindowListener {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
-                isRunning = false;
+                abort = true;
             }
         });
 
@@ -65,38 +65,37 @@ public class Race extends JFrame implements WindowListener {
 
     public void start(){
 
-        isRunning = true;
-
         // Set up the repeated task that will update the subject states (seconds)
         TimerTask repeatedTask = new TimerTask() {
             public void run() {
 
-                if(isRunning){
+                // Continue while not abort and all racers have not finished the race
+                if(!abort && nbRacersFinished != nbRacers){
 
                     // Run a tick
                     for(Racer racer : racers){
-                        racer.runOneTick();
+                        if(!racer.hasFinished()){
+                            racer.runOneTick();
+                        }
                     }
 
-                    // Check if there is a winner
+                    // When a Racer finish
                     for(Racer racer : racers){
-                        if(racer.getCurrentDistance() >= totalDistance){
-                            racerWinner = racer;
-                            isRunning = false;
-                            break;
+                        if(!racer.hasFinished() && racer.getCurrentDistance() >= totalDistance){
+                            racer.setHasFinished(true);
+                            nbRacersFinished++;
                         }
                     }
 
                     racePanel.repaint();
                     raceDetailsPanel.updateLeaderBoard();
                     raceDetailsPanel.checkRacersCrash();
-
                 }
                 // Race finish -> stop the current timertask and display winner
                 else{
                     // check we have winner, because we can stop the race when we quit the frame (top left cross icon)
-                    if(racerWinner != null){
-                        displayWinner(racerWinner);
+                    if(!abort){
+                        displayWinner();
                     }
                     this.cancel();
                 }
@@ -109,51 +108,8 @@ public class Race extends JFrame implements WindowListener {
 
     }
 
-    public void stop() {
-
+    private void displayWinner() {
+        JOptionPane.showMessageDialog(null, "TODO" + " won the race !", "winner winner chicken dinner", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    private void displayRace() {
-
-    }
-
-    private void displayWinner(Racer racerWinner) {
-        JOptionPane.showMessageDialog(null, racerWinner.getName() + " won the race !", "winner winner chicken dinner", JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    @Override
-    public void windowOpened(WindowEvent windowEvent) {
-
-    }
-
-    @Override
-    public void windowClosing(WindowEvent windowEvent) {
-        System.out.println("Windows closing");
-        isRunning = false;
-    }
-
-    @Override
-    public void windowClosed(WindowEvent windowEvent) {
-        System.out.println("windows closed");
-    }
-
-    @Override
-    public void windowIconified(WindowEvent windowEvent) {
-
-    }
-
-    @Override
-    public void windowDeiconified(WindowEvent windowEvent) {
-
-    }
-
-    @Override
-    public void windowActivated(WindowEvent windowEvent) {
-
-    }
-
-    @Override
-    public void windowDeactivated(WindowEvent windowEvent) {
-
-    }
 }

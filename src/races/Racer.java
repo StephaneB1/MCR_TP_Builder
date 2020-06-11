@@ -12,6 +12,7 @@ public class Racer implements Comparable<Racer>{
     private String name;
     private boolean displayLogs;
     private Color color;
+    private boolean hasFinished = false;
 
     private double crashTimeout = 0;
     private final double crashDuration;
@@ -72,6 +73,22 @@ public class Racer implements Comparable<Racer>{
     }
 
     /**
+     * Simple hasFinished getter
+     * @return hasFinished
+     */
+    public boolean hasFinished() {
+        return hasFinished;
+    }
+
+    /**
+     * Set hasFinished
+     * @param hasFinished has finished boolean
+     */
+    public void setHasFinished(boolean hasFinished) {
+        this.hasFinished = hasFinished;
+    }
+
+    /**
      * Check if the Racer is crashed
      * @return true if Racer is currently crashed
      */
@@ -105,6 +122,7 @@ public class Racer implements Comparable<Racer>{
     public void reset() {
         currentDistance = 0;
         crashTimeout = 0;
+        hasFinished = false;
     }
 
     /**
