@@ -140,9 +140,9 @@ public class Controller extends JFrame {
 
         // - Car motors
         GarageProduct motors = new GarageProduct("Motors");
-        motors.addProduct(new Motor("Motor-2", Motor.MOTOR_PATH + "Motor_1.png", new Stats().randomize(), new Point(80, 70)));
-        motors.addProduct(new Motor("Motor-2", Motor.MOTOR_PATH + "Motor_2.png", new Stats().randomize(), new Point(80, 70)));
-        motors.addProduct(new Motor("Motor-2", Motor.MOTOR_PATH + "Motor_3.png", new Stats().randomize(), new Point(80, 70)));
+        motors.addProduct(new Motor("Motor-2", Motor.MOTOR_PATH + "Motor_1.png", new Stats().randomize(), new Point(85, 40)));
+        motors.addProduct(new Motor("Motor-2", Motor.MOTOR_PATH + "Motor_2.png", new Stats().randomize(), new Point(85, 40)));
+        motors.addProduct(new Motor("Motor-2", Motor.MOTOR_PATH + "Motor_3.png", new Stats().randomize(), new Point(85, 40)));
 
         // - Car tires
         GarageProduct tires = new GarageProduct("Tires");
@@ -152,9 +152,9 @@ public class Controller extends JFrame {
 
         // - Car spoilers
         GarageProduct spoilers = new GarageProduct("Spoilers");
-        spoilers.addProduct(new Spoiler("Spoiler-1", Spoiler.SPOILER_PATH + "Spoiler_1.png", new Stats().randomize(), new Point(35, 60)));
-        spoilers.addProduct(new Spoiler("Spoiler-2", Spoiler.SPOILER_PATH + "Spoiler_2.png", new Stats().randomize(), new Point(35, 60)));
-        spoilers.addProduct(new Spoiler("Spoiler-3", Spoiler.SPOILER_PATH + "Spoiler_3.png", new Stats().randomize(), new Point(35, 60)));
+        spoilers.addProduct(new Spoiler("Spoiler-1", Spoiler.SPOILER_PATH + "Spoiler_1.png", new Stats().randomize(), new Point(55, 75)));
+        spoilers.addProduct(new Spoiler("Spoiler-2", Spoiler.SPOILER_PATH + "Spoiler_2.png", new Stats().randomize(), new Point(55, 75)));
+        spoilers.addProduct(new Spoiler("Spoiler-3", Spoiler.SPOILER_PATH + "Spoiler_3.png", new Stats().randomize(), new Point(55, 75)));
 
 
 
