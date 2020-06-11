@@ -4,27 +4,24 @@ import carBuilder.CarBuilder;
 import cars.*;
 import garage.Garage;
 import garage.GarageProduct;
-import javafx.util.Builder;
 import races.Race;
 import races.Racer;
 import utils.Utils;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Random;
 
 import static java.lang.System.exit;
 
 public class Controller extends JFrame {
 
-    private final int SCREEN_WIDTH  = 1200;
-    private final int SCREEN_HEIGHT = 800;
+    private final int SCREEN_WIDTH  = 900;
+    private final int SCREEN_HEIGHT = 600;
 
     private Garage garage;
 
@@ -35,6 +32,8 @@ public class Controller extends JFrame {
 
     private BuilderPanel builderPanel;
 
+    private int totalRacer = 0;
+
     public Controller() {
 
         setTitle("MCR - Racers");
@@ -42,15 +41,9 @@ public class Controller extends JFrame {
 
         // General app layout (mainPanel) :
         /*---------------------------------------------*
-         * MCR - Racers                                *
+         * CONSOLE MESSAGES                            *
          *---------------------------------------------*
-         * DEBUG MESSAGES                              *
-         *---------------------------------------------*
-         * BLUEPRINTS            | STATS               *
-         * - Car preview         | - Car performances  *
-         *                       |                     *
-         *=============================================*
-         * BUILDER / OPPONENT + RACE                   *
+         * OPPONENT + RACE MENU                        *
          * - Car components / Race information         *
          *                                             *
          *---------------------------------------------*/
@@ -59,28 +52,26 @@ public class Controller extends JFrame {
         mainPanel.setLayout(new GridBagLayout());
         mainPanel.setBackground(Color.WHITE);
         // DEBUG / INFO
-        debug = new JLabel("Welcome! Build your dream car and then you can start the race!");
+        debug = new JLabel("Welcome! Start by building your car or generate opponents and then start a race!");
         debug.setBorder(getPanelBorder("C O N S O L E"));
         debug.setFont(new Font("Consolas", Font.PLAIN, 14));
         // BLUEPRINTS
-        builder = new CarBuilder();
-        playerCarDisplayer = new CarDisplayer(playerCar, builder);
-        playerCarDisplayer.setBorder(getPanelBorder("B L U E P R I N T"));
+        //builder = new CarBuilder();
+        //playerCarDisplayer = new CarDisplayer(playerCar, builder);
+        //playerCarDisplayer.setBorder(getPanelBorder("B L U E P R I N T"));
         // STATS
-        StatsPanel carStatsPanel = new StatsPanel(playerCarDisplayer);
-        carStatsPanel.setBorder(getPanelBorder("C A R    S T A T I S T I C S"));
+        //StatsPanel carStatsPanel = new StatsPanel(playerCarDisplayer);
+        //carStatsPanel.setBorder(getPanelBorder("C A R    S T A T I S T I C S"));
         // RACE
-        JPanel racePanel = loadRacePanel();
-        racePanel.setBorder(getPanelBorder("R A C E    I N F O R M A T I O N"));
+        //JPanel racePanel = loadRacePanel();
+        //racePanel.setBorder(getPanelBorder("R A C E    I N F O R M A T I O N"));
         // OPPONENTS
         JPanel opponentsPanel = new JPanel(new GridLayout(2, 2));
         opponentsPanel.setBorder(getPanelBorder("O P P O N E N T S"));
-        opponentsPanel.setVisible(false);
         opponentsPanel.setOpaque(false);
         // BUILDER
-        builderPanel = new BuilderPanel(garage, builder, playerCarDisplayer, playerCar, carStatsPanel, racePanel, opponentsPanel, debug);
-        builderPanel.setBorder(getPanelBorder("C A R    B U I L D E R"));
-
+        //builderPanel = new BuilderPanel(garage, builder, playerCarDisplayer, playerCar, carStatsPanel, racePanel, opponentsPanel, debug);
+        //builderPanel.setBorder(getPanelBorder("C A R    B U I L D E R"));
 
         // Add panels with padding
         Border padding = BorderFactory.createEmptyBorder(20, 20, 20, 20);
@@ -89,40 +80,23 @@ public class Controller extends JFrame {
         c.fill = GridBagConstraints.BOTH;
         c.insets = new Insets(3,3,3,3); // padding
         c.weightx = 1;
-        c.weighty = 0.1;
+        c.weighty = 0.05;
         c.gridx = 0;
         c.gridy = 0;
-        c.gridwidth = 2;
         mainPanel.add(debug, c);
-        c.weighty = 1;
-        c.gridwidth = 1;
+        c.weighty = 0.9;
         c.gridy = 1;
-        mainPanel.add(playerCarDisplayer, c);
-        c.gridx = 1;
-        c.weightx = 0.1;
-        mainPanel.add(carStatsPanel, c);
-        c.gridx = 0;
-        c.gridy = 2;
-        c.gridwidth = 2;
-        mainPanel.add(builderPanel, c);
-        racePanel.setVisible(false);
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = 2;
         mainPanel.add(opponentsPanel, c);
-        c.gridx = 1;
-        mainPanel.add(racePanel, c);
+        c.gridy = 2;
+        c.weighty = 0.05;
+        mainPanel.add(loadRacePanel(), c);
 
         add(mainPanel);
 
         //Resizing frame
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         setResizable(false);
-        pack();
-        setVisible(true);
-        //position center of screen
         setLocationRelativeTo(null);
-        //set visible
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -178,25 +152,31 @@ public class Controller extends JFrame {
         JPanel racePanel = new JPanel();
         racePanel.setOpaque(false);
         racePanel.setLayout(new GridBagLayout());
-        JLabel raceTitle = new JLabel("Total racers : 6");
-        JLabel distance  = new JLabel("Total distance (m) : ");
+
+        JLabel totalRacerTitle = new JLabel("Total racers :");
+        JLabel totalDistanceTitle  = new JLabel("Total distance (m) : ");
+
+        JLabel totalRacerLabel = new JLabel(totalRacer + "");
         SpinnerModel model = new SpinnerNumberModel(3000, 500, 50000, 100);
         JSpinner spinner = new JSpinner(model);
-        JButton quitButton = Utils.getIconJButton("resources/GUI/quit.png", 0.3);
+        JButton quitButton = Utils.getIconJButton("resources/GUI/quit.png", 0.1);
+        quitButton.setPreferredSize(new Dimension(50, 50));
         quitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 exit(0);
             }
         });
-        JButton restartButton = Utils.getIconJButton("resources/GUI/restart.png", 0.3);
+        JButton restartButton = Utils.getIconJButton("resources/GUI/restart.png", 0.1);
+        restartButton.setPreferredSize(new Dimension(50, 50));
         restartButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // TODO
             }
         });
-        JButton startButton = Utils.getIconJButton("resources/GUI/start_race.png", 0.3);
+        JButton startButton = Utils.getIconJButton("resources/GUI/start_race.png", 0.1);
+        startButton.setPreferredSize(new Dimension(50, 50));
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -209,22 +189,38 @@ public class Controller extends JFrame {
         c.insets = new Insets(3,3,3,3); // padding
         c.fill = GridBagConstraints.BOTH;
         c.anchor=GridBagConstraints.CENTER;
+        // Race information
         c.gridx = 0;
         c.gridy = 0;
-        c.gridwidth = 2;
-        racePanel.add(raceTitle, c);
+        racePanel.add(totalRacerTitle, c);
         c.gridy = 1;
-        c.gridwidth = 1;
-        racePanel.add(distance, c);
+        racePanel.add(totalDistanceTitle, c);
         c.gridx = 1;
+        c.gridy = 0;
+        racePanel.add(totalRacerLabel, c);
+        c.gridy = 1;
         racePanel.add(spinner, c);
-        c.gridx = 0;
-        c.gridy = 2;
-        c.gridwidth = 2;
+        // Empty center
+        c.gridx = 2;
+        c.gridy = 0;
+        c.gridheight = 2;
+        c.weightx = 1;
+        JPanel transparent = new JPanel();
+        transparent.setOpaque(false);
+        racePanel.add(transparent, c);
+        // Main buttons
+        c.gridx = 3;
+        c.gridy = 0;
+        c.gridheight = 2;
+        c.weightx = 0.1;
         racePanel.add(quitButton, c);
-        c.gridy = 3;
+        c.gridx = 4;
+        c.gridheight = 2;
+        c.weightx = 0.1;
         racePanel.add(restartButton, c);
-        c.gridy = 4;
+        c.gridx = 5;
+        c.gridheight = 2;
+        c.weightx = 0.1;
         racePanel.add(startButton, c);
 
         return racePanel;

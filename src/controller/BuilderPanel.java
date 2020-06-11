@@ -7,20 +7,17 @@ import garage.GarageProduct;
 import races.Racer;
 import utils.Utils;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class BuilderPanel extends JPanel {
+public class BuilderPanel extends JFrame {
 
     private static final int TOTAL_RACERS = 5;
+    private static int totalBuilder = 0;
 
     private Garage garage;
     private CarDisplayer displayer;
@@ -50,12 +47,17 @@ public class BuilderPanel extends JPanel {
         this.debug = debug;
         racers = new ArrayList<>();
 
-        setupPanel();
+        totalBuilder++;
+
+        setupFrame();
     }
 
-    private void setupPanel() {
+    private void setupFrame() {
+
+        setTitle("MCR - Racers : Car Builder #" + totalBuilder);
+
         setLayout(new GridLayout(1, 2));
-        setOpaque(false);
+        //setOpaque(false);
         // Car Part display with stats
         JPanel carPartPanel = new JPanel(new GridBagLayout());
         JPanel carPartDisplay = new JPanel(new GridBagLayout());
