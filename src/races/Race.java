@@ -109,7 +109,16 @@ public class Race extends JFrame {
     }
 
     private void displayWinner() {
-        JOptionPane.showMessageDialog(null, "TODO" + " won the race !", "winner winner chicken dinner", JOptionPane.INFORMATION_MESSAGE);
+        StringBuilder sb = new StringBuilder("Leaderboard\n\n");
+        for(int i = 0; i < racers.size(); ++i){
+            sb.append(i + 1)
+                .append(". ")
+                .append(racers.get(i)
+                .getName())
+                .append("\n");
+        }
+
+        JOptionPane.showMessageDialog(null, sb.toString(), "winner winner chicken dinner", JOptionPane.INFORMATION_MESSAGE);
     }
 
 }
