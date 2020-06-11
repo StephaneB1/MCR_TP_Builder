@@ -65,31 +65,32 @@ public class RacerPanel extends JPanel {
     }
 
     public void checkCrash(){
-        System.out.println(racer.getName() + " : " + racer.isCrashed());
-        if(racer.isCrashed() && !animCrashedRunning){
-            animCrashedRunning = true;
+        if(!racer.hasFinished()) {
+            if (racer.isCrashed() && !animCrashedRunning) {
+                animCrashedRunning = true;
 
-            lblSmokeAnim.setVisible(true);
+                lblSmokeAnim.setVisible(true);
 
-            repeatedTask = new TimerTask() {
-                @Override
-                public void run() {
-                    if(RacerPanel.this.lblWarningImg.isVisible()){
-                        RacerPanel.this.lblWarningImg.setVisible(false);
-                    }else{
-                        RacerPanel.this.lblWarningImg.setVisible(true);
+                repeatedTask = new TimerTask() {
+                    @Override
+                    public void run() {
+                        if (RacerPanel.this.lblWarningImg.isVisible()) {
+                            RacerPanel.this.lblWarningImg.setVisible(false);
+                        } else {
+                            RacerPanel.this.lblWarningImg.setVisible(true);
+                        }
                     }
-                }
-            };
+                };
 
-            timerWarning = new Timer();
-            timerWarning.scheduleAtFixedRate(repeatedTask, 0, 500);
-        }else if(!racer.isCrashed() && animCrashedRunning){
-            animCrashedRunning = false;
-            lblSmokeAnim.setVisible(false);
-            lblWarningImg.setVisible(false);
-            timerWarning.cancel();
-            timerWarning.purge();
+                timerWarning = new Timer();
+                timerWarning.scheduleAtFixedRate(repeatedTask, 0, 500);
+            } else if (!racer.isCrashed() && animCrashedRunning) {
+                animCrashedRunning = false;
+                lblSmokeAnim.setVisible(false);
+                lblWarningImg.setVisible(false);
+                timerWarning.cancel();
+                timerWarning.purge();
+            }
         }
     }
 
