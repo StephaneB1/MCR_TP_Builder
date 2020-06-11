@@ -49,7 +49,7 @@ public class RaceDetailsPanel extends JPanel {
         JPanel panel = new JPanel();
         panel.setBackground(Color.WHITE);
         panel.setLayout(null);
-        panel.setBorder(Utils.getPanelBorder("L E A D E R  B O A R D"));
+        panel.setBorder(Utils.getPanelBorder("L E A D E R  B O A R D", Utils.getDefaultColor()));
         //rightPanel.setBackground(Color.BLUE);
         int initialxPos = 150;
         int initialYPos = 80;

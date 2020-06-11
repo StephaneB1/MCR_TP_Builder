@@ -2,6 +2,7 @@ package utils;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.util.ArrayList;
@@ -13,6 +14,10 @@ public class Utils {
 
     public static Font getDefaultFont(int size) {
         return new Font("Arial", Font.PLAIN, size);
+    }
+
+    public static Color getDefaultColor() {
+        return new Color(50,50,50);
     }
 
     /**
@@ -84,10 +89,12 @@ public class Utils {
     }
 
 
-    public static Border getPanelBorder(String title) {
+    public static Border getPanelBorder(String title, Color color) {
         Border comp;
-        TitledBorder titledBorder =BorderFactory.createTitledBorder(title);
-        titledBorder.setTitleFont(getDefaultFont(15));
+        Border lineBorder = new LineBorder(color);
+
+        TitledBorder titledBorder = new TitledBorder(lineBorder, title, TitledBorder.TOP,
+                TitledBorder.DEFAULT_POSITION, getDefaultFont(15), color);
         Border margin = BorderFactory.createEmptyBorder(10,10,10,10);
         comp = BorderFactory.createCompoundBorder(titledBorder, margin);
         return comp;

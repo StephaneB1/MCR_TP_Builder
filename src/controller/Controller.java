@@ -58,7 +58,7 @@ public class Controller extends JFrame {
         mainPanel.setBackground(Color.WHITE);
         // DEBUG / INFO
         debug = new JLabel("Welcome! Start by building your car or generate opponents and then start a race!");
-        debug.setBorder(Utils.getPanelBorder("C O N S O L E"));
+        debug.setBorder(Utils.getPanelBorder("C O N S O L E", Utils.getDefaultColor()));
         debug.setFont(new Font("Consolas", Font.PLAIN, 14));
         // BLUEPRINTS
         //builder = new CarBuilder();
@@ -75,7 +75,7 @@ public class Controller extends JFrame {
         totalRacersLabel = new JLabel("0");
         updateOpponentsDisplay();
         opponentsScroll.setViewportView(opponentsPanel);
-        opponentsScroll.setBorder(Utils.getPanelBorder("O P P O N E N T S"));
+        opponentsScroll.setBorder(Utils.getPanelBorder("O P P O N E N T S", Utils.getDefaultColor()));
         opponentsScroll.setOpaque(false);
         // BUILDER
         //builderPanel = new BuilderPanel(garage, builder, playerCarDisplayer, playerCar, carStatsPanel, racePanel, opponentsPanel, debug);
@@ -136,10 +136,19 @@ public class Controller extends JFrame {
             c.gridx = i;
 
             // Car display with stats
-            JPanel panel = new JPanel(new GridLayout(2, 1));
+            JPanel panel = new JPanel(new GridBagLayout());
+            panel.setPreferredSize(new Dimension(250, 300));
+            panel.setBorder(Utils.getPanelBorder("PLAYER " + (i+1), racers.get(i).getColor()));
             CarDisplayer carDisplayer = new CarDisplayer(racers.get(i).getCar(), null, 0.5);
-            panel.add(carDisplayer);
-            panel.add(new StatsPanel(carDisplayer));
+            GridBagConstraints c1 = new GridBagConstraints();
+            c1.fill = GridBagConstraints.BOTH;
+            c1.insets = new Insets(3,3,3,3); // padding
+            c1.weighty = 1;
+            c1.gridy = 0;
+            panel.add(carDisplayer, c1);
+            c1.gridy = 1;
+            panel.add(new StatsPanel(carDisplayer), c1);
+
             opponentsPanel.add(panel, c);
         }
 

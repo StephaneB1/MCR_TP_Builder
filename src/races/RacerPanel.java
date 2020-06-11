@@ -38,7 +38,7 @@ public class RacerPanel extends JPanel {
 
 
         setLayout(null);
-        setBorder(Utils.getPanelBorder(panelTitle));
+        setBorder(Utils.getPanelBorder(panelTitle, Utils.getDefaultColor()));
 
         Icon imgIcon = new ImageIcon(RaceDetailsPanel.class.getClassLoader().getResource("smoke_anim.gif"));
         lblSmokeAnim = new JLabel(imgIcon);
