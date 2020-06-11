@@ -3,6 +3,7 @@ package garage;
 import cars.*;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Garage {
 
@@ -35,5 +36,10 @@ public class Garage {
 
     public ArrayList<PaintJob> getPaintJobs() {
         return paintJobs;
+    }
+
+    public PaintJob getRandomPaintJob() {
+        Random rand = new Random();
+        return paintJobs.get(rand.nextInt(paintJobs.size()));
     }
 }

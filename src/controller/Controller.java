@@ -116,8 +116,14 @@ public class Controller extends JFrame {
         return instance;
     }
 
-    public void addRacer(Racer racer) {
-        this.racers.add(racer);
+    public void addNewRacer(Car car) {
+
+        Racer newRacer = new Racer("Player " + racers.size(), car,
+                garage.getPaintJobs().get(racers.size()
+                        % garage.getPaintJobs().size()).getColor(),
+                true);
+
+        racers.add(newRacer);
         updateOpponentsDisplay();
     }
 
@@ -137,7 +143,7 @@ public class Controller extends JFrame {
 
             // Car display with stats
             JPanel panel = new JPanel(new GridBagLayout());
-            panel.setPreferredSize(new Dimension(250, 300));
+            panel.setPreferredSize(new Dimension(250, 280));
             panel.setBorder(Utils.getPanelBorder("PLAYER " + (i+1), racers.get(i).getColor()));
             CarDisplayer carDisplayer = new CarDisplayer(racers.get(i).getCar(), null, 0.5);
             GridBagConstraints c1 = new GridBagConstraints();

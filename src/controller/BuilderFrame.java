@@ -212,12 +212,7 @@ public class BuilderFrame extends JFrame {
 
                     mainFrame.dispose();
 
-                    Controller.getInstance().addRacer(
-                            new Racer("Player1",
-                                    builder.getCar(),
-                                    Color.RED,
-                                    true)
-                    );
+                    Controller.getInstance().addNewRacer(builder.getCar());
 
 
                     //System.exit(0);
@@ -356,24 +351,6 @@ public class BuilderFrame extends JFrame {
                 .buildTire((Tires) getRandCarPart(random, Garage.CATEGORY_TIRES))
                 .buildSpoiler((Spoiler) getRandCarPart(random, Garage.CATEGORY_SPOILERS));
     }
-
-    /*private void generateRacers() {
-        // Add the player
-        racers.add(new Racer("Player1", builder.getCar(), Color.RED, true));
-
-        // Generate random racers
-        CarBuilder opponentBuilder = new CarBuilder();
-        buildRandomCar(opponentBuilder);
-        racers.add(new Racer("Player2", opponentBuilder.getCar(), Color.BLUE, true));
-        for (int i = 1; i < TOTAL_RACERS; ++i) {
-            buildRandomCar(opponentBuilder);
-            racers.add(new Racer("Racer" + i, opponentBuilder.getCar(), Color.BLACK, true));
-        }
-    }*/
-
-    //public ArrayList<Racer> getRacers() {
-        //return racers;
-    //}
 
     private void setNotBodyErrorMessage(String part) {
         //debug.setForeground(Color.RED);
