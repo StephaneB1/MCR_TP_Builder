@@ -6,7 +6,7 @@ import cars.Stats;
 import java.awt.*;
 import java.util.Random;
 
-public class Racer implements Comparable<Racer>{
+public class Racer implements Comparable<Racer>, Cloneable{
     private Car car;
     private double currentDistance;
     private String name;
@@ -161,5 +161,10 @@ public class Racer implements Comparable<Racer>{
     public int compareTo(Racer racer) {
         // Refactor to use only Double value ?
         return (int) (currentDistance - racer.getCurrentDistance());
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return new Racer(this.name, this.car, this.color, this.displayLogs);
     }
 }

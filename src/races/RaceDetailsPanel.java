@@ -64,8 +64,10 @@ public class RaceDetailsPanel extends JPanel {
      * Update the leaderboard, we'll sort the racers list that is implicitly the leaderboard
      * and display a label for each racer
      */
-    public void updateLeaderBoard() {
-        racers.sort(Collections.reverseOrder());
+    public void updateLeaderBoard(int nbRacersFinished) {
+        // Only sort players who are still racing
+        Collections.sort(racers.subList(nbRacersFinished,racers.size()), Collections.reverseOrder());
+        // Display one label each player, with player color and percentage of complete race distance
         for(int i = 0; i < racers.size(); ++i){
             learerboardLabels.get(i).setForeground(racers.get(i).getColor());
             learerboardLabels.get(i).setText((i+1) + ". " + racers.get(i).getName() + " - " + (int)(racers.get(i).getCurrentDistance() * 100 / totalDistance) + "%");
