@@ -156,7 +156,7 @@ public class BuilderFrame extends JFrame {
         randomCarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                buildRandomCar(builder);
+                Utils.buildRandomCar(garage, builder);
                 displayer.repaint();
                 statsPanel.updateStats();
             }
@@ -212,30 +212,10 @@ public class BuilderFrame extends JFrame {
 
                     mainFrame.dispose();
 
-                    Controller.getInstance().addNewRacer(builder.getCar());
+                    Controller.getInstance().addNewRacer(builder.getCar(), true);
 
-
-                    //System.exit(0);
-
-                    // Building and displaying the opponents
-
-                    /*generateRacers();
-                    for (int i = 1; i < racers.size(); ++i) {
-                        CarDisplayer carDisplayer = new CarDisplayer(racers.get(i).getCar(), null, 0.5);
-                        opponentsPanel.add(carDisplayer);
-                    }*/
-
-                    // Changing the layout to start a race
-                    //setVisible(false);
-                    //racePanel.setVisible(true);
-                    //opponentsPanel.setVisible(true);
-                    /*car = builder.getCar();
-                    displayer.setCar(car);
-                    displayer.repaint();*/
-
-                    //debug.setForeground(Color.BLACK);
-                    //debug.setText("Well done, it's a beauty. Now let's race!");
                 } else {
+                    // TODO : Pop up
                     //debug.setForeground(Color.RED);
                     //debug.setText("Your blueprint is incomplete! You're missing some parts!");
                 }
@@ -328,28 +308,12 @@ public class BuilderFrame extends JFrame {
         carPartStatsPanel.updateStats(product.getStats());
     }
 
-    private CarPart getRandCarPart(Random rand, int category) {
-        CarPart result = garage.getInventory().get(category).getProducts()
-                .get(rand.nextInt(garage.getInventory().get(category)
-                        .getProducts().size())).clone();
-        result.setColor(garage.getPaintJobs().get(rand.nextInt(garage.getPaintJobs().size())).getColor());
-        return result;
-    }
-
     private int getNext(int current, int size) {
         return (current + 1) % size;
     }
 
     private int getPrevious(int current, int size) {
         return (current - 1 + size) % size;
-    }
-
-    private void buildRandomCar(CarBuilder builder) {
-        Random random = new Random();
-        builder.buildBody((Body) getRandCarPart(random, Garage.CATEGORY_BODY))
-                .buildMotor((Motor) getRandCarPart(random, Garage.CATEGORY_MOTORS))
-                .buildTire((Tires) getRandCarPart(random, Garage.CATEGORY_TIRES))
-                .buildSpoiler((Spoiler) getRandCarPart(random, Garage.CATEGORY_SPOILERS));
     }
 
     private void setNotBodyErrorMessage(String part) {

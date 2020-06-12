@@ -1,11 +1,16 @@
 package utils;
 
+import carBuilder.CarBuilder;
+import cars.*;
+import garage.Garage;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.function.Function;
 
 public class Utils {
@@ -99,6 +104,23 @@ public class Utils {
         comp = BorderFactory.createCompoundBorder(titledBorder, margin);
         return comp;
     }
+
+    private static CarPart getRandCarPart(Garage garage, Random rand, int category) {
+        CarPart result = garage.getInventory().get(category).getProducts()
+                .get(rand.nextInt(garage.getInventory().get(category)
+                        .getProducts().size())).clone();
+        result.setColor(garage.getPaintJobs().get(rand.nextInt(garage.getPaintJobs().size())).getColor());
+        return result;
+    }
+
+    public static void buildRandomCar(Garage garage, CarBuilder builder) {
+        Random random = new Random();
+        builder.buildBody((Body) getRandCarPart(garage, random, Garage.CATEGORY_BODY))
+                .buildMotor((Motor) getRandCarPart(garage, random, Garage.CATEGORY_MOTORS))
+                .buildTire((Tires) getRandCarPart(garage, random, Garage.CATEGORY_TIRES))
+                .buildSpoiler((Spoiler) getRandCarPart(garage, random, Garage.CATEGORY_SPOILERS));
+    }
+
 
 
 }

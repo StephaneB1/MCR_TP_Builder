@@ -25,17 +25,15 @@ public class Controller extends JFrame {
     private Garage garage;
 
     private static Controller instance;
-
-    private Car playerCar;
-    private CarDisplayer playerCarDisplayer;
-    private CarBuilder builder;
     private JLabel debug;
 
     // Opponents
     private ArrayList<Racer> racers;
     private JPanel opponentsPanel;
     private JLabel totalRacersLabel;
-    JScrollPane opponentsScroll;
+    private JScrollPane opponentsScroll;
+    private JButton addOpponentButton;
+    private boolean autoGeneration = false;
 
 
     public Controller() {
@@ -57,7 +55,7 @@ public class Controller extends JFrame {
         mainPanel.setLayout(new GridBagLayout());
         mainPanel.setBackground(Color.WHITE);
         // DEBUG / INFO
-        debug = new JLabel("Welcome! Start by building your car or generate opponents and then start a race!");
+        debug = new JLabel("Welcome! Each player must first build their car, you can build a car by pressing on the (+) button down below!");
         debug.setBorder(Utils.getPanelBorder("C O N S O L E", Utils.getDefaultColor()));
         debug.setFont(new Font("Consolas", Font.PLAIN, 14));
         // OPPONENTS
@@ -103,9 +101,10 @@ public class Controller extends JFrame {
         return instance;
     }
 
-    public void addNewRacer(Car car) {
-
-        Racer newRacer = new Racer("Player " + racers.size(), car,
+    public void addNewRacer(Car car, boolean player) {
+        Racer newRacer = new Racer((player ?
+                "Player " +  (racers.size() + 1) :
+                "Bot " + (racers.size() - 2)), car,
                 garage.getPaintJobs().get(racers.size()
                         % garage.getPaintJobs().size()).getColor(),
                 true);
@@ -132,7 +131,7 @@ public class Controller extends JFrame {
             JPanel panel = new JPanel(new GridBagLayout());
             panel.setOpaque(false);
             panel.setPreferredSize(new Dimension(250, 280));
-            panel.setBorder(Utils.getPanelBorder("PLAYER " + (i+1), racers.get(i).getColor()));
+            panel.setBorder(Utils.getPanelBorder(racers.get(i).getName().toUpperCase(), racers.get(i).getColor()));
             CarDisplayer carDisplayer = new CarDisplayer(racers.get(i).getCar(), null, 0.45);
             GridBagConstraints c1 = new GridBagConstraints();
             c1.fill = GridBagConstraints.BOTH;
@@ -149,6 +148,26 @@ public class Controller extends JFrame {
         opponentsPanel.repaint();
         opponentsScroll.setViewportView(opponentsPanel);
         opponentsScroll.repaint();
+
+        // If the players have finished building their cars, we let the user know he can generate the opponents
+        switch(racers.size()) {
+            case 0:
+                break;
+            case 1:
+                debug.setText("Looking good! Alright now Player 2 it's your turn. Go make your dream car!");
+                break;
+            case 2:
+                debug.setText("Awesome, now that you're ready you can generate the opponents' cars by pressing on the (G) button below.");
+                autoGeneration = true;
+                addOpponentButton.setIcon(Utils.getSizedIcon("resources/GUI/add-opponent-auto.png", 0.1, Image.SCALE_SMOOTH));
+                break;
+            case 3:
+                debug.setText("That was easy right ? You can thank the Builder Design pattern for that.");
+                break;
+            case 4:
+                debug.setText("The competition is getting fierce! Add as many as you want and when you're ready you can start the race!");
+                break;
+        }
     }
 
     public Garage getGarage() {
@@ -237,13 +256,19 @@ public class Controller extends JFrame {
                 updateOpponentsDisplay();
             }
         });
-        JButton addOpponentButton = Utils.getIconJButton("resources/GUI/add-opponent.png", 0.1);
+        addOpponentButton = Utils.getIconJButton("resources/GUI/add-opponent.png", 0.1);
         addOpponentButton.setPreferredSize(new Dimension(50, 50));
         addOpponentButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                BuilderFrame newBuilder = new BuilderFrame();
-                newBuilder.setVisible(true);
+                if(autoGeneration) {
+                    CarBuilder builder = new CarBuilder();
+                    Utils.buildRandomCar(garage, builder);
+                    addNewRacer(builder.getCar(), false);
+                } else {
+                    BuilderFrame newBuilder = new BuilderFrame();
+                    newBuilder.setVisible(true);
+                }
             }
         });
         JButton startButton = Utils.getIconJButton("resources/GUI/start_race.png", 0.1);
