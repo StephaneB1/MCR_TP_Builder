@@ -18,7 +18,7 @@ import java.util.Random;
 public class BuilderFrame extends JFrame {
 
     private final int SCREEN_WIDTH  = 900;
-    private final int SCREEN_HEIGHT = 600;
+    private final int SCREEN_HEIGHT = 550;
 
     private static int totalBuilder = 0;
 
@@ -203,7 +203,7 @@ public class BuilderFrame extends JFrame {
                     mainFrame.dispose();
                     Controller.getInstance().addNewRacer(builder.getCar(), true);
                 } else {
-                    Utils.popup("resources/warning-popup.png", "Warning", "Your blueprint is incomplete! You're missing some parts!");
+                    Utils.popupWarning("Your blueprint is incomplete! You're missing some parts!");
                 }
             }
         });
@@ -303,7 +303,6 @@ public class BuilderFrame extends JFrame {
     }
 
     private void setNotBodyErrorMessage(String part) {
-        Utils.popup("resources/warning-popup.png",
-                "Warning", "Can't add " + part + " without a body");
+        Utils.popupWarning("Can't add " + part + " without a body");
     }
 }

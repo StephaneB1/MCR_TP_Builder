@@ -118,6 +118,12 @@ public class Controller extends JFrame {
     }
 
     public void addNewRacer(Car car, boolean player) {
+        // Can't have more than 2 players
+        if(player && racers.size() >= 2) {
+            Utils.popupWarning("Sorry there's already 2 players.");
+            return;
+        }
+
         Racer newRacer = new Racer((player ?
                 "Player " +  (racers.size() + 1) :
                 "Bot " + (racers.size() - 1)), car,

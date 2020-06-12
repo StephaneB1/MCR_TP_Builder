@@ -127,5 +127,11 @@ public class Utils {
         JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE, imgIcon);
     }
 
+    public static void popupWarning(String message) {
+        popup("resources/warning-popup.png",
+                "Warning", message);
+    }
+
+
 
 }
