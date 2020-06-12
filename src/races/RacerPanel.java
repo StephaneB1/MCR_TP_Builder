@@ -1,13 +1,11 @@
 package races;
 
 import cars.CarDisplayer;
-import controller.Controller;
 import controller.StatsPanel;
 import utils.Utils;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -19,10 +17,15 @@ public class RacerPanel extends JPanel {
 
     private Racer racer;
     private boolean animCrashedRunning = false;
-    private TimerTask repeatedTask;
+    private JLabel lblSmokeAnim;
+
+    private TimerTask repeatedTaskWarning;
     private Timer timerWarning;
     private JLabel lblWarningImg;
-    private JLabel lblSmokeAnim;
+
+    private TimerTask repeatedTaskCrashBar;
+    private Timer timerCrashBar;
+    private JLabel lblCrashBar;
 
     public RacerPanel(Racer racer, String panelTitle) {
         this.racer = racer;
@@ -53,11 +56,21 @@ public class RacerPanel extends JPanel {
         lblWarningImg.setVisible(false);
 
         StatsPanel statsPanel = new StatsPanel(carPanel, 1);
-        statsPanel.setBackground(Color.RED);
+        statsPanel.setBackground(new Color(210, 0, 0));
         statsPanel.updateStats();
         statsPanel.setLocation(30, 340);
         statsPanel.setSize(440,120);
 
+        // Crash timeout bar
+        lblCrashBar = new JLabel();
+        lblCrashBar.setBounds(420 ,95, lblCrashBar.getPreferredSize().width, lblCrashBar.getPreferredSize().height);
+        lblCrashBar.setSize(80, 7);
+        lblCrashBar.setOpaque(true);
+        lblCrashBar.setBackground(Color.RED);
+        lblCrashBar.setVisible(false);
+
+        // Add components
+        add(lblCrashBar);
         add(statsPanel);
         add(lblWarningImg);
         add(lblSmokeAnim);
@@ -71,32 +84,58 @@ public class RacerPanel extends JPanel {
     public void checkCrash(){
         if(!racer.hasFinished()) {
             if (racer.isCrashed() && !animCrashedRunning) {
-                animCrashedRunning = true;
-
-                lblSmokeAnim.setVisible(true);
-
-                repeatedTask = new TimerTask() {
-                    @Override
-                    public void run() {
-                        if (RacerPanel.this.lblWarningImg.isVisible()) {
-                            RacerPanel.this.lblWarningImg.setVisible(false);
-                        } else {
-                            RacerPanel.this.lblWarningImg.setVisible(true);
-                        }
-                    }
-                };
-
-                timerWarning = new Timer();
-                timerWarning.scheduleAtFixedRate(repeatedTask, 0, 500);
+                beginCrashDisplay();
             } else if (!racer.isCrashed() && animCrashedRunning) {
-                animCrashedRunning = false;
-                lblSmokeAnim.setVisible(false);
-                lblWarningImg.setVisible(false);
-                timerWarning.cancel();
-                timerWarning.purge();
+                stopCrashDisplay();
             }
         }
     }
 
+    /**
+     * Displays crash UI elements and starts timer tasks
+     */
+    private void beginCrashDisplay() {
+        animCrashedRunning = true;
+
+        lblSmokeAnim.setVisible(true);
+        lblCrashBar.setVisible(true);
+
+        repeatedTaskWarning = new TimerTask() {
+            @Override
+            public void run() {
+                // Reverse setVisible
+                RacerPanel.this.lblWarningImg.setVisible(!RacerPanel.this.lblWarningImg.isVisible());
+            }
+        };
+        timerWarning = new Timer();
+        timerWarning.scheduleAtFixedRate(repeatedTaskWarning, 0, 500);
+
+        repeatedTaskCrashBar = new TimerTask() {
+            @Override
+            public void run() {
+                lblCrashBar.setSize((int)(80*racer.crashProgression()), lblCrashBar.getHeight());
+            }
+        };
+        timerCrashBar = new Timer();
+        timerCrashBar.scheduleAtFixedRate(repeatedTaskCrashBar, 0, 50);
+    }
+
+    /**
+     * Hides UI elements of the crash and stops associated timers
+     */
+    private void stopCrashDisplay() {
+        animCrashedRunning = false;
+        // Hide crash elements
+        lblSmokeAnim.setVisible(false);
+        lblWarningImg.setVisible(false);
+        lblCrashBar.setVisible(false);
+        // Reset timers
+        timerWarning.cancel();
+        timerWarning.purge();
+        timerCrashBar.cancel();
+        timerCrashBar.purge();
+        // Reset crash bar's width
+        lblCrashBar.setSize(80, lblCrashBar.getHeight());
+    }
 
 }

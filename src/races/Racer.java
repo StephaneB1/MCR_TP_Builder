@@ -14,7 +14,8 @@ public class Racer implements Comparable<Racer>{
     private Color color;
     private boolean hasFinished = false;
 
-    private double crashTimeout = 0;
+    private double crashTimeout = 0; // Crash time (does not vary during crash)
+    private double crashTimer = 0; // Crash countdown timer (decreases during crash)
     private final double crashDuration;
     private final double crashChance;
     private final double distancePerTick;
@@ -23,7 +24,7 @@ public class Racer implements Comparable<Racer>{
     /***** GLOBAL PARAMETERS *****/
     private static final double REALTIME_RANDOMNESS = 0.5;  // [0;1] global randomness factor (0 = no randomness)
     private static final double CRASH_DURATION = 200;       // [tick]
-    private static final double CRASH_CHANCE = 0.004;       // [0;1]
+    private static final double CRASH_CHANCE = 0.008;       // [0;1]
     private static final double DISTANCE_PER_TICK = 5;      // [meter], base velocity
 
 
@@ -93,7 +94,16 @@ public class Racer implements Comparable<Racer>{
      * @return true if Racer is currently crashed
      */
     public boolean isCrashed() {
-        return crashTimeout > 0;
+        return crashTimer > 0;
+    }
+
+    /**
+     * Remaining crash time in percent
+     * 1 = just began crash, 0 = finished crash
+     * @return percent [0;1]
+     */
+    public double crashProgression() {
+        return crashTimer / crashTimeout;
     }
 
     /**
@@ -101,13 +111,15 @@ public class Racer implements Comparable<Racer>{
      * c.f. global parameters constants above
      */
     public void runOneTick() {
-        if(crashTimeout > 0) {
-            if(--crashTimeout == 0) {
+        if(crashTimer > 0) {
+            if(--crashTimer == 0) {
                 displayLog(name + " gets back to race");
             }
         } else { // Racer runs
             if(rand.nextDouble() < crashChance) { // Bad luck, Racer crashes
+                // Store crash time in crashTimeout and count down using crashTimer
                 crashTimeout = crashDuration * globalRandomMultiplier(); // Racer has to wait crashDuration ticks
+                crashTimer = crashTimeout;
                 displayLog(name + " crashes and waits for " + crashTimeout);
             } else { // Racer runs normally
                 double tickDistance = distancePerTick * globalRandomMultiplier();
@@ -122,6 +134,7 @@ public class Racer implements Comparable<Racer>{
     public void reset() {
         currentDistance = 0;
         crashTimeout = 0;
+        crashTimer = 0;
         hasFinished = false;
     }
 
