@@ -63,7 +63,7 @@ public class RacerPanel extends JPanel {
 
         // Crash timeout bar
         lblCrashBar = new JLabel();
-        lblCrashBar.setBounds(420 ,90, lblCrashBar.getPreferredSize().width, lblCrashBar.getPreferredSize().height);
+        lblCrashBar.setBounds(420 ,95, lblCrashBar.getPreferredSize().width, lblCrashBar.getPreferredSize().height);
         lblCrashBar.setSize(80, 7);
         lblCrashBar.setOpaque(true);
         lblCrashBar.setBackground(Color.RED);
