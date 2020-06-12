@@ -223,7 +223,8 @@ public class Controller extends JFrame {
         restartButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO
+                racers.clear();
+                updateOpponentsDisplay();
             }
         });
         JButton addOpponentButton = Utils.getIconJButton("resources/GUI/add-opponent.png", 0.1);
