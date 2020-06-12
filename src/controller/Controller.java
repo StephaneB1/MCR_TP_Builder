@@ -14,6 +14,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static java.lang.System.exit;
 
@@ -34,7 +35,22 @@ public class Controller extends JFrame {
     private JScrollPane opponentsScroll;
     private JButton addOpponentButton;
     private boolean autoGeneration = false;
-
+    private ArrayList<Color> playerColors = new ArrayList<>(Arrays.asList(
+        new Color(255,66,66),
+        new Color(71, 126, 255),
+        new Color(68, 255, 122),
+        new Color(255, 179, 91),
+        new Color(255, 131, 189),
+        new Color(117, 40, 255),
+        new Color(93, 255, 230),
+        new Color(124, 32, 32),
+        new Color(35, 63, 127),
+        new Color(33, 125, 60),
+        new Color(128, 90, 46),
+        new Color(130, 67, 96),
+        new Color(51, 18, 112),
+        new Color(46, 126, 114)
+    ));
 
     public Controller() {
 
@@ -105,8 +121,7 @@ public class Controller extends JFrame {
         Racer newRacer = new Racer((player ?
                 "Player " +  (racers.size() + 1) :
                 "Bot " + (racers.size() - 2)), car,
-                garage.getPaintJobs().get(racers.size()
-                        % garage.getPaintJobs().size()).getColor(),
+                playerColors.get(racers.size() % playerColors.size()),
                 true);
 
         racers.add(newRacer);
