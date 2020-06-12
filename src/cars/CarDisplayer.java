@@ -61,7 +61,7 @@ public class CarDisplayer extends JPanel {
     }
 
     private void drawCarPart(Graphics g, CarPart carPart) {
-        if (ratio != 1) {
+        if (ratio < 1) {
             Image sizedImage = carPart.getImage().getScaledInstance(
                     (int) (carPart.getImage().getWidth() * ratio),
                     (int) (carPart.getImage().getHeight() * ratio),

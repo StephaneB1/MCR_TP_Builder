@@ -20,8 +20,6 @@ public class BuilderFrame extends JFrame {
     private final int SCREEN_WIDTH  = 900;
     private final int SCREEN_HEIGHT = 600;
 
-
-    private static final int TOTAL_RACERS = 5;
     private static int totalBuilder = 0;
 
     // Reference to this frame to close is on action event
@@ -168,7 +166,6 @@ public class BuilderFrame extends JFrame {
                 CarPart newPart = garage.getInventory().get(currentCategory).getProducts().get(currentProduct).clone();
                 newPart.setColor(garage.getPaintJobs().get(currentColor).getColor());
 
-                boolean success = true;
                 switch (currentCategory) {
                     case Garage.CATEGORY_BODY:
                         builder.buildBody((Body) newPart);
@@ -176,26 +173,18 @@ public class BuilderFrame extends JFrame {
                     case Garage.CATEGORY_MOTORS:
                         if (builder.buildMotor((Motor) newPart) == null) {
                             setNotBodyErrorMessage("a motor");
-                            success = false;
                         }
                         break;
                     case Garage.CATEGORY_SPOILERS:
                         if (builder.buildSpoiler((Spoiler) newPart) == null) {
                             setNotBodyErrorMessage("a spoiler");
-                            success = false;
                         }
                         break;
                     case Garage.CATEGORY_TIRES:
                         if (builder.buildTire((Tires) newPart) == null) {
                             setNotBodyErrorMessage("tires");
-                            success = false;
                         }
                         break;
-                }
-
-                if (success) {
-                    //debug.setForeground(Color.BLACK);
-                    //debug.setText("Added a new car part to the blueprint : " + newPart.getName() + " !");
                 }
 
                 displayer.repaint();
@@ -209,11 +198,8 @@ public class BuilderFrame extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
                 // Build car
                 if (builder.getCar() != null) {
-
                     mainFrame.dispose();
-
                     Controller.getInstance().addNewRacer(builder.getCar(), true);
-
                 } else {
                     // TODO : Pop up
                     //debug.setForeground(Color.RED);

@@ -202,9 +202,6 @@ public class Controller extends JFrame {
         spoilers.addProduct(new Spoiler("Spoiler-2", Spoiler.SPOILER_PATH + "Spoiler_2.png", new Stats().randomize(), new Point(55, 75)));
         spoilers.addProduct(new Spoiler("Spoiler-3", Spoiler.SPOILER_PATH + "Spoiler_3.png", new Stats().randomize(), new Point(55, 75)));
 
-
-
-
         // Adding to the garage inventory
         garage.addToInventory(bodies);
         garage.addToInventory(motors);
