@@ -52,7 +52,7 @@ public class RacerPanel extends JPanel {
         lblWarningImg.setBounds(420 ,20,lblWarningImg.getPreferredSize().width, lblWarningImg.getPreferredSize().height);
         lblWarningImg.setVisible(false);
 
-        StatsPanel statsPanel = new StatsPanel(carPanel);
+        StatsPanel statsPanel = new StatsPanel(carPanel, 1);
         statsPanel.setBackground(Color.RED);
         statsPanel.updateStats();
         statsPanel.setLocation(30, 340);

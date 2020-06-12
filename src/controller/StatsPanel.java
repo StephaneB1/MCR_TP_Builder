@@ -18,10 +18,13 @@ public class StatsPanel extends JPanel {
     private final JPanel resistanceStatPanel = new JPanel(statGrid);
 
     private CarDisplayer displayer;
+    private double ratio;
 
-    public StatsPanel(CarDisplayer displayer) {
+
+    public StatsPanel(CarDisplayer displayer, double ratio) {
 
         this.displayer = displayer;
+        this.ratio = ratio;
 
         speedStatPanel.setBackground(Color.WHITE);
         maniabilityStatPanel.setBackground(Color.WHITE);
@@ -89,8 +92,8 @@ public class StatsPanel extends JPanel {
 
         for(int i = 1; i <= TOTAL_STAT_UNIT; ++i) {
             JLabel stat = new JLabel(statValue <= i ?
-                    Utils.getSizedIcon("resources/GUI/statOff_v2.png", 0.05, Image.SCALE_DEFAULT) :
-                    Utils.getSizedIcon("resources/GUI/statOn_v2.png", 0.05, Image.SCALE_DEFAULT)
+                    Utils.getSizedIcon("resources/GUI/statOff_v2.png", 0.1 * ratio, Image.SCALE_DEFAULT) :
+                    Utils.getSizedIcon("resources/GUI/statOn_v2.png", 0.1 * ratio, Image.SCALE_DEFAULT)
             );
 
             statPanel.add(stat);

@@ -133,7 +133,7 @@ public class Controller extends JFrame {
             panel.setOpaque(false);
             panel.setPreferredSize(new Dimension(250, 280));
             panel.setBorder(Utils.getPanelBorder("PLAYER " + (i+1), racers.get(i).getColor()));
-            CarDisplayer carDisplayer = new CarDisplayer(racers.get(i).getCar(), null, 0.5);
+            CarDisplayer carDisplayer = new CarDisplayer(racers.get(i).getCar(), null, 0.45);
             GridBagConstraints c1 = new GridBagConstraints();
             c1.fill = GridBagConstraints.BOTH;
             c1.insets = new Insets(3,3,3,3); // padding
@@ -141,7 +141,7 @@ public class Controller extends JFrame {
             c1.gridy = 0;
             panel.add(carDisplayer, c1);
             c1.gridy = 1;
-            panel.add(new StatsPanel(carDisplayer), c1);
+            panel.add(new StatsPanel(carDisplayer, 0.5), c1);
 
             opponentsPanel.add(panel, c);
         }

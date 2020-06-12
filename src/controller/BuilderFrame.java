@@ -58,7 +58,7 @@ public class BuilderFrame extends JFrame {
         displayer = new CarDisplayer(car, builder);
         displayer.setBorder(Utils.getPanelBorder("B L U E P R I N T", Utils.getDefaultColor()));
         // STATS
-        statsPanel = new StatsPanel(displayer);
+        statsPanel = new StatsPanel(displayer, 1);
         statsPanel.setBorder(Utils.getPanelBorder("C A R    S T A T I S T I C S", Utils.getDefaultColor()));
 
         // BUILDER PANEL
@@ -80,7 +80,7 @@ public class BuilderFrame extends JFrame {
         carPartPanel.add(carPartDisplay, c1);
         c1.gridy = 1;
         c1.weighty = 0.1;
-        carPartStatsPanel = new StatsPanel(null);
+        carPartStatsPanel = new StatsPanel(null, 1);
         carPartPanel.add(carPartStatsPanel, c1);
         // Car Part selection display
         JPanel selectionPanel = new JPanel();
