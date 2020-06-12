@@ -60,16 +60,6 @@ public class Controller extends JFrame {
         debug = new JLabel("Welcome! Start by building your car or generate opponents and then start a race!");
         debug.setBorder(Utils.getPanelBorder("C O N S O L E", Utils.getDefaultColor()));
         debug.setFont(new Font("Consolas", Font.PLAIN, 14));
-        // BLUEPRINTS
-        //builder = new CarBuilder();
-        //playerCarDisplayer = new CarDisplayer(playerCar, builder);
-        //playerCarDisplayer.setBorder(getPanelBorder("B L U E P R I N T"));
-        // STATS
-        //StatsPanel carStatsPanel = new StatsPanel(playerCarDisplayer);
-        //carStatsPanel.setBorder(getPanelBorder("C A R    S T A T I S T I C S"));
-        // RACE
-        //JPanel racePanel = loadRacePanel();
-        //racePanel.setBorder(getPanelBorder("R A C E    I N F O R M A T I O N"));
         // OPPONENTS
         opponentsScroll = new JScrollPane();
         totalRacersLabel = new JLabel("0");
@@ -77,9 +67,6 @@ public class Controller extends JFrame {
         opponentsScroll.setViewportView(opponentsPanel);
         opponentsScroll.setBorder(Utils.getPanelBorder("O P P O N E N T S", Utils.getDefaultColor()));
         opponentsScroll.setOpaque(false);
-        // BUILDER
-        //builderPanel = new BuilderPanel(garage, builder, playerCarDisplayer, playerCar, carStatsPanel, racePanel, opponentsPanel, debug);
-        //builderPanel.setBorder(getPanelBorder("C A R    B U I L D E R"));
 
         // Add panels with padding
         Border padding = BorderFactory.createEmptyBorder(20, 20, 20, 20);
@@ -131,7 +118,7 @@ public class Controller extends JFrame {
 
         totalRacersLabel.setText(racers.size() + "");
         opponentsPanel = new JPanel(new GridBagLayout());
-        opponentsPanel.setOpaque(false);
+        opponentsPanel.setBackground(Color.WHITE);
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
         c.insets = new Insets(3,3,3,3); // padding
@@ -143,6 +130,7 @@ public class Controller extends JFrame {
 
             // Car display with stats
             JPanel panel = new JPanel(new GridBagLayout());
+            panel.setOpaque(false);
             panel.setPreferredSize(new Dimension(250, 280));
             panel.setBorder(Utils.getPanelBorder("PLAYER " + (i+1), racers.get(i).getColor()));
             CarDisplayer carDisplayer = new CarDisplayer(racers.get(i).getCar(), null, 0.5);
