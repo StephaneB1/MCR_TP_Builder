@@ -120,7 +120,7 @@ public class Controller extends JFrame {
     public void addNewRacer(Car car, boolean player) {
         Racer newRacer = new Racer((player ?
                 "Player " +  (racers.size() + 1) :
-                "Bot " + (racers.size() - 2)), car,
+                "Bot " + (racers.size() - 1)), car,
                 playerColors.get(racers.size() % playerColors.size()),
                 true);
 
@@ -167,6 +167,10 @@ public class Controller extends JFrame {
         // If the players have finished building their cars, we let the user know he can generate the opponents
         switch(racers.size()) {
             case 0:
+                if(autoGeneration) {
+                    addOpponentButton.setIcon(Utils.getSizedIcon("resources/GUI/add-opponent.png", 0.1, Image.SCALE_SMOOTH));
+                    autoGeneration = false;
+                }
                 break;
             case 1:
                 debug.setText("Looking good! Alright now Player 2 it's your turn. Go make your dream car!");
@@ -264,8 +268,10 @@ public class Controller extends JFrame {
         restartButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Reset opponents
                 racers.clear();
                 updateOpponentsDisplay();
+                spinner.setValue(3000);
             }
         });
         addOpponentButton = Utils.getIconJButton("resources/GUI/add-opponent.png", 0.1);
