@@ -1,20 +1,11 @@
 package races;
 
-import cars.CarDisplayer;
-import controller.Controller;
 import utils.Utils;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class RaceDetailsPanel extends JPanel {
 
@@ -45,6 +36,10 @@ public class RaceDetailsPanel extends JPanel {
         this.add(racersPanels.get(1));
     }
 
+    /**
+     * Create a Panel that will display the current leaderboard and return it
+     * @return The leaderboard Panel
+     */
     private JPanel loadLeaderboardPanel() {
         JPanel panel = new JPanel();
         panel.setBackground(Color.WHITE);
@@ -65,17 +60,21 @@ public class RaceDetailsPanel extends JPanel {
         return panel;
     }
 
+    /**
+     * Update the leaderboard, we'll sort the racers list that is implicitly the leaderboard
+     * and display a label for each racer
+     */
     public void updateLeaderBoard() {
         racers.sort(Collections.reverseOrder());
-
         for(int i = 0; i < racers.size(); ++i){
             learerboardLabels.get(i).setForeground(racers.get(i).getColor());
             learerboardLabels.get(i).setText((i+1) + ". " + racers.get(i).getName() + " - " + (int)(racers.get(i).getCurrentDistance() * 100 / totalDistance) + "%");
-            //System.out.println((i+1) + ". " + racers.get(i).getName() + " - " + racers.get(i).getCurrentDistance());
         }
-        //System.out.println("");
     }
 
+    /**
+     * Check if one of our racerPanel (players) has crashed
+     */
     public void checkRacersCrash(){
         for(RacerPanel racerPanel : racersPanels){
             racerPanel.checkCrash();

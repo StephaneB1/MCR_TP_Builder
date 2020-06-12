@@ -55,8 +55,8 @@ public class RacerPanel extends JPanel {
         StatsPanel statsPanel = new StatsPanel(carPanel);
         statsPanel.setBackground(Color.RED);
         statsPanel.updateStats();
-        statsPanel.setLocation(50, 340);
-        statsPanel.setSize(400,120);
+        statsPanel.setLocation(30, 340);
+        statsPanel.setSize(440,120);
 
         add(statsPanel);
         add(lblWarningImg);
@@ -64,6 +64,10 @@ public class RacerPanel extends JPanel {
         add(carPanel);
     }
 
+    /**
+     * Check if the current racer has crashed. While is crashing, we'll display smoke animation
+     * as a GIF, and a flashing warning signal image.
+     */
     public void checkCrash(){
         if(!racer.hasFinished()) {
             if (racer.isCrashed() && !animCrashedRunning) {
