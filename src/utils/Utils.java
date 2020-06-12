@@ -121,6 +121,11 @@ public class Utils {
                 .buildSpoiler((Spoiler) getRandCarPart(garage, random, Garage.CATEGORY_SPOILERS));
     }
 
+    public static void popup(String iconPath, String title, String message) {
+        final Icon imgIcon = new ImageIcon(iconPath);
+        UIManager.put("OptionPane.messageFont", new Font("Arial", Font.BOLD, 16));
+        JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE, imgIcon);
+    }
 
 
 }

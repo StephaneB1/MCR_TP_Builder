@@ -203,9 +203,7 @@ public class BuilderFrame extends JFrame {
                     mainFrame.dispose();
                     Controller.getInstance().addNewRacer(builder.getCar(), true);
                 } else {
-                    // TODO : Pop up
-                    //debug.setForeground(Color.RED);
-                    //debug.setText("Your blueprint is incomplete! You're missing some parts!");
+                    Utils.popup("resources/warning-popup.png", "Warning", "Your blueprint is incomplete! You're missing some parts!");
                 }
             }
         });
@@ -305,7 +303,7 @@ public class BuilderFrame extends JFrame {
     }
 
     private void setNotBodyErrorMessage(String part) {
-        //debug.setForeground(Color.RED);
-        //debug.setText("Can't add " + part + " without a body");
+        Utils.popup("resources/warning-popup.png",
+                "Warning", "Can't add " + part + " without a body");
     }
 }

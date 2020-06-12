@@ -1,5 +1,7 @@
 package races;
 
+import utils.Utils;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -136,9 +138,7 @@ public class Race extends JFrame {
         }
         sb.append("\n");
 
-        final Icon imgIcon = new ImageIcon("resources/winner_trophy.png");
-        UIManager.put("OptionPane.messageFont", new Font("Arial", Font.BOLD, 16));
-        JOptionPane.showMessageDialog(null, sb.toString(), "winner winner chicken dinner", JOptionPane.INFORMATION_MESSAGE, imgIcon);
+        Utils.popup("resources/winner_trophy.png", "winner winner chicken dinner", sb.toString());
     }
 
 }
