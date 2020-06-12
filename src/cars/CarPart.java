@@ -16,15 +16,20 @@ public abstract class CarPart implements Displayable, Cloneable {
     Point relCoord;
     Color color;
 
+    boolean isDuplicateOnX;
+    int duplicateDistance;
+
     // Stats
     Stats stats;
 
-    public CarPart(String name, String imagePath, Stats stats, Point relCoord) {
+    public CarPart(String name, String imagePath, Point relCoord, boolean isDuplicateOnX, int duplicateDistance, Stats stats) {
         this.name = name;
         this.stats = stats;
         this.imagePath = imagePath;
         this.relCoord = relCoord;
         this.color = Color.WHITE;
+        this.isDuplicateOnX = isDuplicateOnX;
+        this.duplicateDistance = duplicateDistance;
         try {
             BufferedImage in = ImageIO.read(new File(imagePath));
 
@@ -37,6 +42,11 @@ public abstract class CarPart implements Displayable, Cloneable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public CarPart(String name, String imagePath, Stats stats, Point relCoord) {
+        this(name, imagePath, relCoord, false, 0, stats);
     }
 
     public abstract String getCategory();
@@ -77,6 +87,10 @@ public abstract class CarPart implements Displayable, Cloneable {
     @Override
     public int getYCoord() {
         return relCoord.y;
+    }
+
+    public int getDuplicateDistanceX() {
+        return duplicateDistance;
     }
 
     private BufferedImage tintImage(BufferedImage loadImg, Color color) {

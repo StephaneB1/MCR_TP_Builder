@@ -192,9 +192,9 @@ public class Controller extends JFrame {
 
         // - Car tires
         GarageProduct tires = new GarageProduct("Tires");
-        tires.addProduct(new Tires("Tires_1", Tires.TIRES_PATH + "Tires_1.png", new Stats().randomize(), new Point(90, 120)));
-        tires.addProduct(new Tires("Tires_2", Tires.TIRES_PATH + "Tires_2.png", new Stats().randomize(), new Point(90, 120)));
-        tires.addProduct(new Tires("Tires_3", Tires.TIRES_PATH + "Tires_3.png", new Stats().randomize(), new Point(90, 120)));
+        tires.addProduct(new Tires("Tires_1", Tires.TIRES_PATH + "Tires_1.png", new Stats().randomize(), new Point(90, 120), 210));
+        tires.addProduct(new Tires("Tires_2", Tires.TIRES_PATH + "Tires_2.png", new Stats().randomize(), new Point(90, 120), 210));
+        tires.addProduct(new Tires("Tires_3", Tires.TIRES_PATH + "Tires_3.png", new Stats().randomize(), new Point(90, 120), 210));
 
         // - Car spoilers
         GarageProduct spoilers = new GarageProduct("Spoilers");
