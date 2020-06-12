@@ -47,24 +47,28 @@ public class CarDisplayer extends JPanel {
         // display the car parts of the car
         if(car != null) {
             for(CarPart carPart : car.getCarParts()) {
-                if(ratio != 1) {
-                    Image sizedImage = carPart.getImage().getScaledInstance(
-                            (int) (carPart.getImage().getWidth() * ratio),
-                            (int) (carPart.getImage().getHeight() * ratio),
-                            Image.SCALE_DEFAULT);
-                    g.drawImage(sizedImage, (int) (carPart.getXCoord() * ratio), (int) (carPart.getYCoord() * ratio), this);
-                } else {
-                    g.drawImage(carPart.getImage(), carPart.getXCoord(), carPart.getYCoord(), this);
-                }
+                drawCarPart(g, carPart);
             }
         }
         // Or the blueprint of the builder
         else if (builder != null) {
             for(CarPart carPart : builder.getCarParts()) {
                 if(carPart != null) {
-                    g.drawImage(carPart.getImage(), carPart.getXCoord(), carPart.getYCoord(),this);
+                    drawCarPart(g, carPart);
                 }
             }
+        }
+    }
+
+    private void drawCarPart(Graphics g, CarPart carPart) {
+        if (ratio != 1) {
+            Image sizedImage = carPart.getImage().getScaledInstance(
+                    (int) (carPart.getImage().getWidth() * ratio),
+                    (int) (carPart.getImage().getHeight() * ratio),
+                    Image.SCALE_DEFAULT);
+            g.drawImage(sizedImage, (int) (carPart.getXCoord() * ratio), (int) (carPart.getYCoord() * ratio), this);
+        } else {
+            g.drawImage(carPart.getImage(), carPart.getXCoord(), carPart.getYCoord(), this);
         }
     }
 

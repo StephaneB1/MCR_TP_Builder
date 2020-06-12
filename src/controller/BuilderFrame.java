@@ -55,7 +55,7 @@ public class BuilderFrame extends JFrame {
 
         // BLUEPRINTS
         builder = new CarBuilder();
-        displayer = new CarDisplayer(car, builder);
+        displayer = new CarDisplayer(car, builder, 0.8);
         displayer.setBorder(Utils.getPanelBorder("B L U E P R I N T", Utils.getDefaultColor()));
         // STATS
         statsPanel = new StatsPanel(displayer, 1);
