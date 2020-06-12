@@ -104,6 +104,7 @@ public class BuilderFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 currentCategory = getPrevious(currentCategory, garage.getInventory().size());
                 currentProduct  = 0;
+                currentColor = 0;
                 updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartDisplay);
             }
         });
@@ -113,6 +114,7 @@ public class BuilderFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 currentCategory = getNext(currentCategory, garage.getInventory().size());
                 currentProduct  = 0;
+                currentColor = 0;
                 updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartDisplay);
             }
         });
@@ -148,9 +150,9 @@ public class BuilderFrame extends JFrame {
                 updateSelectionLabels(categoryLabel, productLabel, colorLabel, carPartDisplay);
             }
         });
-        JButton mountToCarButton = Utils.getIconJButton("resources/GUI/add-blueprint_v2.png", 0.4);
-        JButton randomCarButton = Utils.getIconJButton("resources/GUI/random-button_v2.png", 0.4);
-        JButton buildCarButton = Utils.getIconJButton("resources/GUI/build-car_v2.png", 0.4);
+        JButton mountToCarButton = Utils.getIconJButton("resources/GUI/add-blueprint_v2.png", 0.3);
+        JButton randomCarButton = Utils.getIconJButton("resources/GUI/random-button_v2.png", 0.3);
+        JButton buildCarButton = Utils.getIconJButton("resources/GUI/build-car_v2.png", 0.3);
         randomCarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
