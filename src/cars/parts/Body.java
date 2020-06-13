@@ -3,6 +3,7 @@ package cars.parts;
 import cars.Stats;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.ImageObserver;
 
 public class Body extends CarPart {

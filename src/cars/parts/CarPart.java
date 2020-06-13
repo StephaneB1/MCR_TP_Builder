@@ -116,7 +116,7 @@ public abstract class CarPart implements Displayable, Cloneable {
         return duplicateDistance;
     }
 
-    private BufferedImage tintImage(BufferedImage loadImg, Color color) {
+    BufferedImage tintImage(BufferedImage loadImg, Color color) {
         BufferedImage result = new BufferedImage(loadImg.getWidth(),
                 loadImg.getHeight(), BufferedImage.TYPE_INT_ARGB);
         for(int i = 0; i < loadImg.getWidth(); ++i) {

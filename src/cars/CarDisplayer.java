@@ -4,6 +4,10 @@ import cars.parts.CarPart;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 
 public class CarDisplayer extends JPanel {
 
@@ -13,6 +17,8 @@ public class CarDisplayer extends JPanel {
     private Car car;
     private double ratio; // image ratio [0.0, 1.0]
     private boolean simulation;
+
+    private BufferedImage rotated;
 
     public CarDisplayer(Car car) {
         this(car, 1.0, false);
@@ -43,8 +49,5 @@ public class CarDisplayer extends JPanel {
                 carPart.drawPart(g, ratio, this, simulation);
             }
         }
-
-        // TODO : if(simulation) { rotateWheels(); } (a faire ici ou dans la classe Tires, i don't know...)
-
     }
 }
