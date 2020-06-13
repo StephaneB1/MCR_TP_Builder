@@ -27,12 +27,18 @@ public class Race extends JFrame {
 
     public Race(int totalDistance, ArrayList<Racer> racers){
         this.totalDistance = totalDistance;
-        this.racers = racers;
-        this.nbRacers = this.racers.size();
 
-        for(Racer racer : this.racers){
-            racer.reset();
+        // Clone racers to be able to restart a race with new Racer all the time,
+        // Also to run more than one race at the same time
+        this.racers = new ArrayList<>(racers.size());
+        for(Racer racer : racers){
+            try {
+                this.racers.add((Racer) racer.clone());
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
         }
+        this.nbRacers = this.racers.size();
 
         this.setSize(WIDTH, HEIGHT);
         this.setTitle("Race");
@@ -41,7 +47,7 @@ public class Race extends JFrame {
         this.setResizable(false);
         this.setLayout(null);
         // Race panel has same width as the JFrame and 1/4 of his height
-        this.racePanel = new RacePanel(WIDTH, HEIGHT / 4, racers, totalDistance);
+        this.racePanel = new RacePanel(WIDTH, HEIGHT / 4, this.racers, totalDistance);
         // PanelBottom for player stats in the current race has the rest of the windows
         this.raceDetailsPanel = new RaceDetailsPanel(this.racers, totalDistance);
         Border padding = BorderFactory.createEmptyBorder(20, 20, 40, 20);
@@ -63,7 +69,6 @@ public class Race extends JFrame {
             }
         });
 
-
     }
 
     /**
@@ -81,7 +86,7 @@ public class Race extends JFrame {
 
                     racePanel.repaint();
 
-                    raceDetailsPanel.updateLeaderBoard();
+                    raceDetailsPanel.updateLeaderBoard(nbRacersFinished);
                     raceDetailsPanel.checkRacersCrash();
                 }
                 // Race finish -> stop the current timertask and display winner
