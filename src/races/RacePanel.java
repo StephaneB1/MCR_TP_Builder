@@ -19,6 +19,9 @@ public class RacePanel extends JPanel {
     private JLabel lblPlayer2;
 
     public RacePanel(int width, int height, ArrayList<Racer> racers, int totalDistance) {
+
+        // TODO : check racers size >= 2
+
         this.setSize(width, height);
         setBackground(Color.WHITE);
         this.player1Racer = racers.get(0);
