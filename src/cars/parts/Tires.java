@@ -41,9 +41,10 @@ public class Tires extends CarPart {
     public void drawPart(Graphics g, double ratio, ImageObserver observer, boolean simulation) {
         if(simulation) {
             if(!timerSet) {
+                // Delay would have to be divided by the speed
                 Timer timer = new Timer(10, new ActionListener() {
                     private double angle = 0;
-                    private double delta = 1.0;
+                    private double delta = 10.0;
 
                     @Override
                     public void actionPerformed(ActionEvent e) {
