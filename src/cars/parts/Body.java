@@ -28,9 +28,4 @@ public class Body extends CarPart {
         return new Body(this.name, this.imagePath, this.stats);
     }
 
-    @Override
-    public void drawPart(Graphics g, double ratio, ImageObserver observer, boolean simulation) {
-        System.out.println("Drawing from Body");
-        super.drawPart(g, ratio, observer, simulation);
-    }
 }

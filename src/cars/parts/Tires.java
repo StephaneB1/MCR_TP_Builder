@@ -30,7 +30,6 @@ public class Tires extends CarPart {
 
     @Override
     public void drawPart(Graphics g, double ratio, ImageObserver observer, boolean simulation) {
-        System.out.println("Drawing from Tires");
         if(simulation)
             return;
 

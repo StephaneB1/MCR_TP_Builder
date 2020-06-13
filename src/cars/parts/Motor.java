@@ -28,10 +28,4 @@ public class Motor extends CarPart {
         return new Motor(this.name, this.imagePath, this.stats, this.relCoord);
     }
 
-
-    @Override
-    public void drawPart(Graphics g, double ratio, ImageObserver observer, boolean simulation) {
-        System.out.println("Drawing from Motor");
-        super.drawPart(g, ratio, observer, simulation);
-    }
 }

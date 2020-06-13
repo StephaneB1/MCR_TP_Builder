@@ -28,10 +28,4 @@ public class Spoiler extends CarPart {
         return new Spoiler(this.name, this.imagePath, this.stats, this.relCoord);
     }
 
-
-    @Override
-    public void drawPart(Graphics g, double ratio, ImageObserver observer, boolean simulation) {
-        System.out.println("Drawing from Spoiler");
-        super.drawPart(g, ratio, observer, simulation);
-    }
 }

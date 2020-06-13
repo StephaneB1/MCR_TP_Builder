@@ -44,7 +44,7 @@ public class CarDisplayer extends JPanel {
             }
         }
 
-        // TODO : if(simulation) { rotateWheels(); }
+        // TODO : if(simulation) { rotateWheels(); } (a faire ici ou dans la classe Tires, i don't know...)
 
     }
 }
