@@ -14,8 +14,8 @@ public class Car {
     }
 
     public Car(ArrayList<CarPart> carParts) {
-        this.carParts = carParts;
         stats = new Stats();
+        setCarParts(carParts);
     }
 
     public void setCarParts(ArrayList<CarPart> carParts) {
