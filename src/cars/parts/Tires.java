@@ -3,6 +3,7 @@ package cars.parts;
 import cars.Stats;
 
 import java.awt.*;
+import java.awt.image.ImageObserver;
 
 public class Tires extends CarPart {
 
@@ -25,5 +26,14 @@ public class Tires extends CarPart {
     @Override
     public CarPart clone() {
         return new Tires(this.name, this.imagePath, this.stats, this.relCoord, this.duplicateDistance);
+    }
+
+    @Override
+    public void drawPart(Graphics g, double ratio, ImageObserver observer, boolean simulation) {
+        System.out.println("Drawing from Tires");
+        if(simulation)
+            return;
+
+        super.drawPart(g, ratio, observer, false);
     }
 }

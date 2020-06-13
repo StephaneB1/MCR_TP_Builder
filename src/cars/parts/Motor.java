@@ -3,6 +3,7 @@ package cars.parts;
 import cars.Stats;
 
 import java.awt.*;
+import java.awt.image.ImageObserver;
 
 public class Motor extends CarPart {
 
@@ -25,5 +26,12 @@ public class Motor extends CarPart {
     @Override
     public CarPart clone() {
         return new Motor(this.name, this.imagePath, this.stats, this.relCoord);
+    }
+
+
+    @Override
+    public void drawPart(Graphics g, double ratio, ImageObserver observer, boolean simulation) {
+        System.out.println("Drawing from Motor");
+        super.drawPart(g, ratio, observer, simulation);
     }
 }

@@ -94,7 +94,8 @@ public abstract class CarPart implements Displayable, Cloneable {
     }
 
     @Override
-    public void drawPart(Graphics g, double ratio, ImageObserver observer) {
+    public void drawPart(Graphics g, double ratio, ImageObserver observer, boolean simulation) {
+        System.out.println("Drawing from CarPart");
         if (ratio < 1) {
             Image sizedImage = tintImage(image, color).getScaledInstance(
                     (int) (image.getWidth() * ratio),
