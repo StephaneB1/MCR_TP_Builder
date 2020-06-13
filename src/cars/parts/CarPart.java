@@ -1,8 +1,12 @@
-package cars;
+package cars.parts;
+
+import cars.Displayable;
+import cars.Stats;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 
@@ -71,7 +75,7 @@ public abstract class CarPart implements Displayable, Cloneable {
 
     @Override
     public BufferedImage getImage() {
-        return tintImage(image, color);
+        return image;
     }
 
     @Override
@@ -87,6 +91,25 @@ public abstract class CarPart implements Displayable, Cloneable {
     @Override
     public int getYCoord() {
         return relCoord.y;
+    }
+
+    @Override
+    public void drawPart(Graphics g, double ratio, ImageObserver observer) {
+        if (ratio < 1) {
+            Image sizedImage = tintImage(image, color).getScaledInstance(
+                    (int) (image.getWidth() * ratio),
+                    (int) (image.getHeight() * ratio),
+                    Image.SCALE_DEFAULT);
+            g.drawImage(sizedImage, (int) (relCoord.x * ratio), (int) (relCoord.y * ratio), observer);
+            if (isDuplicateOnX){
+                g.drawImage(sizedImage, (int) ((relCoord.x + duplicateDistance) * ratio),  (int) (relCoord.y * ratio) ,observer);
+            }
+        } else {
+            g.drawImage(tintImage(image, color), relCoord.x, relCoord.y, observer);
+            if (isDuplicateOnX){
+                g.drawImage(tintImage(image, color), relCoord.x + duplicateDistance, relCoord.y,observer);
+            }
+        }
     }
 
     public int getDuplicateDistanceX() {

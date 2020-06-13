@@ -1,5 +1,6 @@
 package cars;
 
+import cars.parts.CarPart;
 import utils.Utils;
 
 import java.util.ArrayList;

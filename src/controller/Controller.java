@@ -1,7 +1,8 @@
 package controller;
 
-import carBuilder.CarBuilder;
+import cars.CarBuilder;
 import cars.*;
+import cars.parts.*;
 import garage.Garage;
 import garage.GarageProduct;
 import races.Race;
@@ -153,7 +154,7 @@ public class Controller extends JFrame {
             panel.setOpaque(false);
             panel.setPreferredSize(new Dimension(250, 280));
             panel.setBorder(Utils.getPanelBorder(racers.get(i).getName().toUpperCase(), racers.get(i).getColor()));
-            CarDisplayer carDisplayer = new CarDisplayer(racers.get(i).getCar(), null, 0.45);
+            CarDisplayer carDisplayer = new CarDisplayer(racers.get(i).getCar(), 0.45);
             GridBagConstraints c1 = new GridBagConstraints();
             c1.fill = GridBagConstraints.BOTH;
             c1.insets = new Insets(3,3,3,3); // padding
@@ -287,7 +288,7 @@ public class Controller extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if(autoGeneration) {
                     CarBuilder builder = new CarBuilder();
-                    Utils.buildRandomCar(garage, builder);
+                    builder.buildRandomCar(garage);
                     addNewRacer(builder.getCar(), false);
                 } else {
                     BuilderFrame newBuilder = new BuilderFrame();

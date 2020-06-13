@@ -1,10 +1,10 @@
 package controller;
 
-import carBuilder.CarBuilder;
+import cars.CarBuilder;
 import cars.*;
+import cars.parts.*;
 import garage.Garage;
 import garage.GarageProduct;
-import races.Racer;
 import utils.Utils;
 
 import javax.swing.*;
@@ -12,8 +12,6 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Random;
 
 public class BuilderFrame extends JFrame {
 
@@ -34,7 +32,7 @@ public class BuilderFrame extends JFrame {
     // Blueprint
     private CarDisplayer displayer;
     private CarBuilder builder;
-    private Car car;
+    private Car carSkeleton; // blueprint
 
     // Stats
     private StatsPanel statsPanel;
@@ -53,7 +51,8 @@ public class BuilderFrame extends JFrame {
 
         // BLUEPRINTS
         builder = new CarBuilder();
-        displayer = new CarDisplayer(car, builder, 0.8);
+        carSkeleton = new Car();
+        displayer = new CarDisplayer(carSkeleton, 0.8);
         displayer.setBorder(Utils.getPanelBorder("B L U E P R I N T", Utils.getDefaultColor()));
         // STATS
         statsPanel = new StatsPanel(displayer, 1);
@@ -156,7 +155,8 @@ public class BuilderFrame extends JFrame {
         randomCarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                Utils.buildRandomCar(garage, builder);
+                builder.buildRandomCar(garage);
+                carSkeleton.setCarParts(builder.getCarParts());
                 displayer.repaint();
                 statsPanel.updateStats();
             }
@@ -189,6 +189,7 @@ public class BuilderFrame extends JFrame {
                         break;
                 }
 
+                carSkeleton.setCarParts(builder.getCarParts());
                 displayer.repaint();
 
                 // Update the stats grids

@@ -1,6 +1,6 @@
 package garage;
 
-import cars.*;
+import cars.parts.PaintJob;
 
 import java.util.ArrayList;
 import java.util.Random;

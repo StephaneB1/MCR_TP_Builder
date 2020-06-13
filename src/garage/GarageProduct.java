@@ -1,6 +1,6 @@
 package garage;
 
-import cars.CarPart;
+import cars.parts.CarPart;
 
 import java.util.ArrayList;
 
