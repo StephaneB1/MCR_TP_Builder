@@ -18,6 +18,10 @@ public class Car {
         setCarParts(carParts);
     }
 
+    /**
+     * Add the list of car part to the car
+     * @param carParts
+     */
     public void setCarParts(ArrayList<CarPart> carParts) {
         this.carParts = carParts;
         updateStats();
@@ -31,6 +35,9 @@ public class Car {
         return stats;
     }
 
+    /**
+     * Update the statistic for this car
+     */
     public void updateStats() {
         Stats.updateCarPartStats(stats, carParts);
     }
