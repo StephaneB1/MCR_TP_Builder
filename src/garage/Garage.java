@@ -1,5 +1,6 @@
 package garage;
 
+import cars.parts.CarPart;
 import cars.parts.PaintJob;
 
 import java.util.ArrayList;
@@ -41,5 +42,20 @@ public class Garage {
     public PaintJob getRandomPaintJob() {
         Random rand = new Random();
         return paintJobs.get(rand.nextInt(paintJobs.size()));
+    }
+
+    /**
+     *  Get a random car part for the given category
+     *
+     * @param rand
+     * @param category
+     * @return a random car part
+     */
+    public CarPart getRandCarPart(Random rand, int category) {
+        CarPart result = getInventory().get(category).getProducts()
+                .get(rand.nextInt(getInventory().get(category)
+                        .getProducts().size())).clone();
+        result.setColor(getPaintJobs().get(rand.nextInt(getPaintJobs().size())).getColor());
+        return result;
     }
 }

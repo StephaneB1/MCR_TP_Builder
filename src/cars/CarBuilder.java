@@ -99,31 +99,15 @@ public class CarBuilder {
 
 
     /**
-     *  Get a random car part for the given category
-     *
-     * @param garage
-     * @param rand
-     * @param category
-     * @return a random car part
-     */
-    private CarPart getRandCarPart(Garage garage, Random rand, int category) {
-        CarPart result = garage.getInventory().get(category).getProducts()
-                .get(rand.nextInt(garage.getInventory().get(category)
-                        .getProducts().size())).clone();
-        result.setColor(garage.getPaintJobs().get(rand.nextInt(garage.getPaintJobs().size())).getColor());
-        return result;
-    }
-
-    /**
      * Put random car part in the builder
      * @param garage
      */
     public void buildRandomCar(Garage garage) {
         Random random = new Random();
-        this.buildBody((Body) getRandCarPart(garage, random, Garage.CATEGORY_BODY))
-                .buildMotor((Motor) getRandCarPart(garage, random, Garage.CATEGORY_MOTORS))
-                .buildTire((Tires) getRandCarPart(garage, random, Garage.CATEGORY_TIRES))
-                .buildSpoiler((Spoiler) getRandCarPart(garage, random, Garage.CATEGORY_SPOILERS));
+        this.buildBody((Body) garage.getRandCarPart(random, Garage.CATEGORY_BODY))
+                .buildMotor((Motor) garage.getRandCarPart(random, Garage.CATEGORY_MOTORS))
+                .buildTire((Tires) garage.getRandCarPart(random, Garage.CATEGORY_TIRES))
+                .buildSpoiler((Spoiler) garage.getRandCarPart(random, Garage.CATEGORY_SPOILERS));
     }
 
 }
