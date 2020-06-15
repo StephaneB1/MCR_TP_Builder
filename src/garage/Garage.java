@@ -4,6 +4,7 @@ import cars.parts.CarPart;
 import cars.parts.PaintJob;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * MCR PROJECT : Builder Design Pattern
