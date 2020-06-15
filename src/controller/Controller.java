@@ -12,8 +12,6 @@ import utils.Utils;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -335,7 +333,7 @@ public class Controller extends JFrame {
             if(autoGeneration) {
                 CarBuilder builder = new CarBuilder();
                 builder.buildRandomCar(garage);
-                generateNewRacer(builder.getCar(), false);
+                addNewRacer(generateNewRacer(builder.getCar(), false));
             } else {
                 BuilderFrame newBuilder = new BuilderFrame();
                 newBuilder.setVisible(true);

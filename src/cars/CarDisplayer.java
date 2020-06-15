@@ -41,7 +41,7 @@ public class CarDisplayer extends JPanel {
 
         for(CarPart carPart : car.getCarParts()) {
             if(carPart != null) {
-                carPart.drawPart(g, ratio, this);
+                carPart.drawPart(g, ratio);
             }
         }
     }

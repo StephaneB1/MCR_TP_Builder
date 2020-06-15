@@ -33,16 +33,16 @@ public class Tires extends CarPart {
      * Tires are displayed twice with the same source image
      */
     @Override
-    public void drawPart(Graphics g, double ratio, ImageObserver observer) {
-        super.drawPart(g, ratio, observer);
+    public void drawPart(Graphics g, double ratio) {
+        super.drawPart(g, ratio);
         if (ratio < 1) {
             Image sizedImage = tintImage(image, color).getScaledInstance(
                     (int) (image.getWidth() * ratio),
                     (int) (image.getHeight() * ratio),
                     Image.SCALE_DEFAULT);
-            g.drawImage(sizedImage, (int) ((relCoord.x + TIRE_DISTANCE) * ratio),  (int) (relCoord.y * ratio), observer);
+            g.drawImage(sizedImage, (int) ((relCoord.x + TIRE_DISTANCE) * ratio),  (int) (relCoord.y * ratio), null);
         } else {
-            g.drawImage(tintImage(image, color), relCoord.x + TIRE_DISTANCE, relCoord.y, observer);
+            g.drawImage(tintImage(image, color), relCoord.x + TIRE_DISTANCE, relCoord.y, null);
         }
     }
 }

@@ -17,11 +17,6 @@ public class Body extends CarPart {
     }
 
     @Override
-    public int getLayerIndex() {
-        return 0; // Body is displayed before all the car parts
-    }
-
-    @Override
     public CarPart clone() {
         return new Body(this.name, this.imageName, this.stats);
     }

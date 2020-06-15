@@ -1,6 +1,5 @@
 package cars.parts;
 
-import cars.Displayable;
 import cars.Stats;
 
 import javax.imageio.ImageIO;
@@ -16,7 +15,7 @@ import java.io.IOException;
  *
  * Description : abstract class that defines a car part
  */
-public abstract class CarPart implements Displayable, Cloneable {
+public abstract class CarPart implements Cloneable {
 
     String name;
 
@@ -44,61 +43,74 @@ public abstract class CarPart implements Displayable, Cloneable {
         }
     }
 
+    /**
+     * Enable to clone a part so that the garage keeps the originals
+     * @return clone of the car part
+     */
     public abstract CarPart clone();
 
+    /**
+     * Get the resource folder for the car parts' images
+     * @return resource folder path
+     */
     abstract String getResourceFolder();
 
+    /**
+     * Get the stats
+     * @return stats
+     */
     public Stats getStats() {
         return stats;
     }
 
+    /**
+     * Get the name
+     * @return name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Set the color of the part
+     * @param color : color to paint
+     */
     public void setColor(Color color) {
         this.color = color;
     }
 
+    /**
+     * Get the color
+     * @return color
+     */
     public Color getColor() {
         return color;
     }
 
-    @Override
-    public BufferedImage getImage() {
-        return image;
-    }
-
-    @Override
+    /**
+     * Get the tinted version of the car part
+     * @param color : color to paint the car part
+     * @return tinted buffered image
+     */
     public BufferedImage getTintedImage(Color color) {
         return tintImage(image, color);
     }
 
-    @Override
-    public int getXCoord() {
-        return relCoord.x;
-    }
-
-    @Override
-    public int getYCoord() {
-        return relCoord.y;
-    }
-
-    @Override
-    public int getLayerIndex() {
-        return 1;
-    }
-
-    @Override
-    public void drawPart(Graphics g, double ratio, ImageObserver observer) {
+    /**
+     * Draws the car part on a given graphic
+     * @param g        : graphic
+     * @param ratio    : ratio of the car part
+     */
+    public void drawPart(Graphics g, double ratio) {
         if (ratio < 1) {
+            // draw a resized image anchored at the center
             Image sizedImage = tintImage(image, color).getScaledInstance(
                     (int) (image.getWidth() * ratio),
                     (int) (image.getHeight() * ratio),
                     Image.SCALE_DEFAULT);
-            g.drawImage(sizedImage, (int) (relCoord.x * ratio), (int) (relCoord.y * ratio), observer);
+            g.drawImage(sizedImage, (int) (relCoord.x * ratio), (int) (relCoord.y * ratio), null);
         } else {
-            g.drawImage(tintImage(image, color), relCoord.x, relCoord.y, observer);
+            g.drawImage(tintImage(image, color), relCoord.x, relCoord.y, null);
         }
     }
 
