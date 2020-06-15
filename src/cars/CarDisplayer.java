@@ -4,10 +4,6 @@ import cars.parts.CarPart;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
 
 public class CarDisplayer extends JPanel {
 
@@ -16,9 +12,6 @@ public class CarDisplayer extends JPanel {
 
     private Car car;
     private double ratio; // image ratio [0.0, 1.0]
-    private boolean simulation;
-
-    private BufferedImage rotated;
 
     public CarDisplayer(Car car) {
         this(car, 1.0);
@@ -31,6 +24,10 @@ public class CarDisplayer extends JPanel {
         setSize(WIDTH, HEIGHT);
     }
 
+    /**
+     * Get the stats of the car displayed
+     * @return stats of the car
+     */
     public Stats getStats() {
         return car.getStats();
     }
@@ -39,10 +36,10 @@ public class CarDisplayer extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        for(CarPart carPart : car.getCarParts()) {
-            if(carPart != null) {
+        // We draw each car parts, since the body is always the first added
+        // and no other parts are colliding, we don't need to handle layers
+        for(CarPart carPart : car.getCarParts())
+            if(carPart != null)
                 carPart.drawPart(g, ratio);
-            }
-        }
     }
 }
