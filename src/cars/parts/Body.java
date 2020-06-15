@@ -3,15 +3,11 @@ package cars.parts;
 import cars.Stats;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.image.ImageObserver;
 
 public class Body extends CarPart {
 
-    public static String BODY_PATH = "resources/cars/bodies/";
-
-    public Body(String name, String image, Stats stats) {
-        super(name, image, stats, new Point(50, 50));
+    public Body(String name, String imageName, Stats stats) {
+        super(name, imageName, stats, new Point(50, 50));
     }
 
     @Override
@@ -26,7 +22,11 @@ public class Body extends CarPart {
 
     @Override
     public CarPart clone() {
-        return new Body(this.name, this.imagePath, this.stats);
+        return new Body(this.name, this.imageName, this.stats);
     }
 
+    @Override
+    String getResourceFolder() {
+        return "bodies";
+    }
 }

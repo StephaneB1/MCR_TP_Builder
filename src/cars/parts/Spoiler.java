@@ -3,14 +3,11 @@ package cars.parts;
 import cars.Stats;
 
 import java.awt.*;
-import java.awt.image.ImageObserver;
 
 public class Spoiler extends CarPart {
 
-    public static String SPOILER_PATH = "resources/cars/spoilers/";
-
-    public Spoiler(String name, String image, Stats stats, Point relCoord) {
-        super(name, image, stats, relCoord);
+    public Spoiler(String name, String imageName, Stats stats, Point relCoord) {
+        super(name, imageName, stats, relCoord);
     }
 
     @Override
@@ -25,7 +22,10 @@ public class Spoiler extends CarPart {
 
     @Override
     public CarPart clone() {
-        return new Spoiler(this.name, this.imagePath, this.stats, this.relCoord);
+        return new Spoiler(this.name, this.imageName, this.stats, this.relCoord);
     }
-
+    @Override
+    String getResourceFolder() {
+        return "spoilers";
+    }
 }

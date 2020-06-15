@@ -206,27 +206,27 @@ public class Controller extends JFrame {
         // Products available in the garage (maybe add the point coordinate in the class)
         // - Car bodies
         GarageProduct bodies = new GarageProduct("Bodies");
-        bodies.addProduct(new Body("Body-1", Body.BODY_PATH + "Body_1.png", new Stats().randomize()));
-        bodies.addProduct(new Body("Body-2", Body.BODY_PATH + "Body_2.png", new Stats().randomize()));
-        bodies.addProduct(new Body("Body-3", Body.BODY_PATH + "Body_3.png", new Stats().randomize()));
+        bodies.addProduct(new Body("Body-1", "Body_1.png", new Stats().randomize()));
+        bodies.addProduct(new Body("Body-2", "Body_2.png", new Stats().randomize()));
+        bodies.addProduct(new Body("Body-3", "Body_3.png", new Stats().randomize()));
 
         // - Car motors
         GarageProduct motors = new GarageProduct("Motors");
-        motors.addProduct(new Motor("Motor-1", Motor.MOTOR_PATH + "Motor_1.png", new Stats().randomize(), new Point(85, 40)));
-        motors.addProduct(new Motor("Motor-2", Motor.MOTOR_PATH + "Motor_2.png", new Stats().randomize(), new Point(85, 40)));
-        motors.addProduct(new Motor("Motor-3", Motor.MOTOR_PATH + "Motor_3.png", new Stats().randomize(), new Point(85, 40)));
+        motors.addProduct(new Motor("Motor-1", "Motor_1.png", new Stats().randomize(), new Point(85, 40)));
+        motors.addProduct(new Motor("Motor-2", "Motor_2.png", new Stats().randomize(), new Point(85, 40)));
+        motors.addProduct(new Motor("Motor-3", "Motor_3.png", new Stats().randomize(), new Point(85, 40)));
 
         // - Car tires
         GarageProduct tires = new GarageProduct("Tires");
-        tires.addProduct(new Tires("Tires_1", Tires.TIRES_PATH + "Tires_1.png", new Stats().randomize(), new Point(90, 120), 210));
-        tires.addProduct(new Tires("Tires_2", Tires.TIRES_PATH + "Tires_2.png", new Stats().randomize(), new Point(90, 120), 210));
-        tires.addProduct(new Tires("Tires_3", Tires.TIRES_PATH + "Tires_3.png", new Stats().randomize(), new Point(90, 120), 210));
+        tires.addProduct(new Tires("Tires_1", "Tires_1.png", new Stats().randomize(), new Point(90, 120), 210));
+        tires.addProduct(new Tires("Tires_2", "Tires_2.png", new Stats().randomize(), new Point(90, 120), 210));
+        tires.addProduct(new Tires("Tires_3", "Tires_3.png", new Stats().randomize(), new Point(90, 120), 210));
 
         // - Car spoilers
         GarageProduct spoilers = new GarageProduct("Spoilers");
-        spoilers.addProduct(new Spoiler("Spoiler-1", Spoiler.SPOILER_PATH + "Spoiler_1.png", new Stats().randomize(), new Point(55, 75)));
-        spoilers.addProduct(new Spoiler("Spoiler-2", Spoiler.SPOILER_PATH + "Spoiler_2.png", new Stats().randomize(), new Point(55, 75)));
-        spoilers.addProduct(new Spoiler("Spoiler-3", Spoiler.SPOILER_PATH + "Spoiler_3.png", new Stats().randomize(), new Point(55, 75)));
+        spoilers.addProduct(new Spoiler("Spoiler-1", "Spoiler_1.png", new Stats().randomize(), new Point(55, 75)));
+        spoilers.addProduct(new Spoiler("Spoiler-2", "Spoiler_2.png", new Stats().randomize(), new Point(55, 75)));
+        spoilers.addProduct(new Spoiler("Spoiler-3", "Spoiler_3.png", new Stats().randomize(), new Point(55, 75)));
 
         // Adding to the garage inventory
         garage.addToInventory(bodies);

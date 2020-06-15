@@ -21,17 +21,12 @@ public class CarDisplayer extends JPanel {
     private BufferedImage rotated;
 
     public CarDisplayer(Car car) {
-        this(car, 1.0, false);
+        this(car, 1.0);
     }
 
     public CarDisplayer(Car car, double ratio) {
-        this(car, ratio, false);
-    }
-
-    public CarDisplayer(Car car, double ratio, boolean simulation) {
         this.car = car;
         this.ratio = ratio;
-        this.simulation = simulation;
         setOpaque(false);
         setSize(WIDTH, HEIGHT);
     }
@@ -46,7 +41,7 @@ public class CarDisplayer extends JPanel {
 
         for(CarPart carPart : car.getCarParts()) {
             if(carPart != null) {
-                carPart.drawPart(g, ratio, this, simulation);
+                carPart.drawPart(g, ratio, this);
             }
         }
     }

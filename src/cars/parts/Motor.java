@@ -3,14 +3,11 @@ package cars.parts;
 import cars.Stats;
 
 import java.awt.*;
-import java.awt.image.ImageObserver;
 
 public class Motor extends CarPart {
 
-    public static String MOTOR_PATH = "resources/cars/motors/";
-
-    public Motor(String name, String image, Stats stats, Point relCoord) {
-        super(name, image, stats, relCoord);
+    public Motor(String name, String imageName, Stats stats, Point relCoord) {
+        super(name, imageName, stats, relCoord);
     }
 
     @Override
@@ -25,7 +22,12 @@ public class Motor extends CarPart {
 
     @Override
     public CarPart clone() {
-        return new Motor(this.name, this.imagePath, this.stats, this.relCoord);
+        return new Motor(this.name, this.imageName, this.stats, this.relCoord);
+    }
+
+    @Override
+    String getResourceFolder() {
+        return "motors";
     }
 
 }

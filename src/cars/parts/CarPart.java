@@ -12,10 +12,12 @@ import java.io.IOException;
 
 public abstract class CarPart implements Displayable, Cloneable {
 
+    public static String CAR_RESOURCES_PATH = "resources/cars/";
+
     String name;
 
     // Graphic display
-    String imagePath;
+    String imageName;
     BufferedImage image;
     Point relCoord;
     Color color;
@@ -26,23 +28,17 @@ public abstract class CarPart implements Displayable, Cloneable {
     // Stats
     Stats stats;
 
-    public CarPart(String name, String imagePath, Point relCoord, boolean isDuplicateOnX, int duplicateDistance, Stats stats) {
+    public CarPart(String name, String imageName, Point relCoord, boolean isDuplicateOnX, int duplicateDistance, Stats stats) {
         this.name = name;
         this.stats = stats;
-        this.imagePath = imagePath;
+        this.imageName = imageName;
         this.relCoord = relCoord;
         this.color = Color.WHITE;
         this.isDuplicateOnX = isDuplicateOnX;
         this.duplicateDistance = duplicateDistance;
+
         try {
-            BufferedImage in = ImageIO.read(new File(imagePath));
-
-            image = new BufferedImage(
-                    in.getWidth(), in.getHeight(), BufferedImage.TRANSLUCENT);
-
-            Graphics2D g = image.createGraphics();
-            g.drawImage(in, 0, 0, null);
-            g.dispose();
+            image = ImageIO.read(new File(CAR_RESOURCES_PATH + getResourceFolder() + "/" + imageName));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -56,6 +52,8 @@ public abstract class CarPart implements Displayable, Cloneable {
     public abstract String getCategory();
 
     public abstract CarPart clone();
+
+    abstract String getResourceFolder();
 
     public Stats getStats() {
         return stats;
@@ -94,7 +92,7 @@ public abstract class CarPart implements Displayable, Cloneable {
     }
 
     @Override
-    public void drawPart(Graphics g, double ratio, ImageObserver observer, boolean simulation) {
+    public void drawPart(Graphics g, double ratio, ImageObserver observer) {
         if (ratio < 1) {
             Image sizedImage = tintImage(image, color).getScaledInstance(
                     (int) (image.getWidth() * ratio),

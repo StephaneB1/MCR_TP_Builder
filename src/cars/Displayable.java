@@ -12,6 +12,6 @@ public interface Displayable {
     int getYCoord();
     int getLayerIndex();
 
-    void drawPart(Graphics g, double ratio, ImageObserver observer, boolean simulation);
+    void drawPart(Graphics g, double ratio, ImageObserver observer);
 
 }
