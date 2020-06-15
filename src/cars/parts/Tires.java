@@ -3,7 +3,6 @@ package cars.parts;
 import cars.Stats;
 
 import java.awt.*;
-import java.awt.image.ImageObserver;
 
 /**
  * MCR PROJECT : Builder Design Pattern
