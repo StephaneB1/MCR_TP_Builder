@@ -11,16 +11,6 @@ public class Spoiler extends CarPart {
     }
 
     @Override
-    public String getCategory() {
-        return "Spoiler";
-    }
-
-    @Override
-    public int getLayerIndex() {
-        return 1;
-    }
-
-    @Override
     public CarPart clone() {
         return new Spoiler(this.name, this.imageName, this.stats);
     }

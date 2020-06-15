@@ -14,16 +14,6 @@ public class Tires extends CarPart {
     }
 
     @Override
-    public String getCategory() {
-        return "Tires";
-    }
-
-    @Override
-    public int getLayerIndex() {
-        return 1;
-    }
-
-    @Override
     public CarPart clone() {
         return new Tires(this.name, this.imageName, this.stats);
     }

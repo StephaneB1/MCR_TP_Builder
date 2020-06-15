@@ -38,8 +38,6 @@ public abstract class CarPart implements Displayable, Cloneable {
         }
     }
 
-    public abstract String getCategory();
-
     public abstract CarPart clone();
 
     abstract String getResourceFolder();
@@ -78,6 +76,11 @@ public abstract class CarPart implements Displayable, Cloneable {
     @Override
     public int getYCoord() {
         return relCoord.y;
+    }
+
+    @Override
+    public int getLayerIndex() {
+        return 1;
     }
 
     @Override

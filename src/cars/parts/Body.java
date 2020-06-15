@@ -11,11 +11,6 @@ public class Body extends CarPart {
     }
 
     @Override
-    public String getCategory() {
-        return "Body";
-    }
-
-    @Override
     public int getLayerIndex() {
         return 0;
     }
