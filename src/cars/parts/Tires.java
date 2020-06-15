@@ -13,7 +13,7 @@ import java.awt.image.ImageObserver;
  */
 public class Tires extends CarPart {
 
-    private static int TIRE_DISTANCE = 210;
+    private static final int TIRE_DISTANCE = 210;
 
     public Tires(String name, String imageName, Stats stats) {
         super(name, imageName, stats, new Point(90, 120));
