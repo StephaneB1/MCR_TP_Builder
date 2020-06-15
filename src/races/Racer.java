@@ -6,6 +6,12 @@ import cars.Stats;
 import java.awt.*;
 import java.util.Random;
 
+/**
+ * MCR PROJECT : Builder Design Pattern
+ * Author      : Bottin Stéphane, Demarta Robin, Dessaules Loïc, Kot Chau-Ying
+ *
+ * Description : Racer class that represent a current racer in the game
+ */
 public class Racer implements Comparable<Racer>, Cloneable{
     private Car car;
     private double currentDistance;
