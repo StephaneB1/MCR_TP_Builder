@@ -19,19 +19,35 @@ import java.util.Arrays;
 
 import static java.lang.System.exit;
 
+/**
+ * MCR PROJECT : Builder Design Pattern
+ * Author      : Bottin Stéphane, Demarta Robin, Dessaules Loïc, Kot Chau-Ying
+ *
+ * Description : Singleton class handling the main core of the app
+ *                  - Opening the builder panel to build cars
+ *                  - Display the opponents of a race
+ *                  - Starting a race
+ */
 public class Controller extends JFrame {
 
+    private static Controller instance;
+
+    // Screen display
     private final int SCREEN_WIDTH  = 900;
     private final int SCREEN_HEIGHT = 600;
 
-    private Garage garage;
+    // Race default values
+    private final int DEFAULT_DISTANCE = 3000;
+    private final int MIN_DISTANCE     = 500;
+    private final int MAX_DISTANCE     = 5000;
+    private final int STEP_DISTANCE    = 100;
 
-    private static Controller instance;
-    private JLabel debug;
+    // Garage containing all the car parts and paint jobs
+    private Garage garage;
 
     // Opponents
     private ArrayList<Racer> racers;
-    private JPanel opponentsPanel;
+    private JPanel racersPanel;
     private JLabel totalRacersLabel;
     private JScrollPane opponentsScroll;
     private JButton addOpponentButton;
@@ -53,33 +69,27 @@ public class Controller extends JFrame {
         new Color(46, 126, 114)
     ));
 
+    // Console information
+    private JLabel console;
+
     public Controller() {
 
-        setTitle("MCR - Racers");
         racers = new ArrayList<>();
+        setTitle("MCR - Racers");
         setupGarage();
-
-        // General app layout (mainPanel) :
-        /*---------------------------------------------*
-         * CONSOLE MESSAGES                            *
-         *---------------------------------------------*
-         * OPPONENTS + RACE MENU                        *
-         * - Car components / Race information         *
-         *                                             *
-         *---------------------------------------------*/
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridBagLayout());
         mainPanel.setBackground(Color.WHITE);
-        // DEBUG / INFO
-        debug = new JLabel("Welcome! Each player must first build their car, you can build a car by pressing on the (+) button down below!");
-        debug.setBorder(Utils.getPanelBorder("C O N S O L E", Utils.getDefaultColor()));
-        debug.setFont(new Font("Consolas", Font.PLAIN, 14));
-        // OPPONENTS
-        opponentsScroll = new JScrollPane();
+        // Console format
+        console = new JLabel("Welcome! Each player must first build their car, you can build a car by pressing on the (+) button down below!");
+        console.setBorder(Utils.getPanelBorder("C O N S O L E", Utils.getDefaultColor()));
+        console.setFont(new Font("Consolas", Font.PLAIN, 14));
+        // Opponents
+        opponentsScroll  = new JScrollPane();
         totalRacersLabel = new JLabel("0");
         updateOpponentsDisplay();
-        opponentsScroll.setViewportView(opponentsPanel);
+        opponentsScroll.setViewportView(racersPanel);
         opponentsScroll.setBorder(Utils.getPanelBorder("O P P O N E N T S", Utils.getDefaultColor()));
         opponentsScroll.setOpaque(false);
 
@@ -93,13 +103,13 @@ public class Controller extends JFrame {
         c.weighty = 0.05;
         c.gridx = 0;
         c.gridy = 0;
-        mainPanel.add(debug, c);
+        mainPanel.add(console, c);
         c.weighty = 0.9;
         c.gridy = 1;
         mainPanel.add(opponentsScroll, c);
         c.gridy = 2;
         c.weighty = 0.05;
-        mainPanel.add(loadRacePanel(), c);
+        mainPanel.add(loadRaceInformationPanel(), c);
 
         add(mainPanel);
 
@@ -111,6 +121,10 @@ public class Controller extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    /**
+     * Get the instance of the singleton class
+     * @return only instance of Controller
+     */
     public static Controller getInstance() {
         if(instance == null)
             instance = new Controller();
@@ -118,28 +132,44 @@ public class Controller extends JFrame {
         return instance;
     }
 
-    public void addNewRacer(Car car, boolean player) {
+    /**
+     * Generate a new racer
+     * @param car    : car of the racer
+     * @param player : if the racer is a player or not
+     */
+    public Racer generateNewRacer(Car car, boolean player) {
         // Can't have more than 2 players
         if(player && racers.size() >= 2) {
             Utils.popupWarning("Sorry there's already 2 players.");
-            return;
+            return null;
         }
 
-        Racer newRacer = new Racer((player ?
+        return new Racer((player ?
                 "Player " +  (racers.size() + 1) :
                 "Bot " + (racers.size() - 1)), car,
                 playerColors.get(racers.size() % playerColors.size()),
                 true);
+    }
 
-        racers.add(newRacer);
+    /**
+     * Add a new racer to the list and update the display
+     * @param racer : new racer to add
+     */
+    public void addNewRacer(Racer racer) {
+        racers.add(racer);
         updateOpponentsDisplay();
     }
 
+    /**
+     * Updates the racers list display
+     */
     private void updateOpponentsDisplay() {
-
+        // Total racer information
         totalRacersLabel.setText(racers.size() + "");
-        opponentsPanel = new JPanel(new GridBagLayout());
-        opponentsPanel.setBackground(Color.WHITE);
+
+        // Racers display
+        racersPanel = new JPanel(new GridBagLayout());
+        racersPanel.setBackground(Color.WHITE);
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
         c.insets = new Insets(3,3,3,3); // padding
@@ -164,14 +194,14 @@ public class Controller extends JFrame {
             c1.gridy = 1;
             panel.add(new StatsPanel(carDisplayer, 0.5), c1);
 
-            opponentsPanel.add(panel, c);
+            racersPanel.add(panel, c);
         }
 
-        opponentsPanel.repaint();
-        opponentsScroll.setViewportView(opponentsPanel);
+        racersPanel.repaint();
+        opponentsScroll.setViewportView(racersPanel);
         opponentsScroll.repaint();
 
-        // If the players have finished building their cars, we let the user know he can generate the opponents
+        // Console information to guide the user on what to do next
         switch(racers.size()) {
             case 0:
                 if(autoGeneration) {
@@ -180,30 +210,37 @@ public class Controller extends JFrame {
                 }
                 break;
             case 1:
-                debug.setText("Looking good! Alright now Player 2 it's your turn. Go make your dream car!");
+                console.setText("Looking good! Alright now Player 2 it's your turn. Go make your dream car!");
                 break;
             case 2:
-                debug.setText("Awesome, now that you're ready you can generate the opponents' cars by pressing on the (G) button below.");
+                console.setText("Awesome, now that you're ready you can generate the opponents' cars by pressing on the (G) button below.");
                 autoGeneration = true;
                 addOpponentButton.setIcon(Utils.getSizedIcon("resources/GUI/add-opponent-auto.png", 0.1, Image.SCALE_SMOOTH));
                 break;
             case 3:
-                debug.setText("That was easy right ? You can thank the Builder Design pattern for that.");
+                console.setText("That was easy right ? You can thank the Builder Design pattern for that.");
                 break;
             case 4:
-                debug.setText("The competition is getting fierce! Add as many as you want and when you're ready you can start the race!");
+                console.setText("The competition is getting fierce! Add as many as you want and when you're ready you can start the race!");
                 break;
         }
     }
 
+    /**
+     * Get the garage of the Controller
+     * @return garage
+     */
     public Garage getGarage() {
         return garage;
     }
 
+    /**
+     * Setup the garage of the Controller
+     */
     private void setupGarage() {
         garage = new Garage();
 
-        // Products available in the garage (maybe add the point coordinate in the class)
+        // Products available in the garage
         // - Car bodies
         GarageProduct bodies = new GarageProduct("Bodies");
         bodies.addProduct(new Body("Body-1", "Body_1.png", new Stats().randomize()));
@@ -249,62 +286,63 @@ public class Controller extends JFrame {
 
     }
 
+    /**
+     * Starts a race in a new panel
+     * @param racers   : list of racers
+     * @param distance : distance of the race
+     */
     private void startRace(ArrayList<Racer> racers, int distance) {
         new Race(distance, racers).start();
     }
 
-    private JPanel loadRacePanel() {
+    /**
+     * Loads the race information panel with the main buttons
+     * @return race information panel
+     */
+    private JPanel loadRaceInformationPanel() {
         JPanel racePanel = new JPanel();
         racePanel.setOpaque(false);
         racePanel.setLayout(new GridBagLayout());
 
+        // Race information
         JLabel totalRacerTitle = new JLabel("Total racers :");
         JLabel totalDistanceTitle  = new JLabel("Total distance (m) : ");
-        SpinnerModel model = new SpinnerNumberModel(3000, 500, 50000, 100);
+        SpinnerModel model = new SpinnerNumberModel(DEFAULT_DISTANCE,
+                MIN_DISTANCE, MAX_DISTANCE, STEP_DISTANCE);
         JSpinner spinner = new JSpinner(model);
+
+        // Main buttons
         JButton quitButton = Utils.getIconJButton("resources/GUI/quit.png", 0.1);
         quitButton.setPreferredSize(new Dimension(50, 50));
-        quitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                exit(0);
-            }
-        });
         JButton restartButton = Utils.getIconJButton("resources/GUI/restart.png", 0.1);
         restartButton.setPreferredSize(new Dimension(50, 50));
-        restartButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Reset opponents
-                racers.clear();
-                updateOpponentsDisplay();
-                spinner.setValue(3000);
-            }
-        });
         addOpponentButton = Utils.getIconJButton("resources/GUI/add-opponent.png", 0.1);
         addOpponentButton.setPreferredSize(new Dimension(50, 50));
-        addOpponentButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(autoGeneration) {
-                    CarBuilder builder = new CarBuilder();
-                    builder.buildRandomCar(garage);
-                    addNewRacer(builder.getCar(), false);
-                } else {
-                    BuilderFrame newBuilder = new BuilderFrame();
-                    newBuilder.setVisible(true);
-                }
-            }
-        });
         JButton startButton = Utils.getIconJButton("resources/GUI/start_race.png", 0.1);
         startButton.setPreferredSize(new Dimension(50, 50));
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                startRace(racers, (int) spinner.getValue());
+
+
+        quitButton.addActionListener(e -> exit(0));
+
+        restartButton.addActionListener(e -> {
+            // Reset opponents and spinner value
+            racers.clear();
+            updateOpponentsDisplay();
+            spinner.setValue(DEFAULT_DISTANCE);
+        });
+
+        addOpponentButton.addActionListener(e -> {
+            if(autoGeneration) {
+                CarBuilder builder = new CarBuilder();
+                builder.buildRandomCar(garage);
+                generateNewRacer(builder.getCar(), false);
+            } else {
+                BuilderFrame newBuilder = new BuilderFrame();
+                newBuilder.setVisible(true);
             }
         });
 
+        startButton.addActionListener(e -> startRace(racers, (int) spinner.getValue()));
 
         GridBagConstraints c = new GridBagConstraints();
         c.insets = new Insets(3,3,3,3); // padding
@@ -350,5 +388,4 @@ public class Controller extends JFrame {
 
         return racePanel;
     }
-
 }
