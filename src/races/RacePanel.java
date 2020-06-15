@@ -18,14 +18,18 @@ public class RacePanel extends JPanel {
     private JLabel lblPlayer1;
     private JLabel lblPlayer2;
 
+    /**
+     * MCR PROJECT : Builder Design Pattern
+     * Author      : Bottin Stéphane, Demarta Robin, Dessaules Loïc, Kot Chau-Ying
+     *
+     * Description : RacePanel is the top Panel of the Race frame. We draw here the race line and all racers as
+     * circles that will move by their distance increment.
+     */
     public RacePanel(int width, int height, ArrayList<Racer> racers, int totalDistance) {
-
-        // TODO : check racers size >= 2
-
         this.setSize(width, height);
         setBackground(Color.WHITE);
-        this.player1Racer = racers.get(0);
-        this.player2Racer = racers.get(1);
+        this.player1Racer = racers.get(0); // First racers always the player1
+        this.player2Racer = racers.get(1); // Second racers always the player2
 
         // Race width (black line) is the 70% of the windows (15% margin left, 15% margin right)
         this.raceWidth = width - (2 * (width * 15 / 100));

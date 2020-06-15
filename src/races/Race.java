@@ -4,17 +4,22 @@ import utils.Utils;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.TimerTask;
 import java.util.Timer;
 
+/**
+ * MCR PROJECT : Builder Design Pattern
+ * Author      : Bottin Stéphane, Demarta Robin, Dessaules Loïc, Kot Chau-Ying
+ *
+ * Description : Race frame that will display the current Race with race line drew
+ * and racer1 / racer2 with their details, and the leaderBoard
+ */
 public class Race extends JFrame {
-
-    private final int WIDTH = 1600;
-    private final int HEIGHT = 720;
+    private final int SCREEN_WIDTH = 1600;
+    private final int SCREEN_HEIGHT = 720;
     private RacePanel racePanel;
     private RaceDetailsPanel raceDetailsPanel;
 
@@ -24,6 +29,8 @@ public class Race extends JFrame {
     private Timer timer = new Timer();
     private int nbRacers;
     private int nbRacersFinished;
+
+    private final String WINNER_TROPHY_PATH = "resources/winner_trophy.png";
 
     public Race(int totalDistance, ArrayList<Racer> racers){
         this.totalDistance = totalDistance;
@@ -40,27 +47,10 @@ public class Race extends JFrame {
         }
         this.nbRacers = this.racers.size();
 
-        this.setSize(WIDTH, HEIGHT);
-        this.setTitle("Race");
-        this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        this.setResizable(false);
-        this.setLayout(null);
-        // Race panel has same width as the JFrame and 1/4 of his height
-        this.racePanel = new RacePanel(WIDTH, HEIGHT / 4, this.racers, totalDistance);
-        // PanelBottom for player stats in the current race has the rest of the windows
-        this.raceDetailsPanel = new RaceDetailsPanel(this.racers, totalDistance);
-        Border padding = BorderFactory.createEmptyBorder(20, 20, 40, 20);
-        raceDetailsPanel.setBorder(padding);
-        raceDetailsPanel.setSize(WIDTH, 3 * HEIGHT / 4);
+        // Init the frame
+        frameInitialisation();
 
-        raceDetailsPanel.setLocation(0, HEIGHT / 4);
-
-        this.add(racePanel);
-        this.add(raceDetailsPanel);
-        this.setVisible(true);
-
-        // Don't forget to stop the race, otherwise it will continue to calculate racers positions
+        // Don't forget to stop the race when we close the frame, otherwise it will continue to calculate racers positions
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -86,6 +76,7 @@ public class Race extends JFrame {
 
                     racePanel.repaint();
 
+                    // Updates
                     raceDetailsPanel.updateLeaderBoard(nbRacersFinished);
                     raceDetailsPanel.checkRacersCrash();
                 }
@@ -103,6 +94,29 @@ public class Race extends JFrame {
         long delay  = 0;
         long period = 50;
         timer.scheduleAtFixedRate(repeatedTask, delay, period);
+    }
+
+    private void frameInitialisation(){
+        this.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+        this.setTitle("Race");
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        this.setResizable(false);
+        this.setLayout(null);
+        // Race panel has same width as the JFrame and 1/4 of his height
+        this.racePanel = new RacePanel(SCREEN_WIDTH, SCREEN_HEIGHT / 4, this.racers, totalDistance);
+        // PanelBottom for race details has the rest of the windows
+        this.raceDetailsPanel = new RaceDetailsPanel(this.racers, totalDistance);
+        // Border
+        Border padding = BorderFactory.createEmptyBorder(20, 20, 40, 20);
+        this.raceDetailsPanel.setBorder(padding);
+
+        this.raceDetailsPanel.setSize(SCREEN_WIDTH, 3 * SCREEN_HEIGHT / 4);
+        this.raceDetailsPanel.setLocation(0, SCREEN_HEIGHT / 4);
+
+        this.add(racePanel);
+        this.add(raceDetailsPanel);
+        this.setVisible(true);
     }
 
     /**
@@ -143,7 +157,7 @@ public class Race extends JFrame {
         }
         sb.append("\n");
 
-        Utils.popup("resources/winner_trophy.png", "winner winner chicken dinner", sb.toString());
+        Utils.popup(WINNER_TROPHY_PATH, "winner winner chicken dinner", sb.toString());
     }
 
 }

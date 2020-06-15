@@ -27,6 +27,18 @@ public class RacerPanel extends JPanel {
     private Timer timerCrashBar;
     private JLabel lblCrashBar;
 
+    private final String WARNING_IMG_PATH = "resources/warning.png";
+    private final String SMOKE_ANIM_RESOURCE = "smoke_anim.gif";
+
+    /**
+     * MCR PROJECT : Builder Design Pattern
+     * Author      : Bottin Stéphane, Demarta Robin, Dessaules Loïc, Kot Chau-Ying
+     *
+     * Description : RacerPanel is the Panel that will contains the current Racer (player1 or player2).
+     * We have two RacerPanel (one for player1 and one for player2), they are displayed in the RaceDetailsPanel.
+     * They display the current racer's car, show effect (smoke, icon and crash progress bar) when the car crashes.
+     * And also the car statistics.
+     */
     public RacerPanel(Racer racer, String panelTitle) {
         this.racer = racer;
 
@@ -34,7 +46,7 @@ public class RacerPanel extends JPanel {
 
         BufferedImage warningImg = null;
         try {
-            warningImg = ImageIO.read(new File("resources/warning.png"));
+            warningImg = ImageIO.read(new File(WARNING_IMG_PATH));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -43,7 +55,7 @@ public class RacerPanel extends JPanel {
         setLayout(null);
         setBorder(Utils.getPanelBorder(panelTitle, Utils.getDefaultColor()));
 
-        Icon imgIcon = new ImageIcon(RaceDetailsPanel.class.getClassLoader().getResource("smoke_anim.gif"));
+        Icon imgIcon = new ImageIcon(RaceDetailsPanel.class.getClassLoader().getResource(SMOKE_ANIM_RESOURCE));
         lblSmokeAnim = new JLabel(imgIcon);
         lblSmokeAnim.setBounds(50, -60, lblSmokeAnim.getPreferredSize().width, lblSmokeAnim.getPreferredSize().height);
         lblSmokeAnim.setVisible(false);

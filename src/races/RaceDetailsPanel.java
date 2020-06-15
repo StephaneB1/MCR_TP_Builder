@@ -16,6 +16,13 @@ public class RaceDetailsPanel extends JPanel {
     private ArrayList<RacerPanel> racersPanels;
     private ArrayList<JLabel> learerboardLabels;
 
+    /**
+     * MCR PROJECT : Builder Design Pattern
+     * Author      : Bottin Stéphane, Demarta Robin, Dessaules Loïc, Kot Chau-Ying
+     *
+     * Description : RaceDetailsPanel is the bottom panel of the Race frame. Here will be displayed
+     * our two racers (player1 and 2), their car with statistics and the current leaderboard.
+     */
     public RaceDetailsPanel(ArrayList<Racer> racers, int totalDistance){
         setBackground(Color.WHITE);
         this.racersPanels = new ArrayList<>();
