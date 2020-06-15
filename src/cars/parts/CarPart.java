@@ -12,8 +12,6 @@ import java.io.IOException;
 
 public abstract class CarPart implements Displayable, Cloneable {
 
-    public static String CAR_RESOURCES_PATH = "resources/cars/";
-
     String name;
 
     // Graphic display
@@ -22,31 +20,22 @@ public abstract class CarPart implements Displayable, Cloneable {
     Point relCoord;
     Color color;
 
-    boolean isDuplicateOnX;
-    int duplicateDistance;
-
     // Stats
     Stats stats;
 
-    public CarPart(String name, String imageName, Point relCoord, boolean isDuplicateOnX, int duplicateDistance, Stats stats) {
+    public CarPart(String name, String imageName, Stats stats, Point relCoord) {
         this.name = name;
         this.stats = stats;
         this.imageName = imageName;
         this.relCoord = relCoord;
         this.color = Color.WHITE;
-        this.isDuplicateOnX = isDuplicateOnX;
-        this.duplicateDistance = duplicateDistance;
 
         try {
-            image = ImageIO.read(new File(CAR_RESOURCES_PATH + getResourceFolder() + "/" + imageName));
+            image = ImageIO.read(new File("resources/cars/" +
+                    getResourceFolder() + "/" + imageName));
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-
-    public CarPart(String name, String imagePath, Stats stats, Point relCoord) {
-        this(name, imagePath, relCoord, false, 0, stats);
     }
 
     public abstract String getCategory();
@@ -99,19 +88,9 @@ public abstract class CarPart implements Displayable, Cloneable {
                     (int) (image.getHeight() * ratio),
                     Image.SCALE_DEFAULT);
             g.drawImage(sizedImage, (int) (relCoord.x * ratio), (int) (relCoord.y * ratio), observer);
-            if (isDuplicateOnX){
-                g.drawImage(sizedImage, (int) ((relCoord.x + duplicateDistance) * ratio),  (int) (relCoord.y * ratio) ,observer);
-            }
         } else {
             g.drawImage(tintImage(image, color), relCoord.x, relCoord.y, observer);
-            if (isDuplicateOnX){
-                g.drawImage(tintImage(image, color), relCoord.x + duplicateDistance, relCoord.y,observer);
-            }
         }
-    }
-
-    public int getDuplicateDistanceX() {
-        return duplicateDistance;
     }
 
     BufferedImage tintImage(BufferedImage loadImg, Color color) {
@@ -136,10 +115,6 @@ public abstract class CarPart implements Displayable, Cloneable {
         return result;
     }
 
-    private int getHalfAlphaTint(int original, int tint) {
-        return (int) (original + (tint - original) * 0.5);
-    }
-
     private int getGrayScaleTint(int original, int tint) {
         double whitePercentage = original / 255.0;
         double blackPercentage = 1 - whitePercentage;
@@ -147,11 +122,4 @@ public abstract class CarPart implements Displayable, Cloneable {
         return (int) (original * blackPercentage + tint * whitePercentage);
     }
 
-    // Metallic paint job in case we add different textures (found the formula by mistake)
-    private int getTintMetallic(int original, int tint) {
-        double whitePercentage = original / 255.0;
-        double blackPercentage = 1 - whitePercentage;
-
-        return (int) (original * (((blackPercentage * tint)) % 1) + tint * whitePercentage) % 255;
-    }
 }

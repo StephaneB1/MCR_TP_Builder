@@ -212,21 +212,21 @@ public class Controller extends JFrame {
 
         // - Car motors
         GarageProduct motors = new GarageProduct("Motors");
-        motors.addProduct(new Motor("Motor-1", "Motor_1.png", new Stats().randomize(), new Point(85, 40)));
-        motors.addProduct(new Motor("Motor-2", "Motor_2.png", new Stats().randomize(), new Point(85, 40)));
-        motors.addProduct(new Motor("Motor-3", "Motor_3.png", new Stats().randomize(), new Point(85, 40)));
+        motors.addProduct(new Motor("Motor-1", "Motor_1.png", new Stats().randomize()));
+        motors.addProduct(new Motor("Motor-2", "Motor_2.png", new Stats().randomize()));
+        motors.addProduct(new Motor("Motor-3", "Motor_3.png", new Stats().randomize()));
 
         // - Car tires
         GarageProduct tires = new GarageProduct("Tires");
-        tires.addProduct(new Tires("Tires_1", "Tires_1.png", new Stats().randomize(), new Point(90, 120), 210));
-        tires.addProduct(new Tires("Tires_2", "Tires_2.png", new Stats().randomize(), new Point(90, 120), 210));
-        tires.addProduct(new Tires("Tires_3", "Tires_3.png", new Stats().randomize(), new Point(90, 120), 210));
+        tires.addProduct(new Tires("Tires_1", "Tires_1.png", new Stats().randomize()));
+        tires.addProduct(new Tires("Tires_2", "Tires_2.png", new Stats().randomize()));
+        tires.addProduct(new Tires("Tires_3", "Tires_3.png", new Stats().randomize()));
 
         // - Car spoilers
         GarageProduct spoilers = new GarageProduct("Spoilers");
-        spoilers.addProduct(new Spoiler("Spoiler-1", "Spoiler_1.png", new Stats().randomize(), new Point(55, 75)));
-        spoilers.addProduct(new Spoiler("Spoiler-2", "Spoiler_2.png", new Stats().randomize(), new Point(55, 75)));
-        spoilers.addProduct(new Spoiler("Spoiler-3", "Spoiler_3.png", new Stats().randomize(), new Point(55, 75)));
+        spoilers.addProduct(new Spoiler("Spoiler-1", "Spoiler_1.png", new Stats().randomize()));
+        spoilers.addProduct(new Spoiler("Spoiler-2", "Spoiler_2.png", new Stats().randomize()));
+        spoilers.addProduct(new Spoiler("Spoiler-3", "Spoiler_3.png", new Stats().randomize()));
 
         // Adding to the garage inventory
         garage.addToInventory(bodies);

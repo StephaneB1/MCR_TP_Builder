@@ -6,8 +6,8 @@ import java.awt.*;
 
 public class Spoiler extends CarPart {
 
-    public Spoiler(String name, String imageName, Stats stats, Point relCoord) {
-        super(name, imageName, stats, relCoord);
+    public Spoiler(String name, String imageName, Stats stats) {
+        super(name, imageName, stats, new Point(55, 75));
     }
 
     @Override
@@ -22,7 +22,7 @@ public class Spoiler extends CarPart {
 
     @Override
     public CarPart clone() {
-        return new Spoiler(this.name, this.imageName, this.stats, this.relCoord);
+        return new Spoiler(this.name, this.imageName, this.stats);
     }
     @Override
     String getResourceFolder() {

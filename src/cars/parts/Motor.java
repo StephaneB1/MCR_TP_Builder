@@ -6,8 +6,8 @@ import java.awt.*;
 
 public class Motor extends CarPart {
 
-    public Motor(String name, String imageName, Stats stats, Point relCoord) {
-        super(name, imageName, stats, relCoord);
+    public Motor(String name, String imageName, Stats stats) {
+        super(name, imageName, stats, new Point(85, 40));
     }
 
     @Override
@@ -22,7 +22,7 @@ public class Motor extends CarPart {
 
     @Override
     public CarPart clone() {
-        return new Motor(this.name, this.imageName, this.stats, this.relCoord);
+        return new Motor(this.name, this.imageName, this.stats);
     }
 
     @Override
