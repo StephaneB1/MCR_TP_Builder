@@ -60,11 +60,6 @@ public class Garage {
         return paintJobs;
     }
 
-    public PaintJob getRandomPaintJob() {
-        Random rand = new Random();
-        return paintJobs.get(rand.nextInt(paintJobs.size()));
-    }
-
     /**
      *  Get a random car part for the given category
      *
