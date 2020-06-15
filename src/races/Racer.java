@@ -129,16 +129,6 @@ public class Racer implements Comparable<Racer>, Cloneable{
     }
 
     /**
-     * The Racer gets back into initial state
-     */
-    public void reset() {
-        currentDistance = 0;
-        crashTimeout = 0;
-        crashTimer = 0;
-        hasFinished = false;
-    }
-
-    /**
      * Displays message to console if displayLogs attribute is set to true
      * @param message text to display in console
      */

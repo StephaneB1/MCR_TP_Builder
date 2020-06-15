@@ -3,7 +3,6 @@ package cars;
 import cars.parts.*;
 import garage.Garage;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
