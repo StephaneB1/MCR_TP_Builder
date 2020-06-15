@@ -9,9 +9,8 @@ import java.awt.*;
 
 public class StatsPanel extends JPanel {
 
-    private static final int TOTAL_STAT_UNIT = 5;
 
-    private final GridLayout statGrid = new GridLayout(1, TOTAL_STAT_UNIT);
+    private final GridLayout statGrid = new GridLayout(1, (int)Stats.getRangeMax());
 
     private final JPanel speedStatPanel = new JPanel(statGrid);
     private final JPanel maniabilityStatPanel = new JPanel(statGrid);
@@ -90,7 +89,7 @@ public class StatsPanel extends JPanel {
     private void updateStat(JPanel statPanel, double statValue) {
         statPanel.removeAll();
 
-        for(int i = 1; i <= TOTAL_STAT_UNIT; ++i) {
+        for(int i = 1; i <= (int)Stats.getRangeMax(); ++i) {
             JLabel stat = new JLabel(statValue <= i ?
                     Utils.getSizedIcon("resources/GUI/statOff_v2.png", 0.1 * ratio, Image.SCALE_DEFAULT) :
                     Utils.getSizedIcon("resources/GUI/statOn_v2.png", 0.1 * ratio, Image.SCALE_DEFAULT)

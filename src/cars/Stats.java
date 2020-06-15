@@ -35,7 +35,15 @@ public class Stats {
         maniability = RANGE_MIN;
         resistance = RANGE_MIN;
     }
-    
+
+    public static double getRangeMin() {
+        return RANGE_MIN;
+    }
+
+    public static double getRangeMax() {
+        return RANGE_MAX;
+    }
+
     public double getSpeed() {
         return speed;
     }
@@ -98,6 +106,7 @@ public class Stats {
 
     public static void updateCarPartStats(Stats stats, ArrayList<CarPart> carParts) {
         // Car's stats is its CarParts' averaged
+        // TODO move method in Car ?
         stats.setSpeed(Utils.averageFunc(carParts, o -> o.getStats().getSpeed()));
         stats.setManiability(Utils.averageFunc(carParts, o -> o.getStats().getManiability()));
         stats.setResistance(Utils.averageFunc(carParts, o -> o.getStats().getResistance()));
