@@ -10,6 +10,12 @@ import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * MCR PROJECT : Builder Design Pattern
+ * Author      : Bottin Stéphane, Demarta Robin, Dessaules Loïc, Kot Chau-Ying
+ *
+ * Description : abstract class that defines a car part
+ */
 public abstract class CarPart implements Displayable, Cloneable {
 
     String name;

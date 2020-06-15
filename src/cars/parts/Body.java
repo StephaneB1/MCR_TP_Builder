@@ -4,6 +4,12 @@ import cars.Stats;
 
 import java.awt.*;
 
+/**
+ * MCR PROJECT : Builder Design Pattern
+ * Author      : Bottin Stéphane, Demarta Robin, Dessaules Loïc, Kot Chau-Ying
+ *
+ * Description : class for the body of a car
+ */
 public class Body extends CarPart {
 
     public Body(String name, String imageName, Stats stats) {
@@ -12,7 +18,7 @@ public class Body extends CarPart {
 
     @Override
     public int getLayerIndex() {
-        return 0;
+        return 0; // Body is displayed before all the car parts
     }
 
     @Override

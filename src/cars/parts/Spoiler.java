@@ -4,6 +4,12 @@ import cars.Stats;
 
 import java.awt.*;
 
+/**
+ * MCR PROJECT : Builder Design Pattern
+ * Author      : Bottin Stéphane, Demarta Robin, Dessaules Loïc, Kot Chau-Ying
+ *
+ * Description : class for the spoiler of a car
+ */
 public class Spoiler extends CarPart {
 
     public Spoiler(String name, String imageName, Stats stats) {

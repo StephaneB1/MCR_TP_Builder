@@ -4,6 +4,12 @@ import cars.Stats;
 
 import java.awt.*;
 
+/**
+ * MCR PROJECT : Builder Design Pattern
+ * Author      : Bottin Stéphane, Demarta Robin, Dessaules Loïc, Kot Chau-Ying
+ *
+ * Description : class for the motor of a car
+ */
 public class Motor extends CarPart {
 
     public Motor(String name, String imageName, Stats stats) {

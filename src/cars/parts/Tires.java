@@ -5,6 +5,12 @@ import cars.Stats;
 import java.awt.*;
 import java.awt.image.ImageObserver;
 
+/**
+ * MCR PROJECT : Builder Design Pattern
+ * Author      : Bottin Stéphane, Demarta Robin, Dessaules Loïc, Kot Chau-Ying
+ *
+ * Description : class for the tires of a car
+ */
 public class Tires extends CarPart {
 
     private static int TIRE_DISTANCE = 210;
