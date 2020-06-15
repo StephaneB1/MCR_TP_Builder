@@ -3,29 +3,26 @@ package cars.parts;
 import cars.Stats;
 
 import java.awt.*;
-import java.awt.image.ImageObserver;
 
+/**
+ * MCR PROJECT : Builder Design Pattern
+ * Author      : Bottin Stéphane, Demarta Robin, Dessaules Loïc, Kot Chau-Ying
+ *
+ * Description : class for the body of a car
+ */
 public class Body extends CarPart {
 
-    public static String BODY_PATH = "resources/cars/bodies/";
-
-    public Body(String name, String image, Stats stats) {
-        super(name, image, stats, new Point(50, 50));
-    }
-
-    @Override
-    public String getCategory() {
-        return "Body";
-    }
-
-    @Override
-    public int getLayerIndex() {
-        return 0;
+    public Body(String name, String imageName, Stats stats) {
+        super(name, imageName, stats, new Point(50, 50));
     }
 
     @Override
     public CarPart clone() {
-        return new Body(this.name, this.imagePath, this.stats);
+        return new Body(this.name, this.imageName, this.stats);
     }
 
+    @Override
+    String getResourceFolder() {
+        return "bodies";
+    }
 }

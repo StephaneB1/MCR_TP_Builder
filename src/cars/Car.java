@@ -4,6 +4,10 @@ import cars.parts.CarPart;
 
 import java.util.ArrayList;
 
+/**
+ * MCR PROJECT : Builder Design Pattern
+ * Author      : Bottin Stéphane, Demarta Robin, Dessaules Loïc, Kot Chau-Ying
+ */
 public class Car {
 
     private ArrayList<CarPart> carParts;
@@ -19,26 +23,34 @@ public class Car {
     }
 
     /**
-     * Add the list of car part to the car
-     * @param carParts
+     * Set the car parts and update the stats
+     * @param carParts : car parts to add
      */
     public void setCarParts(ArrayList<CarPart> carParts) {
         this.carParts = carParts;
         updateStats();
     }
 
+    /**
+     * Get the car parts
+     * @return car parts of the car
+     */
     public ArrayList<CarPart> getCarParts() {
         return carParts;
     }
 
+    /**
+     * Get the stats
+     * @return stats
+     */
     public Stats getStats() {
         return stats;
     }
 
     /**
-     * Update the statistic for this car
+     * Update the stats depending on the car's car parts
      */
-    public void updateStats() {
+    private void updateStats() {
         Stats.updateCarPartStats(stats, carParts);
     }
 

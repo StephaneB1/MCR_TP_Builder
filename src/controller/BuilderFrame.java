@@ -5,6 +5,7 @@ import cars.*;
 import cars.parts.*;
 import garage.Garage;
 import garage.GarageProduct;
+import races.Racer;
 import utils.Utils;
 
 import javax.swing.*;
@@ -52,7 +53,7 @@ public class BuilderFrame extends JFrame {
         // BLUEPRINTS
         builder = new CarBuilder();
         carSkeleton = new Car();
-        displayer = new CarDisplayer(carSkeleton, 0.8, true);
+        displayer = new CarDisplayer(carSkeleton, 0.8);
         displayer.setBorder(Utils.getPanelBorder("B L U E P R I N T", Utils.getDefaultColor()));
         // STATS
         statsPanel = new StatsPanel(displayer, 1);
@@ -202,7 +203,9 @@ public class BuilderFrame extends JFrame {
                 // Build car
                 if (builder.getCar() != null) {
                     mainFrame.dispose();
-                    Controller.getInstance().addNewRacer(builder.getCar(), true);
+                    Racer newRacer = Controller.getInstance().generateNewRacer(builder.getCar(), true);
+                    if(newRacer != null)
+                        Controller.getInstance().addNewRacer(newRacer);
                 } else {
                     Utils.popupWarning("Your blueprint is incomplete! You're missing some parts!");
                 }

@@ -3,36 +3,45 @@ package cars.parts;
 import cars.Stats;
 
 import java.awt.*;
-import java.awt.image.ImageObserver;
 
+/**
+ * MCR PROJECT : Builder Design Pattern
+ * Author      : Bottin Stéphane, Demarta Robin, Dessaules Loïc, Kot Chau-Ying
+ *
+ * Description : class for the tires of a car
+ */
 public class Tires extends CarPart {
 
-    public static String TIRES_PATH = "resources/cars/tires/";
+    private static final int TIRE_DISTANCE = 210;
 
-    public Tires(String name, String image, Stats stats, Point relCoord, int duplicateDistance) {
-        super(name, image, relCoord, true, duplicateDistance, stats );
-    }
-
-    @Override
-    public String getCategory() {
-        return "Tires";
-    }
-
-    @Override
-    public int getLayerIndex() {
-        return 1;
+    public Tires(String name, String imageName, Stats stats) {
+        super(name, imageName, stats, new Point(90, 120));
     }
 
     @Override
     public CarPart clone() {
-        return new Tires(this.name, this.imagePath, this.stats, this.relCoord, this.duplicateDistance);
+        return new Tires(this.name, this.imageName, this.stats);
     }
 
     @Override
-    public void drawPart(Graphics g, double ratio, ImageObserver observer, boolean simulation) {
-        if(simulation)
-            return;
+    String getResourceFolder() {
+        return "tires";
+    }
 
-        super.drawPart(g, ratio, observer, false);
+    /**
+     * Tires are displayed twice with the same source image
+     */
+    @Override
+    public void drawPart(Graphics g, double ratio) {
+        super.drawPart(g, ratio);
+        if (ratio < 1) {
+            Image sizedImage = tintImage(image, color).getScaledInstance(
+                    (int) (image.getWidth() * ratio),
+                    (int) (image.getHeight() * ratio),
+                    Image.SCALE_DEFAULT);
+            g.drawImage(sizedImage, (int) ((relCoord.x + TIRE_DISTANCE) * ratio),  (int) (relCoord.y * ratio), null);
+        } else {
+            g.drawImage(tintImage(image, color), relCoord.x + TIRE_DISTANCE, relCoord.y, null);
+        }
     }
 }

@@ -1,6 +1,5 @@
 package cars.parts;
 
-import cars.Displayable;
 import cars.Stats;
 
 import javax.imageio.ImageIO;
@@ -10,113 +9,112 @@ import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 
-public abstract class CarPart implements Displayable, Cloneable {
+/**
+ * MCR PROJECT : Builder Design Pattern
+ * Author      : Bottin Stéphane, Demarta Robin, Dessaules Loïc, Kot Chau-Ying
+ *
+ * Description : abstract class that defines a car part
+ */
+public abstract class CarPart implements Cloneable {
 
     String name;
 
     // Graphic display
-    String imagePath;
+    String imageName;
     BufferedImage image;
     Point relCoord;
     Color color;
 
-    boolean isDuplicateOnX;
-    int duplicateDistance;
-
     // Stats
     Stats stats;
 
-    public CarPart(String name, String imagePath, Point relCoord, boolean isDuplicateOnX, int duplicateDistance, Stats stats) {
+    public CarPart(String name, String imageName, Stats stats, Point relCoord) {
         this.name = name;
         this.stats = stats;
-        this.imagePath = imagePath;
+        this.imageName = imageName;
         this.relCoord = relCoord;
         this.color = Color.WHITE;
-        this.isDuplicateOnX = isDuplicateOnX;
-        this.duplicateDistance = duplicateDistance;
+
         try {
-            BufferedImage in = ImageIO.read(new File(imagePath));
-
-            image = new BufferedImage(
-                    in.getWidth(), in.getHeight(), BufferedImage.TRANSLUCENT);
-
-            Graphics2D g = image.createGraphics();
-            g.drawImage(in, 0, 0, null);
-            g.dispose();
+            image = ImageIO.read(new File("resources/cars/" +
+                    getResourceFolder() + "/" + imageName));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-
-    public CarPart(String name, String imagePath, Stats stats, Point relCoord) {
-        this(name, imagePath, relCoord, false, 0, stats);
-    }
-
-    public abstract String getCategory();
-
+    /**
+     * Enable to clone a part so that the garage keeps the originals
+     * @return clone of the car part
+     */
     public abstract CarPart clone();
 
+    /**
+     * Get the resource folder for the car parts' images
+     * @return resource folder path
+     */
+    abstract String getResourceFolder();
+
+    /**
+     * Get the stats
+     * @return stats
+     */
     public Stats getStats() {
         return stats;
     }
 
+    /**
+     * Get the name
+     * @return name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Set the color of the part
+     * @param color : color to paint
+     */
     public void setColor(Color color) {
         this.color = color;
     }
 
+    /**
+     * Get the color
+     * @return color
+     */
     public Color getColor() {
         return color;
     }
 
-    @Override
-    public BufferedImage getImage() {
-        return image;
-    }
-
-    @Override
+    /**
+     * Get the tinted version of the car part
+     * @param color : color to paint the car part
+     * @return tinted buffered image
+     */
     public BufferedImage getTintedImage(Color color) {
         return tintImage(image, color);
     }
 
-    @Override
-    public int getXCoord() {
-        return relCoord.x;
-    }
-
-    @Override
-    public int getYCoord() {
-        return relCoord.y;
-    }
-
-    @Override
-    public void drawPart(Graphics g, double ratio, ImageObserver observer, boolean simulation) {
+    /**
+     * Draws the car part on a given graphic
+     * @param g        : graphic
+     * @param ratio    : ratio of the car part
+     */
+    public void drawPart(Graphics g, double ratio) {
         if (ratio < 1) {
+            // draw a resized image anchored at the center
             Image sizedImage = tintImage(image, color).getScaledInstance(
                     (int) (image.getWidth() * ratio),
                     (int) (image.getHeight() * ratio),
                     Image.SCALE_DEFAULT);
-            g.drawImage(sizedImage, (int) (relCoord.x * ratio), (int) (relCoord.y * ratio), observer);
-            if (isDuplicateOnX){
-                g.drawImage(sizedImage, (int) ((relCoord.x + duplicateDistance) * ratio),  (int) (relCoord.y * ratio) ,observer);
-            }
+            g.drawImage(sizedImage, (int) (relCoord.x * ratio), (int) (relCoord.y * ratio), null);
         } else {
-            g.drawImage(tintImage(image, color), relCoord.x, relCoord.y, observer);
-            if (isDuplicateOnX){
-                g.drawImage(tintImage(image, color), relCoord.x + duplicateDistance, relCoord.y,observer);
-            }
+            g.drawImage(tintImage(image, color), relCoord.x, relCoord.y, null);
         }
     }
 
-    public int getDuplicateDistanceX() {
-        return duplicateDistance;
-    }
-
-    private BufferedImage tintImage(BufferedImage loadImg, Color color) {
+    BufferedImage tintImage(BufferedImage loadImg, Color color) {
         BufferedImage result = new BufferedImage(loadImg.getWidth(),
                 loadImg.getHeight(), BufferedImage.TYPE_INT_ARGB);
         for(int i = 0; i < loadImg.getWidth(); ++i) {
@@ -138,10 +136,6 @@ public abstract class CarPart implements Displayable, Cloneable {
         return result;
     }
 
-    private int getHalfAlphaTint(int original, int tint) {
-        return (int) (original + (tint - original) * 0.5);
-    }
-
     private int getGrayScaleTint(int original, int tint) {
         double whitePercentage = original / 255.0;
         double blackPercentage = 1 - whitePercentage;
@@ -149,11 +143,4 @@ public abstract class CarPart implements Displayable, Cloneable {
         return (int) (original * blackPercentage + tint * whitePercentage);
     }
 
-    // Metallic paint job in case we add different textures (found the formula by mistake)
-    private int getTintMetallic(int original, int tint) {
-        double whitePercentage = original / 255.0;
-        double blackPercentage = 1 - whitePercentage;
-
-        return (int) (original * (((blackPercentage * tint)) % 1) + tint * whitePercentage) % 255;
-    }
 }
