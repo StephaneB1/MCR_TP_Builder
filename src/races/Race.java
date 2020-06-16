@@ -1,151 +1,163 @@
 package races;
 
+import utils.Utils;
+
 import javax.swing.*;
-import java.awt.*;
+import javax.swing.border.Border;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.TimerTask;
 import java.util.Timer;
 
-public class Race extends JFrame implements WindowListener {
-
-    private final int WIDTH = 1200;
-    private final int HEIGHT = 600;
+/**
+ * MCR PROJECT : Builder Design Pattern
+ * Author      : Bottin Stéphane, Demarta Robin, Dessaules Loïc, Kot Chau-Ying
+ *
+ * Description : Race frame that will display the current Race with race line drew
+ * and racer1 / racer2 with their details, and the leaderBoard
+ */
+public class Race extends JFrame {
+    private static final int SCREEN_WIDTH = 1600;
+    private static final int SCREEN_HEIGHT = 720;
     private RacePanel racePanel;
     private RaceDetailsPanel raceDetailsPanel;
 
     private int totalDistance;
     private ArrayList<Racer> racers;
-    private Boolean isRunning = false;
+    private Boolean abort = false;
     private Timer timer = new Timer();
-    private Racer racerWinner;
+    private int nbRacers;
+    private int nbRacersFinished;
+
+    private static final String WINNER_TROPHY_PATH = "resources/winner_trophy.png";
 
     public Race(int totalDistance, ArrayList<Racer> racers){
         this.totalDistance = totalDistance;
-        this.racers = racers;
 
-        this.setSize(WIDTH, HEIGHT);
-        this.setTitle("Race");
-        this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        this.setResizable(false);
-        this.setLayout(null);
-        // Race panel has same width as the JFrame and 1/4 of his height
-        this.racePanel = new RacePanel(WIDTH, HEIGHT / 4, racers, totalDistance);
-        // PanelBottom for player stats in the current race has the rest of the windows
-        this.raceDetailsPanel = new RaceDetailsPanel(this.racers, totalDistance);
-        raceDetailsPanel.setSize(1200, 3 * HEIGHT / 4);
-        raceDetailsPanel.setBackground(Color.red);
-        raceDetailsPanel.setLocation(0, HEIGHT / 4);
+        // Clone racers to be able to restart a race with new Racer all the time,
+        // Also to run more than one race at the same time
+        this.racers = new ArrayList<>(racers.size());
+        for(Racer racer : racers){
+            try {
+                this.racers.add((Racer) racer.clone());
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+        }
+        this.nbRacers = this.racers.size();
 
-        this.add(racePanel);
-        this.add(raceDetailsPanel);
-        this.setVisible(true);
+        // Init the frame
+        frameInitialisation();
 
-        // Don't forget to stop the race, otherwise it will continue to calculate racers positions
+        // Don't forget to stop the race when we close the frame, otherwise it will continue to calculate racers positions
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
-                isRunning = false;
+                abort = true;
             }
         });
 
-
     }
 
+    /**
+     * Start the race, each "period time" we'll run a race tick, update all racer and race infos
+     * This repeated task will be aborted when we quit the frame (top tight cross button)
+     */
     public void start(){
-
-        isRunning = true;
-
         // Set up the repeated task that will update the subject states (seconds)
         TimerTask repeatedTask = new TimerTask() {
             public void run() {
-
-                if(isRunning){
-
-                    // Run a tick
-                    for(Racer racer : racers){
-                        racer.runOneTick(2.0);
-                    }
-
-                    // Check if there is a winner
-                    for(Racer racer : racers){
-                        if(racer.getCurrentDistanceMeter() >= totalDistance){
-                            racerWinner = racer;
-                            isRunning = false;
-                            break;
-                        }
-                    }
+                // Continue while not abort and all racers have not finished the race
+                if(!abort && nbRacersFinished != nbRacers){
+                    runOneTick();
+                    racerFinishCheck();
 
                     racePanel.repaint();
-                    raceDetailsPanel.updateLeaderBoard();
 
+                    // Updates
+                    raceDetailsPanel.updateLeaderBoard(nbRacersFinished);
+                    raceDetailsPanel.checkRacersCrash();
                 }
                 // Race finish -> stop the current timertask and display winner
                 else{
                     // check we have winner, because we can stop the race when we quit the frame (top left cross icon)
-                    if(racerWinner != null){
-                        displayWinner(racerWinner);
+                    if(!abort){
+                        displayWinner();
                     }
                     this.cancel();
                 }
            }
         };
-
+        
         long delay  = 0;
         long period = 50;
         timer.scheduleAtFixedRate(repeatedTask, delay, period);
-
     }
 
-    public void stop() {
+    private void frameInitialisation(){
+        this.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+        this.setTitle("MCR - Bob The Racer : Race");
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        this.setResizable(false);
+        this.setLayout(null);
+        // Race panel has same width as the JFrame and 1/4 of his height
+        this.racePanel = new RacePanel(SCREEN_WIDTH, SCREEN_HEIGHT / 4, this.racers, totalDistance);
+        // PanelBottom for race details has the rest of the windows
+        this.raceDetailsPanel = new RaceDetailsPanel(this.racers, totalDistance);
+        // Border
+        Border padding = BorderFactory.createEmptyBorder(20, 20, 40, 20);
+        this.raceDetailsPanel.setBorder(padding);
 
+        this.raceDetailsPanel.setSize(SCREEN_WIDTH, 3 * SCREEN_HEIGHT / 4);
+        this.raceDetailsPanel.setLocation(0, SCREEN_HEIGHT / 4);
+
+        this.add(racePanel);
+        this.add(raceDetailsPanel);
+        this.setVisible(true);
     }
 
-    private void displayRace() {
-
+    /**
+     * Run a single tick of the race for all racers
+     */
+    private void runOneTick(){
+        for(Racer racer : racers){
+            if(!racer.hasFinished()){
+                racer.runOneTick();
+            }
+        }
     }
 
-    private void displayWinner(Racer racerWinner) {
-        JOptionPane.showMessageDialog(null, racerWinner.getName() + " won the race !", "winner winner chicken dinner", JOptionPane.INFORMATION_MESSAGE);
+    /**
+     * Detect if a racer has finished the race to stop it (to be able to
+     * wait the other opponents)
+     */
+    private void racerFinishCheck() {
+        for(Racer racer : racers){
+            if(!racer.hasFinished() && racer.getCurrentDistance() >= totalDistance){
+                racer.setHasFinished(true);
+                nbRacersFinished++;
+            }
+        }
     }
 
-    @Override
-    public void windowOpened(WindowEvent windowEvent) {
+    /**
+     * Display a popup to notify that the race is finished and display the final leaderboard
+     */
+    private void displayWinner() {
+        StringBuilder sb = new StringBuilder("Leaderboard\n\n");
+        for(int i = 0; i < racers.size(); ++i){
+            sb.append(i + 1)
+                .append(". ")
+                .append(racers.get(i)
+                .getName())
+                .append("\n");
+        }
+        sb.append("\n");
 
+        Utils.popup(WINNER_TROPHY_PATH, "winner winner chicken dinner", sb.toString());
     }
 
-    @Override
-    public void windowClosing(WindowEvent windowEvent) {
-        System.out.println("Windows closing");
-        isRunning = false;
-    }
-
-    @Override
-    public void windowClosed(WindowEvent windowEvent) {
-        System.out.println("windows closed");
-    }
-
-    @Override
-    public void windowIconified(WindowEvent windowEvent) {
-
-    }
-
-    @Override
-    public void windowDeiconified(WindowEvent windowEvent) {
-
-    }
-
-    @Override
-    public void windowActivated(WindowEvent windowEvent) {
-
-    }
-
-    @Override
-    public void windowDeactivated(WindowEvent windowEvent) {
-
-    }
 }

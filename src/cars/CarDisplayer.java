@@ -1,53 +1,45 @@
 package cars;
 
-import carBuilder.CarBuilder;
+import cars.parts.CarPart;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class CarDisplayer extends JPanel {
 
+    private static final int WIDTH  = 450;
+    private static final int HEIGHT = 200;
+
     private Car car;
-    private CarBuilder builder; // blueprint
+    private double ratio; // image ratio [0.0, 1.0]
 
-    public CarDisplayer(Car car, CarBuilder builder) {
+    public CarDisplayer(Car car) {
+        this(car, 1.0);
+    }
+
+    public CarDisplayer(Car car, double ratio) {
         this.car = car;
-        this.builder = builder;
-
-        this.setSize(450, 200);
+        this.ratio = ratio;
+        setOpaque(false);
+        setSize(WIDTH, HEIGHT);
     }
 
-    public CarDisplayer(Car car){
-        this(car, null);
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
+    /**
+     * Get the stats of the car displayed
+     * @return stats of the car
+     */
     public Stats getStats() {
-        return (car != null ? car.getStats() : builder.getTempStats());
+        return car.getStats();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        // display the car parts of the car
-        if(car != null) {
-            for(CarPart carPart : car.getCarParts()) {
-                g.drawImage(carPart.getImage(), carPart.getXCoord(), carPart.getYCoord(), this);
-            }
-        }
-        // Or the blueprint of the builder
-        else if (builder != null) {
-            for(CarPart carPart : builder.getCarParts()) {
-                if(carPart != null) {
-                    g.drawImage(carPart.getImage(), carPart.getXCoord(), carPart.getYCoord(),this);
-                }
-            }
-        }
+        // We draw each car parts, since the body is always the first added
+        // and no other parts are colliding, we don't need to handle layers
+        for(CarPart carPart : car.getCarParts())
+            if(carPart != null)
+                carPart.drawPart(g, ratio);
     }
-
 }

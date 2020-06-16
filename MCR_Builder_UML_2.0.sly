@@ -268,8 +268,8 @@
       <attribute const="false" defaultValue="" isStatic="false" name="resistance" type="double" visibility="PRIVATE"/>
       <attribute const="false" defaultValue="" isStatic="false" name="color" type="Color" visibility="PRIVATE"/>
     </entity>
-    <entity entityType="CLASS" id="17489" isAbstract="false" name="carBuilder.CarBuilder" visibility="PUBLIC"/>
-    <entity entityType="CLASS" id="22325" isAbstract="false" name="Controller" visibility="PUBLIC">
+    <entity entityType="CLASS" id="17489" isAbstract="false" name="cars.CarBuilder" visibility="PUBLIC"/>
+    <entity entityType="CLASS" id="22325" isAbstract="false" name="controller.Controller" visibility="PUBLIC">
       <method isAbstract="false" isStatic="false" name="quit" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="false" isStatic="false" name="updateSelectionLabels" returnType="void" view="DEFAULT" visibility="PUBLIC">
         <variable const="false" name="categoryLabel" type="JLabel"/>

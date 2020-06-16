@@ -1,5 +1,6 @@
 package cars;
 
+import cars.parts.CarPart;
 import utils.Utils;
 
 import java.util.ArrayList;
@@ -34,7 +35,15 @@ public class Stats {
         maniability = RANGE_MIN;
         resistance = RANGE_MIN;
     }
-    
+
+    public static double getRangeMin() {
+        return RANGE_MIN;
+    }
+
+    public static double getRangeMax() {
+        return RANGE_MAX;
+    }
+
     public double getSpeed() {
         return speed;
     }
@@ -73,6 +82,15 @@ public class Stats {
     }
 
     /**
+     * Converts stat value [RANGE_MIN;RANGE_MAX] to proportional factor [RANGE_MIN/RANGE_MAX;1]
+     * @param value te stat to be converted
+     * @return factor value [RANGE_MIN/RANGE_MAX;1]
+     */
+    public static double toPercent(double value) {
+        return value / RANGE_MAX;
+    }
+
+    /**
      * Ensures that the value is between class ranges
      * @param value the numeric value to be checked
      * @return the given value, cut to range [RANGE_MIN;RANGE_MAX]
@@ -88,6 +106,7 @@ public class Stats {
 
     public static void updateCarPartStats(Stats stats, ArrayList<CarPart> carParts) {
         // Car's stats is its CarParts' averaged
+        // TODO move method in Car ?
         stats.setSpeed(Utils.averageFunc(carParts, o -> o.getStats().getSpeed()));
         stats.setManiability(Utils.averageFunc(carParts, o -> o.getStats().getManiability()));
         stats.setResistance(Utils.averageFunc(carParts, o -> o.getStats().getResistance()));
