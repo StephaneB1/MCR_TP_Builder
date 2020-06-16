@@ -17,16 +17,16 @@ import java.io.IOException;
  */
 public abstract class CarPart implements Cloneable {
 
-    String name;
+    protected String name;
 
     // Graphic display
-    String imageName;
-    BufferedImage image;
-    Point relCoord;
-    Color color;
+    protected String imageName;
+    protected BufferedImage image;
+    protected Point relCoord;
+    protected Color color;
 
     // Stats
-    Stats stats;
+    protected Stats stats;
 
     public CarPart(String name, String imageName, Stats stats, Point relCoord) {
         this.name = name;
