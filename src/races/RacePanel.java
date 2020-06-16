@@ -13,7 +13,7 @@ public class RacePanel extends JPanel {
     private int raceWidth;
     private int raceBeginX;
     private int raceBeginY;
-    private final int RACER_SIZE = 28;
+    private static final int RACER_SIZE = 28;
 
     private JLabel lblPlayer1;
     private JLabel lblPlayer2;

@@ -16,8 +16,8 @@ import java.awt.event.ActionListener;
 
 public class BuilderFrame extends JFrame {
 
-    private final int SCREEN_WIDTH  = 900;
-    private final int SCREEN_HEIGHT = 550;
+    private static final int SCREEN_WIDTH  = 900;
+    private static final int SCREEN_HEIGHT = 550;
 
     private static int totalBuilder = 0;
 

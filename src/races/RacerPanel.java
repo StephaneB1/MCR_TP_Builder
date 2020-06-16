@@ -27,8 +27,8 @@ public class RacerPanel extends JPanel {
     private Timer timerCrashBar;
     private JLabel lblCrashBar;
 
-    private final String WARNING_IMG_PATH = "resources/warning.png";
-    private final String SMOKE_ANIM_RESOURCE = "smoke_anim.gif";
+    private static final String WARNING_IMG_PATH = "resources/warning.png";
+    private static final String SMOKE_ANIM_RESOURCE = "smoke_anim.gif";
 
     /**
      * MCR PROJECT : Builder Design Pattern

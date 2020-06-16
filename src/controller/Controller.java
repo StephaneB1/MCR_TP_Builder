@@ -31,14 +31,14 @@ public class Controller extends JFrame {
     private static Controller instance;
 
     // Screen display
-    private final int SCREEN_WIDTH  = 900;
-    private final int SCREEN_HEIGHT = 600;
+    private static final int SCREEN_WIDTH  = 900;
+    private static final int SCREEN_HEIGHT = 600;
 
     // Race default values
-    private final int DEFAULT_DISTANCE = 3000;
-    private final int MIN_DISTANCE     = 500;
-    private final int MAX_DISTANCE     = 5000;
-    private final int STEP_DISTANCE    = 100;
+    private static final int DEFAULT_DISTANCE = 3000;
+    private static final int MIN_DISTANCE     = 500;
+    private static final int MAX_DISTANCE     = 5000;
+    private static final int STEP_DISTANCE    = 100;
 
     // Garage containing all the car parts and paint jobs
     private Garage garage;

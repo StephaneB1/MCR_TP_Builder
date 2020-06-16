@@ -18,8 +18,8 @@ import java.util.Timer;
  * and racer1 / racer2 with their details, and the leaderBoard
  */
 public class Race extends JFrame {
-    private final int SCREEN_WIDTH = 1600;
-    private final int SCREEN_HEIGHT = 720;
+    private static final int SCREEN_WIDTH = 1600;
+    private static final int SCREEN_HEIGHT = 720;
     private RacePanel racePanel;
     private RaceDetailsPanel raceDetailsPanel;
 
@@ -30,7 +30,7 @@ public class Race extends JFrame {
     private int nbRacers;
     private int nbRacersFinished;
 
-    private final String WINNER_TROPHY_PATH = "resources/winner_trophy.png";
+    private static final String WINNER_TROPHY_PATH = "resources/winner_trophy.png";
 
     public Race(int totalDistance, ArrayList<Racer> racers){
         this.totalDistance = totalDistance;
