@@ -98,7 +98,7 @@ public class Race extends JFrame {
 
     private void frameInitialisation(){
         this.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-        this.setTitle("Race");
+        this.setTitle("MCR - Bob The Racer : Race");
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setResizable(false);

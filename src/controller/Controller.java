@@ -74,7 +74,7 @@ public class Controller extends JFrame {
     public Controller() {
 
         racers = new ArrayList<>();
-        setTitle("MCR - Racers");
+        setTitle("MCR - Bob The Racer");
         setupGarage();
 
         JPanel mainPanel = new JPanel();

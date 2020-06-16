@@ -43,7 +43,7 @@ public class BuilderFrame extends JFrame {
     public BuilderFrame() {
         garage = Controller.getInstance().getGarage();
 
-        setTitle("MCR - Racers : Car Builder #" + ++totalBuilder);
+        setTitle("MCR - Bob The Racer : Car Builder #" + ++totalBuilder);
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridBagLayout());
