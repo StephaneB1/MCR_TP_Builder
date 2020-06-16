@@ -1,72 +1,57 @@
 package cars;
 
-import javax.swing.*;
-import java.awt.*;
+import cars.parts.CarPart;
 
-public class Car extends JPanel implements Stats{
+import java.util.ArrayList;
 
-    private String name;
-    private Body body;
-    private Motor motor;
-    private Tires tires;
-    private Spoiler spoiler;
+/**
+ * MCR PROJECT : Builder Design Pattern
+ * Author      : Bottin Stéphane, Demarta Robin, Dessaules Loïc, Kot Chau-Ying
+ */
+public class Car {
 
-    // Stats
-    private double acceleration;
-    private double weight;
-    private double adherence;
-    private double maniability;
-    private double resistance;
-    private Color color;
+    private ArrayList<CarPart> carParts;
+    private Stats stats;
 
-    public Car(String name, Body body, Motor motor, Tires tires, Spoiler spoiler, Color color) {
-        this.name = name;
-        this.body = body;
-        this.motor = motor;
-        this.tires = tires;
-        this.spoiler = spoiler;
-        this.color = color;
-
-        this.setSize(450, 200);
+    public Car() {
+        this(new ArrayList<>());
     }
 
-
-    @Override
-    public double getAcceleration() {
-        return acceleration;
+    public Car(ArrayList<CarPart> carParts) {
+        stats = new Stats();
+        setCarParts(carParts);
     }
 
-    @Override
-    public double getWeight() {
-        return weight;
+    /**
+     * Set the car parts and update the stats
+     * @param carParts : car parts to add
+     */
+    public void setCarParts(ArrayList<CarPart> carParts) {
+        this.carParts = carParts;
+        updateStats();
     }
 
-    @Override
-    public double getAdherence() {
-        return adherence;
+    /**
+     * Get the car parts
+     * @return car parts of the car
+     */
+    public ArrayList<CarPart> getCarParts() {
+        return carParts;
     }
 
-    @Override
-    public double getManiability() {
-        return maniability;
+    /**
+     * Get the stats
+     * @return stats
+     */
+    public Stats getStats() {
+        return stats;
     }
 
-    @Override
-    public double getResistance() {
-        return resistance;
+    /**
+     * Update the stats depending on the car's car parts
+     */
+    private void updateStats() {
+        Stats.updateCarPartStats(stats, carParts);
     }
 
-    public Color getColor(){
-        return color;
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-
-        g.drawImage(body.getImage(), 0, 0, this);
-        g.drawImage(tires.getImage(), 0, 0, this);
-        g.drawImage(motor.getImage(), 0, 0, this);
-        g.drawImage(spoiler.getImage(), 0, 0, this);
-    }
 }

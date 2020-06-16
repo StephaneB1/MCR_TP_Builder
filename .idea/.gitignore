@@ -1,5 +1,6 @@
 # Default ignored files
 /workspace.xml
+/misc.xml
 
 # Compiled class file
 *.class
@@ -21,9 +22,13 @@
 *.zgit ip
 *.tar.gz
 *.rar
+*.class
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
 http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+out/
+.idea/
