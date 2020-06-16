@@ -39,6 +39,7 @@ public class Controller extends JFrame {
     private static final int MIN_DISTANCE     = 500;
     private static final int MAX_DISTANCE     = 5000;
     private static final int STEP_DISTANCE    = 100;
+    private static final int MIN_OPPONENTS    = 2;
 
     // Garage containing all the car parts and paint jobs
     private Garage garage;
@@ -340,7 +341,13 @@ public class Controller extends JFrame {
             }
         });
 
-        startButton.addActionListener(e -> startRace(racers, (int) spinner.getValue()));
+        startButton.addActionListener(actionEvent -> {
+            if(racers.size() < MIN_OPPONENTS){
+                Utils.popupWarning("Need at least two opponents to launch the race");
+            }else{
+                startRace(racers, (int) spinner.getValue());
+            }
+        });
 
         GridBagConstraints c = new GridBagConstraints();
         c.insets = new Insets(3,3,3,3); // padding

@@ -35,6 +35,12 @@ public class Race extends JFrame {
     public Race(int totalDistance, ArrayList<Racer> racers){
         this.totalDistance = totalDistance;
 
+
+        if(racers.size() < 2){
+            System.out.println("EEEERRRRROOOOORRRRR");
+        }
+
+
         // Clone racers to be able to restart a race with new Racer all the time,
         // Also to run more than one race at the same time
         this.racers = new ArrayList<>(racers.size());
