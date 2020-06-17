@@ -1,6 +1,7 @@
 package cars;
 
 import cars.parts.CarPart;
+import utils.Utils;
 
 import java.util.ArrayList;
 
@@ -51,7 +52,9 @@ public class Car {
      * Update the stats depending on the car's car parts
      */
     private void updateStats() {
-        Stats.updateCarPartStats(stats, carParts);
+        stats.setSpeed(Utils.averageFunc(carParts, o -> o.getStats().getSpeed()));
+        stats.setManiability(Utils.averageFunc(carParts, o -> o.getStats().getManiability()));
+        stats.setResistance(Utils.averageFunc(carParts, o -> o.getStats().getResistance()));
     }
 
 }

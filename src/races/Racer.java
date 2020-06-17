@@ -149,7 +149,6 @@ public class Racer implements Comparable<Racer>, Cloneable{
      * @return factor in percent
      */
     private double globalRandomMultiplier() {
-        //return 1 + (new Random()).nextDouble() * GLOBAL_REALTIME_RANDOMNESS * 2 - GLOBAL_REALTIME_RANDOMNESS;
         return 1 + REALTIME_RANDOMNESS * (2 * (new Random()).nextDouble() - 1);
     }
 
